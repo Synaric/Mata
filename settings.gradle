@@ -1,1 +1,1 @@
-include ':app', ':common', ':rxmodel'
+include ':app', ':common', ':rxmodel', ':opencv'
