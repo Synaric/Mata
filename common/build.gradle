@@ -32,5 +32,4 @@ dependencies {
     compile 'com.android.support:appcompat-v7:24.2.0'
     compile 'com.jakewharton:butterknife:5.1.1'
     compile 'com.synaric.web:mata-entity:0.0.6-SNAPSHOT'
-    compile project(':rxmodel')
 }
