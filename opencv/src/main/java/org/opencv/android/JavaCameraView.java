@@ -65,7 +65,7 @@ public class JavaCameraView extends CameraBridgeViewBase implements PreviewCallb
     }
 
     protected boolean initializeCamera(int width, int height) {
-        Log.d(TAG, "Initialize java camera");
+        Log.d(TAG, "Initialize java camera: width = " + width + ", height = " + height);
         boolean result = true;
         synchronized (this) {
             mCamera = null;
@@ -136,6 +136,7 @@ public class JavaCameraView extends CameraBridgeViewBase implements PreviewCallb
 
             /* Now set camera parameters */
             try {
+                mCamera.setDisplayOrientation(90);
                 Camera.Parameters params = mCamera.getParameters();
                 Log.d(TAG, "getSupportedPreviewSizes()");
                 List<Camera.Size> sizes = params.getSupportedPreviewSizes();

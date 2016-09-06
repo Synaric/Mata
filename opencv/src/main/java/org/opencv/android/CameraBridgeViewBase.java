@@ -17,6 +17,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.ViewGroup;
 
 import com.synaric.app.opencv.R;
 
@@ -476,19 +477,39 @@ public abstract class CameraBridgeViewBase extends SurfaceView implements Surfac
 
         int maxAllowedWidth = (mMaxWidth != MAX_UNSPECIFIED && mMaxWidth < surfaceWidth)? mMaxWidth : surfaceWidth;
         int maxAllowedHeight = (mMaxHeight != MAX_UNSPECIFIED && mMaxHeight < surfaceHeight)? mMaxHeight : surfaceHeight;
+        Log.d(TAG, "maxAllowed size:   width = " + maxAllowedWidth + ", height = " + maxAllowedHeight);
 
         for (Object size : supportedSizes) {
             int width = accessor.getWidth(size);
             int height = accessor.getHeight(size);
+            Log.d(TAG, "supported size:   width = " + width + ", height = " + height);
 
             if (width <= maxAllowedWidth && height <= maxAllowedHeight) {
                 if (width >= calcWidth && height >= calcHeight) {
                     calcWidth = (int) width;
                     calcHeight = (int) height;
+                    Log.d(TAG, "calc size:   width = " + width + ", height = " + height);
                 }
             }
         }
 
         return new Size(calcWidth, calcHeight);
+    }
+
+    /**
+     * 将图像旋转90度。
+     * @param data 原图像。
+     * @param width 原图像宽度。
+     * @param height 原图像高度。
+     * @return 旋转后图像。
+     */
+    protected byte[] rotateData(byte[] data, int width, int height) {
+        byte[] rotatedData = new byte[data.length];
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++)
+                rotatedData[x * height + height - y - 1] = data[x + y * width];
+        }
+
+        return rotatedData;
     }
 }
