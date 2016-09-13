@@ -495,21 +495,4 @@ public abstract class CameraBridgeViewBase extends SurfaceView implements Surfac
 
         return new Size(calcWidth, calcHeight);
     }
-
-    /**
-     * 将图像旋转90度。
-     * @param data 原图像。
-     * @param width 原图像宽度。
-     * @param height 原图像高度。
-     * @return 旋转后图像。
-     */
-    protected byte[] rotateData(byte[] data, int width, int height) {
-        byte[] rotatedData = new byte[data.length];
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++)
-                rotatedData[x * height + height - y - 1] = data[x + y * width];
-        }
-
-        return rotatedData;
-    }
 }

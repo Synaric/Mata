@@ -6,10 +6,10 @@ android {
 
     defaultConfig {
         applicationId "com.synaric.app.mata"
-        minSdkVersion 15
-        targetSdkVersion 24
-        versionCode 4
-        versionName "1.0"
+        minSdkVersion rootProject.ext.compileSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
         jackOptions {
             enabled true
         }
