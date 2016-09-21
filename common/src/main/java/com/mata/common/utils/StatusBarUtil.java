@@ -14,7 +14,7 @@ import android.view.ViewGroup;
  * <p/>
  * 沉浸式状态栏适配工具类
  */
-public class StatusBarCompat
+public class StatusBarUtil
 {
 
     private static final int INVALID_VAL = -1;

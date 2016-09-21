@@ -1,27 +1,15 @@
 package com.synaric.app.mata.ui;
 
-import android.support.design.widget.NavigationView;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.Toolbar;
 
 import com.synaric.app.mata.R;
 import com.synaric.app.mata.ui.base.BaseActivity;
-
-import butterknife.ButterKnife;
-import butterknife.InjectView;
+import com.synaric.app.widget.ActionButton;
 
 public class MainActivity extends BaseActivity {
 
-    @InjectView(R.id.toolbar)
-    Toolbar toolbar;
-    @InjectView(R.id.navigation_view)
-    NavigationView navigationView;
-    @InjectView(R.id.drawer_layout)
-    DrawerLayout drawerLayout;
-
     private ActionBarDrawerToggle drawerToggle;
+    private ActionButton actionButton;
 
     @Override
     public int getLayoutId() {
@@ -30,24 +18,34 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void initToolBar() {
-        toolbar.setLogo(R.mipmap.ic_launcher);
-        setSupportActionBar(toolbar);
+//        toolbar.setTitle(R.string.app_name);
+//        setSupportActionBar(toolbar);
+//
+//        ActionBar actionBar = getSupportActionBar();
+//        if (actionBar != null) {
+//            actionBar.setDisplayHomeAsUpEnabled(true);
+//            actionBar.setDisplayUseLogoEnabled(false);
+//        }
+//
+//        drawerToggle = new ActionBarDrawerToggle(this,
+//                drawerLayout,
+//                toolbar,
+//                R.string.app_name,
+//                R.string.app_name
+//        );
+//        drawerLayout.post(() -> drawerToggle.syncState());
+//        drawerLayout.addDrawerListener(drawerToggle);
+    }
 
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setDisplayUseLogoEnabled(true);
-            actionBar.setDisplayShowTitleEnabled(false);
-        }
+    @Override
+    protected void onCreate() {
+        actionButton = new ActionButton(this);
+        actionButton.show();
+    }
 
-        drawerToggle = new ActionBarDrawerToggle(this,
-                drawerLayout,
-                toolbar,
-                R.string.app_name,
-                R.string.app_name
-        );
-        drawerLayout.post(() -> drawerToggle.syncState());
-        drawerLayout.addDrawerListener(drawerToggle);
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(actionButton != null) actionButton.hide();
     }
 }

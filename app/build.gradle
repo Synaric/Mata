@@ -48,4 +48,5 @@ dependencies {
     compile project(':common')
     compile project(':opencv')
     compile project(':rxmodel')
+    compile project(':widget')
 }

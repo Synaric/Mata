@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-import com.mata.common.utils.StatusBarCompat;
+import com.mata.common.utils.StatusBarUtil;
 
 import butterknife.ButterKnife;
 
@@ -21,7 +21,7 @@ public abstract class BaseActivity extends AppCompatActivity{
         ButterKnife.inject(this);
         onCreate();
         initToolBar();
-        StatusBarCompat.compat(this);
+        StatusBarUtil.compat(this);
     }
 
     protected void onCreate() {
