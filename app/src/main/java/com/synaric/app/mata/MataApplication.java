@@ -1,7 +1,7 @@
 package com.synaric.app.mata;
 
 import com.mata.common.BaseApplication;
-import com.synaric.app.mata.service.StandardService;
+import com.synaric.app.mata.service.StandardModel;
 
 /**
  * 初始化与生命周期监听。
@@ -11,6 +11,6 @@ public class MataApplication extends BaseApplication {
 
     @Override
     protected String getBaseUrl() {
-        return StandardService.BASE_URL;
+        return StandardModel.BASE_URL;
     }
 }
