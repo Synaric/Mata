@@ -20,7 +20,6 @@ public abstract class BaseActivity extends AppCompatActivity{
         setContentView(getLayoutId());
         ButterKnife.inject(this);
         onCreate();
-        initToolBar();
         StatusBarUtil.compat(this);
     }
 
@@ -29,6 +28,4 @@ public abstract class BaseActivity extends AppCompatActivity{
     }
 
     public abstract int getLayoutId();
-
-    public abstract void initToolBar();
 }

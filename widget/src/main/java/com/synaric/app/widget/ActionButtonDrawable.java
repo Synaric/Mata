@@ -3,6 +3,8 @@ package com.synaric.app.widget;
 import android.animation.AnimatorSet;
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
+import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
@@ -15,6 +17,7 @@ import android.util.Property;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 
+import com.mata.common.utils.SystemUtil;
 import com.orhanobut.logger.Logger;
 
 import static android.graphics.Paint.ANTI_ALIAS_FLAG;
@@ -43,14 +46,29 @@ public class ActionButtonDrawable extends Drawable {
     private int colorClosed = Color.BLUE;
     private int colorOpened = Color.WHITE;
 
+    private Bitmap bitmapOpened;
+    private Bitmap bitmapClosed;
+
     public ActionButtonDrawable() {
         this(10, Color.BLUE, Color.WHITE);
+    }
+
+    public ActionButtonDrawable(Bitmap opened, Bitmap closed) {
+        this(opened, closed, Color.BLUE, Color.WHITE);
     }
 
     public ActionButtonDrawable(int strokeWidth, int tickColor, int plusColor) {
         this.strokeWidth = strokeWidth;
         colorClosed = tickColor;
         colorOpened = plusColor;
+        setupPaints();
+    }
+
+    public ActionButtonDrawable(Bitmap opened, Bitmap closed, int tickColor, int plusColor) {
+        colorClosed = tickColor;
+        colorOpened = plusColor;
+        bitmapOpened = opened;
+        bitmapClosed = closed;
         setupPaints();
     }
 
@@ -64,6 +82,7 @@ public class ActionButtonDrawable extends Drawable {
         backgroundPaint = new Paint(ANTI_ALIAS_FLAG);
         backgroundPaint.setStyle(Paint.Style.FILL);
         backgroundPaint.setColor(colorClosed);
+        backgroundPaint.setShadowLayer(25, 5, 5, Color.GREEN);
     }
 
     @Override
@@ -113,12 +132,7 @@ public class ActionButtonDrawable extends Drawable {
 
         canvas.save();
         canvas.rotate(180 * rotation, (x(0) + x(1))/2, (y(0) + y(1))/2);
-        canvas.drawLine(x(0), y(0), x(1), y(1), linePaint);
-        canvas.restore();
-
-        canvas.save();
-        canvas.rotate(180 * rotation, (x(2) + x(3)) / 2, (y(2) + y(3)) / 2);
-        canvas.drawLine(x(2), y(2), x(3), y(3), linePaint);
+        canvas.drawBitmap(isOpen() ? bitmapOpened : bitmapClosed, null, bounds, null);
         canvas.restore();
     }
 
@@ -139,14 +153,8 @@ public class ActionButtonDrawable extends Drawable {
                 ObjectAnimator.ofFloat(this, mPropertyPointAX, bounds.left),
                 ObjectAnimator.ofFloat(this, mPropertyPointAY, bounds.centerY()),
 
-                ObjectAnimator.ofFloat(this, mPropertyPointBX, bounds.centerX()),
-                ObjectAnimator.ofFloat(this, mPropertyPointBY, bounds.bottom),
-
-                ObjectAnimator.ofFloat(this, mPropertyPointCX, bounds.right),
-                ObjectAnimator.ofFloat(this, mPropertyPointCY, bounds.centerX()/2),
-
-                ObjectAnimator.ofFloat(this, mPropertyPointDX, bounds.centerX()),
-                ObjectAnimator.ofFloat(this, mPropertyPointDY, bounds.bottom),
+                ObjectAnimator.ofFloat(this, mPropertyPointBX, bounds.right),
+                ObjectAnimator.ofFloat(this, mPropertyPointBY, bounds.centerY()),
 
                 ObjectAnimator.ofFloat(this, mRotationProperty, 0f, 1f),
                 ObjectAnimator.ofObject(this, mLineColorProperty, argbEvaluator, colorClosed),
@@ -167,13 +175,7 @@ public class ActionButtonDrawable extends Drawable {
                 ObjectAnimator.ofFloat(this, mPropertyPointBX, bounds.right),
                 ObjectAnimator.ofFloat(this, mPropertyPointBY, bounds.centerY()),
 
-                ObjectAnimator.ofFloat(this, mPropertyPointCX, bounds.centerX()),
-                ObjectAnimator.ofFloat(this, mPropertyPointCY, bounds.top),
-
-                ObjectAnimator.ofFloat(this, mPropertyPointDX, bounds.centerX()),
-                ObjectAnimator.ofFloat(this, mPropertyPointDY, bounds.bottom),
-
-                ObjectAnimator.ofFloat(this, mRotationProperty, 0f, 1f),
+                ObjectAnimator.ofFloat(this, mRotationProperty, 1f, 0f),
                 ObjectAnimator.ofObject(this, mLineColorProperty, argbEvaluator, Color.WHITE),
                 ObjectAnimator.ofObject(this, mBackgroundColorProperty, argbEvaluator, colorClosed)
         );

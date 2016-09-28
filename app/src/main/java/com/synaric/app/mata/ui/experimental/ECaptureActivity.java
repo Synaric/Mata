@@ -1,6 +1,5 @@
 package com.synaric.app.mata.ui.experimental;
 
-import android.os.Bundle;
 import android.util.Log;
 import android.view.SurfaceView;
 import android.view.WindowManager;
@@ -13,8 +12,6 @@ import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Mat;
-import org.opencv.core.Point;
-import org.opencv.imgproc.Imgproc;
 
 public class ECaptureActivity extends BaseActivity {
 
@@ -67,11 +64,6 @@ public class ECaptureActivity extends BaseActivity {
     public int getLayoutId() {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         return R.layout.activity_ecapture;
-    }
-
-    @Override
-    public void initToolBar() {
-
     }
 
     @Override

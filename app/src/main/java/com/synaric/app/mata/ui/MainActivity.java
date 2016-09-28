@@ -16,7 +16,6 @@ public class MainActivity extends BaseActivity {
         return R.layout.activity_main;
     }
 
-    @Override
     public void initToolBar() {
 //        toolbar.setTitle(R.string.app_name);
 //        setSupportActionBar(toolbar);

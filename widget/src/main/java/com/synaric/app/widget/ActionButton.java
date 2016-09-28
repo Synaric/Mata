@@ -1,12 +1,17 @@
 package com.synaric.app.widget;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.WindowManager;
+import android.widget.Button;
 
 import com.mata.common.utils.SystemUtil;
 
@@ -19,7 +24,7 @@ public class ActionButton extends View implements View.OnClickListener{
     /**
      * 默认按钮大小。
      */
-    public static final int DEFAULT_SIZE = 48;
+    public static final int DEFAULT_SIZE = 56;
 
     /**
      * 当控件位于初始状态或者{@link MotionEvent#ACTION_UP}触发时，{@link ActionButton#flagMotion}位
@@ -75,6 +80,9 @@ public class ActionButton extends View implements View.OnClickListener{
      */
     private int flagMotion;
 
+    private Bitmap bitmapClosed;
+    private Bitmap bitmapOpened;
+
     public ActionButton(Context context) {
         super(context);
         init(context);
@@ -86,7 +94,10 @@ public class ActionButton extends View implements View.OnClickListener{
     }
 
     private void init(Context context) {
-        drawable = new ActionButtonDrawable();
+        Resources resources = getResources();
+        bitmapClosed = BitmapFactory.decodeResource(resources, R.drawable.ic_play_arrow_white_48dp);
+        bitmapOpened = BitmapFactory.decodeResource(resources, R.drawable.ic_pause_black_48dp);
+        drawable = new ActionButtonDrawable(bitmapOpened, bitmapClosed);
         setBackground(drawable);
         setOnClickListener(this);
 
