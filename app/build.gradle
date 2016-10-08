@@ -25,7 +25,7 @@ android {
     buildTypes {
         release {
             buildConfigField "boolean", "SHOW_LOG", "false"
-            buildConfigField "String", "HOST", "10.10.10.101:8080"
+            buildConfigField "String", "HOST", "\"10.10.10.104:8088\""
             minifyEnabled true
             zipAlignEnabled true
             shrinkResources true
@@ -34,7 +34,7 @@ android {
 
         debug {
             buildConfigField "boolean", "SHOW_LOG", "true"
-            buildConfigField "String", "HOST", "10.10.10.101:8080"
+            buildConfigField "String", "HOST", "\"10.10.10.104:8088\""
             versionNameSuffix "-debug"
             minifyEnabled false
             zipAlignEnabled false
