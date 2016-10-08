@@ -3,7 +3,6 @@ package com.synaric.app.widget;
 import android.animation.AnimatorSet;
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -17,7 +16,6 @@ import android.util.Property;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 
-import com.mata.common.utils.SystemUtil;
 import com.orhanobut.logger.Logger;
 
 import static android.graphics.Paint.ANTI_ALIAS_FLAG;

@@ -1,4 +1,4 @@
-package com.synaric.app.mata.ui.base;
+package com.synaric.app.mata.base;
 
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;

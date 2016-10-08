@@ -1,4 +1,4 @@
-package com.mata.common;
+package com.synaric.common;
 
 import android.app.Application;
 

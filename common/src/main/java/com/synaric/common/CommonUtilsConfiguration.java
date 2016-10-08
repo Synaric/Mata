@@ -1,8 +1,8 @@
-package com.mata.common;
+package com.synaric.common;
 
 import android.content.Context;
 
-import com.mata.common.utils.SystemUtil;
+import com.synaric.common.utils.SystemUtil;
 import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;
 
@@ -18,7 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class CommonUtilsConfiguration {
 
-    public static Retrofit service;
+    public static Retrofit retrofit;
 
     public static void init(Context context, String baseUrl) {
         initLogger(context);
@@ -33,16 +33,16 @@ public class CommonUtilsConfiguration {
     }
 
     public static Retrofit initRetrofit(String baseUrl) {
-        if (service == null) {
+        if (retrofit == null) {
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
             OkHttpClient okHttpClient = builder.build();
-            service = new Retrofit.Builder()
+            retrofit = new Retrofit.Builder()
                     .baseUrl(baseUrl)
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                     .client(okHttpClient)
                     .build();
         }
-        return service;
+        return retrofit;
     }
 }

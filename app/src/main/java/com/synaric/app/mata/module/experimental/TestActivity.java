@@ -1,4 +1,4 @@
-package com.synaric.app.mata.ui.experimental;
+package com.synaric.app.mata.module.experimental;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

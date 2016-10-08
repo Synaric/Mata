@@ -1,4 +1,4 @@
-package com.mata.common.utils;
+package com.synaric.common.utils;
 
 import android.annotation.TargetApi;
 import android.app.Activity;

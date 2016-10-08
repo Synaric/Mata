@@ -1,6 +1,6 @@
 package com.synaric.app.mata;
 
-import com.mata.common.BaseApplication;
+import com.synaric.common.BaseApplication;
 import com.synaric.app.mata.service.StandardModel;
 
 /**

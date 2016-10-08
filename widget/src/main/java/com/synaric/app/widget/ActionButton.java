@@ -4,16 +4,14 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.WindowManager;
-import android.widget.Button;
 
-import com.mata.common.utils.SystemUtil;
+import com.synaric.common.utils.SystemUtil;
 
 /**
  * 普通状态是一个可拖拽的按钮，点击后能产生若干选项。

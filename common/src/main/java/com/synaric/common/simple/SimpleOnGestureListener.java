@@ -1,4 +1,4 @@
-package com.mata.common.simple;
+package com.synaric.common.simple;
 
 import android.view.GestureDetector;
 import android.view.MotionEvent;

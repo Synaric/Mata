@@ -1,11 +1,11 @@
-package com.synaric.app.mata.ui.experimental;
+package com.synaric.app.mata.module.experimental;
 
 import android.util.Log;
 import android.view.SurfaceView;
 import android.view.WindowManager;
 
 import com.synaric.app.mata.R;
-import com.synaric.app.mata.ui.base.BaseActivity;
+import com.synaric.app.mata.base.BaseActivity;
 
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase;
