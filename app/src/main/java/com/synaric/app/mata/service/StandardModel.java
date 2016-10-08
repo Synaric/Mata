@@ -2,11 +2,14 @@ package com.synaric.app.mata.service;
 
 import com.synaric.app.mata.BuildConfig;
 
+import java.util.Map;
+
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 import rx.Observable;
 
 /**
@@ -26,11 +29,11 @@ public interface StandardModel {
      * 检查是否能成功请求服务端。成功则返回"request: ok"。
      */
     @GET("emptyService")
-    Observable<String> emptyRequest(@Query("params") String params, @Query("ext") String ext);
+    Observable<String> emptyRequest(@QueryMap Map<String, String> query);
 
     /**
      * 用户登录。
      */
     @GET("userService")
-    Observable<String> login(@Query("params") String params, @Query("ext") String ext);
+    Observable<String> login(@QueryMap Map<String, String> query);
 }

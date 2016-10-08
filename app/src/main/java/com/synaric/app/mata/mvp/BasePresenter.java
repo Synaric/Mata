@@ -1,11 +1,15 @@
 package com.synaric.app.mata.mvp;
 
+import com.google.gson.Gson;
 import com.synaric.app.mata.base.ApiCallback;
 import com.synaric.app.mata.base.SubscriberCallback;
 import com.synaric.app.mata.service.StandardModel;
 import com.synaric.common.CommonUtilsConfiguration;
 import com.synaric.mvp.Presenter;
 import com.synaric.mvp.View;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import rx.Observable;
 import rx.Subscriber;
@@ -23,9 +27,12 @@ public class BasePresenter implements Presenter<View> {
 
     public View view;
 
+    private Gson gson;
+
     private CompositeSubscription compositeSubscription;
 
     public BasePresenter(View v) {
+        gson = new Gson();
         attachView(v);
     }
 
@@ -57,7 +64,7 @@ public class BasePresenter implements Presenter<View> {
         }
     }
 
-    protected <T> void loadData(SimpleApiCallBack<T> apiCallBack) {
+    protected <T> void loadData(ApiCallback<T> apiCallBack) {
         view.onLoading();
         addSubscription(
                 apiCallBack.onLoad(),
@@ -65,7 +72,14 @@ public class BasePresenter implements Presenter<View> {
         );
     }
 
-    public abstract class SimpleApiCallBack<T> implements ApiCallback<T> {
+    protected Map<String, String> queryBy(Object obj) {
+        Map<String, String> params = new HashMap<>();
+        params.put("params", obj == null ? "{}" : gson.toJson(obj));
+        params.put("ext", "{}");
+        return params;
+    }
+
+    public abstract class SimpleApiCallback<T> implements ApiCallback<T> {
 
         @SuppressWarnings("unchecked")
         @Override

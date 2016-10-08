@@ -16,10 +16,10 @@ public class MainPresenter extends BasePresenter{
     }
 
     public void loadMain() {
-        loadData(new SimpleApiCallBack<String>() {
+        loadData(new SimpleApiCallback<String>() {
             @Override
             public Observable<String> onLoad() {
-                return standardModel.emptyRequest("{}", "{}");
+                return standardModel.emptyRequest(queryBy(null));
             }
         });
     }
