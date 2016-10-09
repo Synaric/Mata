@@ -9,4 +9,6 @@
     <color name="primaryText">#212121</color>
     <color name="secondText">#757575</color>
     <color name="dividerColor">#BDBDBD</color>
+
+    <color name="background">#EDEDED</color>
 </resources>

@@ -41,6 +41,11 @@ public class ActionButton extends View implements View.OnClickListener{
     public static final int MOTION_DRAG = 2;
 
     /**
+     * 全局单例。
+     */
+    private static ActionButton singleton;
+
+    /**
      * 绘制的内容。
      */
     private ActionButtonDrawable drawable;
@@ -81,6 +86,22 @@ public class ActionButton extends View implements View.OnClickListener{
     private Bitmap bitmapClosed;
     private Bitmap bitmapOpened;
 
+    public static ActionButton getOrCreate(Context context) {
+        if(singleton == null) {
+            singleton = new ActionButton(context);
+            singleton.createInternal();
+        }
+        return singleton;
+    }
+
+    public static void hide() {
+        if(singleton != null) singleton.hideInternal();
+    }
+
+    public static void destroy() {
+        if(singleton != null) singleton.destroyInternal();
+    }
+
     public ActionButton(Context context) {
         super(context);
         init(context);
@@ -112,11 +133,15 @@ public class ActionButton extends View implements View.OnClickListener{
         scaledTouchSlop = sysConfig.getScaledTouchSlop();
     }
 
-    public void show() {
+    private void createInternal() {
         windowManager.addView(this, params);
     }
 
-    public void hide() {
+    private void hideInternal() {
+        windowManager.removeView(this);
+    }
+
+    private void destroyInternal() {
         windowManager.removeView(this);
     }
 
@@ -181,6 +206,6 @@ public class ActionButton extends View implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-        if(drawable != null) drawable.toggle();
+        if(drawable != null && isEnabled()) drawable.toggle();
     }
 }

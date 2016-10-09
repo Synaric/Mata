@@ -1,18 +1,16 @@
 package com.synaric.app.mata.module.main;
 
-import android.support.v7.app.ActionBarDrawerToggle;
-
 import com.orhanobut.logger.Logger;
+
 import com.synaric.app.mata.R;
-import com.synaric.app.mata.base.MvpActivity;
+import com.synaric.app.mata.base.BaseToolBarActivity;
 import com.synaric.app.widget.ActionButton;
 
 /**
  * 主界面。
  */
-public class MainActivity extends MvpActivity<MainPresenter> implements MainView<String>{
+public class MainActivity extends BaseToolBarActivity<MainPresenter> implements MainView<String> {
 
-    private ActionBarDrawerToggle drawerToggle;
     private ActionButton actionButton;
 
     @Override
@@ -23,26 +21,6 @@ public class MainActivity extends MvpActivity<MainPresenter> implements MainView
     @Override
     protected MainPresenter createPresenter() {
         return new MainPresenter(this);
-    }
-
-    public void initToolBar() {
-//        toolbar.setTitle(R.string.app_name);
-//        setSupportActionBar(toolbar);
-//
-//        ActionBar actionBar = getSupportActionBar();
-//        if (actionBar != null) {
-//            actionBar.setDisplayHomeAsUpEnabled(true);
-//            actionBar.setDisplayUseLogoEnabled(false);
-//        }
-//
-//        drawerToggle = new ActionBarDrawerToggle(this,
-//                drawerLayout,
-//                toolbar,
-//                R.string.app_name,
-//                R.string.app_name
-//        );
-//        drawerLayout.post(() -> drawerToggle.syncState());
-//        drawerLayout.addDrawerListener(drawerToggle);
     }
 
     @Override
@@ -67,14 +45,13 @@ public class MainActivity extends MvpActivity<MainPresenter> implements MainView
 
     @Override
     protected void onCreate() {
-        actionButton = new ActionButton(this);
-        actionButton.show();
-        presenter.loadMain();
+        super.onCreate();
+        actionButton = ActionButton.getOrCreate(this);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(actionButton != null) actionButton.hide();
+        ActionButton.destroy();
     }
 }

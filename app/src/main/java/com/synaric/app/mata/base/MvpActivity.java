@@ -13,9 +13,9 @@ public abstract class MvpActivity<P extends BasePresenter> extends BaseActivity 
     protected P presenter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate() {
+        super.onCreate();
         presenter = createPresenter();
-        super.onCreate(savedInstanceState);
     }
 
     @Override
