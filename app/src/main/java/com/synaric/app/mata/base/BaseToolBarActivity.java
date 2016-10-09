@@ -67,15 +67,16 @@ public abstract class BaseToolBarActivity<P extends BasePresenter> extends MvpAc
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
-    }
-
+    /**
+     * 设置侧边栏布局。
+     */
     protected int getMenuId() {
         return R.menu.default_player;
     }
 
+    /**
+     * 侧边栏打开将隐藏{@link ActionButton}，反之则显示。
+     */
     private class LocalDrawerListener extends DrawerLayout.SimpleDrawerListener{
 
         private int oldState = DrawerLayout.STATE_IDLE;

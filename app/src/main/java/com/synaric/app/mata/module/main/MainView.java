@@ -7,4 +7,5 @@ import com.synaric.mvp.View;
  * <br/><br/>Created by Synaric on 2016/10/8 0008.
  */
 public interface MainView<T> extends View<T>{
+
 }

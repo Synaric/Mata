@@ -6,6 +6,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -23,6 +25,11 @@ public class ActionButton extends View implements View.OnClickListener{
      * 默认按钮大小。
      */
     public static final int DEFAULT_SIZE = 56;
+
+    /**
+     * 初始状态距离页边大小。
+     */
+    public static final int DEFAULT_MARGIN = 24;
 
     /**
      * 当控件位于初始状态或者{@link MotionEvent#ACTION_UP}触发时，{@link ActionButton#flagMotion}位
@@ -113,6 +120,9 @@ public class ActionButton extends View implements View.OnClickListener{
     }
 
     private void init(Context context) {
+        int size = SystemUtil.dp2px(context, DEFAULT_SIZE);
+        int margin = SystemUtil.dp2px(context, DEFAULT_MARGIN);
+
         Resources resources = getResources();
         bitmapClosed = BitmapFactory.decodeResource(resources, R.drawable.ic_play_arrow_white_48dp);
         bitmapOpened = BitmapFactory.decodeResource(resources, R.drawable.ic_pause_black_48dp);
@@ -122,12 +132,17 @@ public class ActionButton extends View implements View.OnClickListener{
 
         windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         params = new WindowManager.LayoutParams();
-        params.width = SystemUtil.dp2px(context, DEFAULT_SIZE);
-        params.height = SystemUtil.dp2px(context, DEFAULT_SIZE);
+        params.width = size;
+        params.height = size;
         params.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
                         | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
         params.format = PixelFormat.TRANSLUCENT;
         params.type = WindowManager.LayoutParams.TYPE_PRIORITY_PHONE;
+
+        DisplayMetrics metrics = Utils.getDisplayMetrics(context);
+        params.horizontalMargin = 1.0f * margin / metrics.widthPixels;
+        params.verticalMargin = 1.0f * margin / metrics.heightPixels;
+        params.gravity = Gravity.BOTTOM | Gravity.END;
 
         ViewConfiguration sysConfig = ViewConfiguration.get(context);
         scaledTouchSlop = sysConfig.getScaledTouchSlop();
