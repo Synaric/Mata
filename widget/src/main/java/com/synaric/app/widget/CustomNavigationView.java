@@ -28,7 +28,7 @@ public class CustomNavigationView extends NavigationView {
     }
 
     private void init(Context context) {
-        mMaxWidth = Utils.getDisplayMetrics(context).widthPixels;
+        mMaxWidth = ViewUtil.getDisplayMetrics(context).widthPixels;
     }
 
     @Override

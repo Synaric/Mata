@@ -143,7 +143,7 @@ public class ActionButton extends View implements View.OnClickListener{
         params.format = PixelFormat.TRANSLUCENT;
         params.type = WindowManager.LayoutParams.TYPE_PRIORITY_PHONE;
 
-        DisplayMetrics metrics = Utils.getDisplayMetrics(context);
+        DisplayMetrics metrics = ViewUtil.getDisplayMetrics(context);
         params.horizontalMargin = 1.0f * margin / metrics.widthPixels;
         params.verticalMargin = 1.0f * margin / metrics.heightPixels;
         params.gravity = Gravity.BOTTOM | Gravity.END;

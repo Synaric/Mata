@@ -5,6 +5,9 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.synaric.app.widget.ViewUtil;
 
 import butterknife.ButterKnife;
 import me.yokeyword.fragmentation.SupportFragment;
@@ -17,7 +20,13 @@ public abstract class BaseFragment extends SupportFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(getLayoutId(), container, false);
+        int layoutId = getLayoutId();
+        View root;
+        if(layoutId <= 0) {
+            root = ViewUtil.createDescriptionView(getContext(), getClass().getSimpleName());
+        } else {
+            root = inflater.inflate(layoutId, container, false);
+        }
         ButterKnife.inject(this, root);
         onCreateView(root);
         return root;

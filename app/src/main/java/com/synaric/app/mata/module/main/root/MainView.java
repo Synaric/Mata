@@ -1,4 +1,4 @@
-package com.synaric.app.mata.module.main;
+package com.synaric.app.mata.module.main.root;
 
 import com.synaric.mvp.View;
 
