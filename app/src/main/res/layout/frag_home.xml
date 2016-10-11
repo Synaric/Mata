@@ -38,7 +38,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:padding="@dimen/ic_48dp_padding"
-            android:src="@drawable/ic_search_black_36dp"/>
+            android:src="@drawable/navigation_bar_btn_search"/>
 
     </LinearLayout>
 

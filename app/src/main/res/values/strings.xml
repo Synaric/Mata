@@ -10,4 +10,5 @@
     <string name="tab_me">我的</string>
     <string name="tab_music_room">音乐馆</string>
     <string name="tab_find">发现</string>
+    <string name="main_local_music">本地歌曲</string>
 </resources>

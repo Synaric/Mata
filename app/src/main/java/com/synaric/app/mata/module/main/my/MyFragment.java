@@ -1,5 +1,6 @@
 package com.synaric.app.mata.module.main.my;
 
+import com.synaric.app.mata.R;
 import com.synaric.app.mata.base.BaseFragment;
 
 /**
@@ -14,7 +15,7 @@ public class MyFragment extends BaseFragment implements MyView<String> {
 
     @Override
     public int getLayoutId() {
-        return 0;
+        return R.layout.frag_my;
     }
 
     @Override
