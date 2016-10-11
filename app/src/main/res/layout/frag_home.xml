@@ -6,18 +6,46 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.flyco.tablayout.SlidingTabLayout
-        android:id="@+id/sliding_tabs"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/tab_height"
-        android:background="@color/colorPrimary"
-        android:elevation="@dimen/app_bar_toolbar"
-        android:paddingLeft="@dimen/default_general_margin"
-        android:paddingRight="@dimen/default_general_margin"
-        app:tl_tab_space_equal="true"
-        app:tl_textUnselectColor="@color/black"
-        app:tl_textSelectColor="@color/colorAccent"
-        tools:targetApi="lollipop" />
+        android:orientation="horizontal"
+        android:weightSum="5"
+        android:background="@color/colorPrimary">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/civ_head_portrait"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:padding="@dimen/ic_48dp_padding"
+            android:src="@drawable/aliuser_custom_head"/>
+
+        <com.flyco.tablayout.SlidingTabLayout
+            android:id="@+id/sliding_tabs"
+            android:layout_weight="3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:elevation="@dimen/app_bar_toolbar"
+            app:tl_tab_space_equal="true"
+            app:tl_textUnselectColor="@color/black"
+            app:tl_textSelectColor="@color/colorAccent"
+            tools:targetApi="lollipop" />
+
+        <ImageView
+            android:id="@+id/iv_find"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:padding="@dimen/ic_48dp_padding"
+            android:src="@drawable/ic_search_black_36dp"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/dividerColor"/>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/vp_container"
