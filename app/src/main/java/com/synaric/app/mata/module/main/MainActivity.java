@@ -3,19 +3,23 @@ package com.synaric.app.mata.module.main;
 import com.orhanobut.logger.Logger;
 
 import com.synaric.app.mata.R;
-import com.synaric.app.mata.base.BaseToolBarActivity;
-import com.synaric.app.widget.ActionButton;
+import com.synaric.app.mata.base.MvpActivity;
 
 /**
  * 主界面。
  */
-public class MainActivity extends BaseToolBarActivity<MainPresenter> implements MainView<String> {
-
-    private ActionButton actionButton;
+public class MainActivity extends MvpActivity<MainPresenter> implements MainView<String> {
 
     @Override
     public int getLayoutId() {
         return R.layout.activity_main;
+    }
+
+    @Override
+    protected void onCreate() {
+        super.onCreate();
+        //采用单Activity + 多Fragment的模式
+        loadRootFragment(R.id.fl_container, HomeFragment.newInstance());
     }
 
     @Override
@@ -41,17 +45,5 @@ public class MainActivity extends BaseToolBarActivity<MainPresenter> implements 
     @Override
     public void onComplete() {
 
-    }
-
-    @Override
-    protected void onCreate() {
-        super.onCreate();
-        actionButton = ActionButton.getOrCreate(this);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        ActionButton.destroy();
     }
 }

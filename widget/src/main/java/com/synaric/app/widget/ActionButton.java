@@ -1,10 +1,12 @@
 package com.synaric.app.widget;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
+import android.support.v4.widget.DrawerLayout;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
@@ -17,6 +19,8 @@ import com.synaric.common.utils.SystemUtil;
 
 /**
  * 普通状态是一个可拖拽的按钮，点击后能产生若干选项。
+ * 要创建或者获取一个实例，使用{@link #getOrCreate(Context)}。
+ * 要销毁实例，通常在{@link Activity#onDestroy()}，中调用{@link #destroy()}。
  * Created by Synaric on 2016/9/21 0021.
  */
 public class ActionButton extends View implements View.OnClickListener{
@@ -148,6 +152,13 @@ public class ActionButton extends View implements View.OnClickListener{
         scaledTouchSlop = sysConfig.getScaledTouchSlop();
     }
 
+    /**
+     * 使侧边栏打开时能隐藏本控件，反之则显示。
+     */
+    public void syncState(DrawerLayout drawerLayout) {
+        drawerLayout.addDrawerListener(new LocalDrawerListener());
+    }
+
     private void createInternal() {
         windowManager.addView(this, params);
     }
@@ -222,5 +233,33 @@ public class ActionButton extends View implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         if(drawable != null && isEnabled()) drawable.toggle();
+    }
+
+    /**
+     * 侧边栏打开将隐藏{@link ActionButton}，反之则显示。
+     */
+    private class LocalDrawerListener extends DrawerLayout.SimpleDrawerListener{
+
+        private int oldState = DrawerLayout.STATE_IDLE;
+
+        @Override
+        public void onDrawerSlide(View drawerView, float slideOffset) {
+            setAlpha(1 - slideOffset);
+        }
+
+        @Override
+        public void onDrawerOpened(View drawerView) {
+            setVisibility(View.INVISIBLE);
+            setEnabled(false);
+        }
+
+        @Override
+        public void onDrawerStateChanged(int newState) {
+            if(oldState == DrawerLayout.STATE_IDLE && newState == DrawerLayout.STATE_DRAGGING) {
+                setVisibility(View.VISIBLE);
+                setEnabled(true);
+            }
+            oldState = newState;
+        }
     }
 }

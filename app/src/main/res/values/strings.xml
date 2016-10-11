@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Mata</string>
+
+    <string-array name="main_tabs">
+        <item>@string/tab_me</item>
+        <item>@string/tab_music_room</item>
+        <item>@string/tab_find</item>
+    </string-array>
+
+    <string name="tab_me">我的</string>
+    <string name="tab_music_room">音乐馆</string>
+    <string name="tab_find">发现</string>
 </resources>
