@@ -24,7 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/main_local_music"
-                style="@style/text_14_pri" />
+                style="@style/text_13_pri" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -44,4 +44,118 @@
             android:src="@drawable/local_music_play"/>
 
     </LinearLayout>
+
+    <LinearLayout
+        style="@style/common_item"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageView
+                style="@style/ic_48dp"
+                android:src="@drawable/detail_icon_favorite"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/text_12_sec"
+                android:text="@string/main_favour"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageView
+                style="@style/ic_48dp"
+                android:src="@drawable/detail_icon_history"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/text_12_sec"
+                android:text="@string/main_history"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageView
+                style="@style/ic_48dp"
+                android:src="@drawable/detail_icon_artist"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/text_12_sec"
+                android:text="@string/main_artist"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/common_item"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            style="@style/text_13_pri"
+            android:text="@string/main_rss"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/global_btn_greymore"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/common_item"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/text_12_sec"
+            android:text="@string/main_hint_rss1"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            style="@style/text_12_sec"
+            android:text="@string/main_hint_rss2"/>
+
+        <Button
+            android:id="@+id/btn_first_collection"
+            android:text="@string/main_first_collection"
+            style="@style/btn_border" />
+
+        <Button
+            android:id="@+id/btn_find_collection"
+            android:text="@string/main_find_collection"
+            style="@style/btn_border" />
+
+    </LinearLayout>
+
 </LinearLayout>

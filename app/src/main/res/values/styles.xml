@@ -23,19 +23,42 @@
         <item name="android:layout_marginBottom">@dimen/common_item_margin_bottom</item>
     </style>
 
-    <style name="ic_48dp">
+    <style name="ic_24dp_no_padding">
+        <item name="android:layout_width">@dimen/ic_24dp</item>
+        <item name="android:layout_height">@dimen/ic_24dp</item>
+    </style>
+
+    <style name="ic_48dp_no_padding">
         <item name="android:layout_width">@dimen/ic_48dp</item>
         <item name="android:layout_height">@dimen/ic_48dp</item>
+    </style>
+
+    <style name="ic_48dp" parent="ic_48dp_no_padding">
         <item name="android:padding">@dimen/ic_48dp_padding</item>
     </style>
 
-    <style name="text_14_pri">
-        <item name="android:textSize">14sp</item>
+
+    <style name="text_13_pri">
+        <item name="android:textSize">13sp</item>
         <item name="android:textColor">@color/primaryText</item>
+    </style>
+
+    <style name="text_13_acc">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/colorAccent</item>
     </style>
 
     <style name="text_12_sec">
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/secondText</item>
+    </style>
+
+    <style name="btn_border" parent="text_13_acc">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">35dp</item>
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:paddingLeft">35dp</item>
+        <item name="android:paddingRight">35dp</item>
+        <item name="android:background">@drawable/bg_white_border</item>
     </style>
 </resources>

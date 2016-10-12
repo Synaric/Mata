@@ -11,4 +11,11 @@
     <string name="tab_music_room">音乐馆</string>
     <string name="tab_find">发现</string>
     <string name="main_local_music">本地歌曲</string>
+    <string name="main_favour">收藏</string>
+    <string name="main_artist">关注的艺人</string>
+    <string name="main_rss">订阅的精选集</string>
+    <string name="main_hint_rss1">把私房音乐收录到精选集</string>
+    <string name="main_hint_rss2">在虾米音乐快乐地聆听和分享</string>
+    <string name="main_first_collection">制作第一张精选集</string>
+    <string name="main_find_collection">听大虾们的精选集</string>
 </resources>

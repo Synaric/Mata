@@ -7,7 +7,9 @@
     <dimen name="navigation_max_width">300dp</dimen>
     <dimen name="default_general_margin">16dp</dimen>
     <dimen name="tab_height">48dp</dimen>
+    <dimen name="ic_48dp_padding_small">5dp</dimen>
     <dimen name="ic_48dp_padding">10dp</dimen>
+    <dimen name="ic_24dp">20dp</dimen>
     <dimen name="ic_48dp">48dp</dimen>
     <dimen name="common_item_padding">16dp</dimen>
     <dimen name="common_item_margin_bottom">10dp</dimen>
