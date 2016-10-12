@@ -15,7 +15,7 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.WindowManager;
 
-import com.synaric.common.utils.SystemUtil;
+import com.synaric.common.utils.SystemUtils;
 
 /**
  * 普通状态是一个可拖拽的按钮，点击后能产生若干选项。
@@ -124,8 +124,8 @@ public class ActionButton extends View implements View.OnClickListener{
     }
 
     private void init(Context context) {
-        int size = SystemUtil.dp2px(context, DEFAULT_SIZE);
-        int margin = SystemUtil.dp2px(context, DEFAULT_MARGIN);
+        int size = SystemUtils.dp2px(context, DEFAULT_SIZE);
+        int margin = SystemUtils.dp2px(context, DEFAULT_MARGIN);
 
         Resources resources = getResources();
         bitmapClosed = BitmapFactory.decodeResource(resources, R.drawable.ic_play_arrow_white_48dp);

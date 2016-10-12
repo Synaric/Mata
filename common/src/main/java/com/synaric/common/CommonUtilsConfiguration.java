@@ -2,7 +2,7 @@ package com.synaric.common;
 
 import android.content.Context;
 
-import com.synaric.common.utils.SystemUtil;
+import com.synaric.common.utils.SystemUtils;
 import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;
 
@@ -28,7 +28,7 @@ public class CommonUtilsConfiguration {
     public static void initLogger(Context context) {
         Logger
             .init()
-            .logLevel(SystemUtil.isDebugMode(context) ? LogLevel.FULL : LogLevel.NONE)
+            .logLevel(SystemUtils.isDebugMode(context) ? LogLevel.FULL : LogLevel.NONE)
             .methodCount(3);
     }
 

@@ -9,7 +9,7 @@ import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
- * 提供对各类型Model的总控制。
+ * 装饰类，提供数据库操作的总控制。
  * Created by Synaric on 2016/8/23 0023.
  */
 @SuppressWarnings("ALL")

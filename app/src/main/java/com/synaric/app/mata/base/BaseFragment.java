@@ -1,5 +1,6 @@
 package com.synaric.app.mata.base;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -38,6 +39,10 @@ public abstract class BaseFragment extends SupportFragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.reset(this);
+    }
+
+    protected void screenTransitAnim(View view, int targetId, Intent intent) {
+        ((BaseActivity) getContext()).screenTransitAnim(view, targetId, intent);
     }
 
     public abstract int getLayoutId();
