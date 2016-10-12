@@ -18,4 +18,6 @@
     <string name="main_hint_rss2">在虾米音乐快乐地聆听和分享</string>
     <string name="main_first_collection">制作第一张精选集</string>
     <string name="main_find_collection">听大虾们的精选集</string>
+    <string name="no_title">无标题</string>
+    <string name="unknown">未知</string>
 </resources>

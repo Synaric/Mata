@@ -12,4 +12,5 @@
     <color name="dividerColor">#BDBDBD</color>
 
     <color name="background">#EDEDED</color>
+    <color name="backgroundDark">#414141</color>
 </resources>
