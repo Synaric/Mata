@@ -10,11 +10,35 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <FrameLayout
-            android:id="@+id/fl_container"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+            android:layout_height="match_parent">
+
+            <FrameLayout
+                android:id="@+id/fl_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+            <com.synaric.app.widget.SlideUpLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:content="@+id/ll_player_main"
+                app:handle="@+id/view_bar"
+                app:handleWidthOffset="88dp">
+
+                <include layout="@layout/player_behind" />
+
+                <View
+                    android:id="@+id/view_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/ic_60dp"
+                    android:background="@color/transparent"/>
+
+            </com.synaric.app.widget.SlideUpLayout>
+
+        </RelativeLayout>
 
     </android.support.design.widget.CoordinatorLayout>
 

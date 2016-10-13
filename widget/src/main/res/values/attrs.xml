@@ -6,4 +6,11 @@
         <attr name="civ_border_overlay" format="boolean" />
         <attr name="civ_fill_color" format="color" />
     </declare-styleable>
+
+    <declare-styleable name="SlideUpLayout">
+        <attr name="handle" format="reference"/>
+        <attr name="content" format="reference"/>
+        <attr name="topOffset" format="dimension"/>
+        <attr name="handleWidthOffset" format="dimension"/>
+    </declare-styleable>
 </resources>
