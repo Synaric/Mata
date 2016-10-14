@@ -1,52 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <!--顶部导航-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/tab_height"
-        android:orientation="horizontal"
-        android:weightSum="5"
-        android:background="@color/colorPrimary">
+    <include layout="@layout/view_navigator" />
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/civ_head_portrait"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:padding="@dimen/ic_48dp_padding"
-            android:src="@drawable/default_artist_login_mini"/>
-
-        <com.flyco.tablayout.SlidingTabLayout
-            android:id="@+id/sliding_tabs"
-            android:layout_weight="3"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:elevation="@dimen/app_bar_toolbar"
-            app:tl_tab_space_equal="true"
-            app:tl_textUnselectColor="@color/black"
-            app:tl_textSelectColor="@color/colorAccent"
-            tools:targetApi="lollipop" />
-
-        <ImageView
-            android:id="@+id/iv_find"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:padding="@dimen/ic_48dp_padding"
-            android:src="@drawable/navigation_bar_btn_search"/>
-
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/dividerColor"/>
+    <View style="@style/divider" />
 
     <!--页面主要内容-->
     <android.support.v4.view.ViewPager

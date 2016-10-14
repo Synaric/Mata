@@ -7,6 +7,8 @@ import android.view.View;
 
 import com.synaric.common.utils.StatusBarUtils;
 
+import org.greenrobot.eventbus.EventBus;
+
 import butterknife.ButterKnife;
 import me.yokeyword.fragmentation.SupportActivity;
 
@@ -23,8 +25,15 @@ public abstract class BaseActivity extends SupportActivity{
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
         ButterKnife.inject(this);
+        EventBus.getDefault().register(this);
         onCreate();
         StatusBarUtils.compat(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     protected void onCreate() {

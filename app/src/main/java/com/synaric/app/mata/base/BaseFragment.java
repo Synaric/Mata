@@ -6,9 +6,10 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.synaric.app.widget.ViewUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.ButterKnife;
 import me.yokeyword.fragmentation.SupportFragment;
@@ -17,6 +18,8 @@ import me.yokeyword.fragmentation.SupportFragment;
  * <br/><br/>Created by Synaric on 2016/10/11 0011.
  */
 public abstract class BaseFragment extends SupportFragment {
+
+    protected final EventBus eventBus = EventBus.getDefault();
 
     @Nullable
     @Override

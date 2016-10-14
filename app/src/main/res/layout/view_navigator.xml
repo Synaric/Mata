@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/tab_height"
+    android:orientation="horizontal"
+    android:weightSum="5"
+    android:background="@color/colorPrimary"
+    tools:showIn="@layout/activity_main">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/civ_head_portrait"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:padding="@dimen/ic_48dp_padding"
+        android:src="@drawable/default_artist_login_mini" />
+
+    <com.flyco.tablayout.SlidingTabLayout
+        android:id="@+id/sliding_tabs"
+        android:layout_weight="3"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:elevation="@dimen/app_bar_toolbar"
+        app:tl_tab_space_equal="true"
+        app:tl_textUnselectColor="@color/black"
+        app:tl_textSelectColor="@color/colorAccent"
+        tools:targetApi="lollipop" />
+
+    <ImageView
+        android:id="@+id/iv_find"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:padding="@dimen/ic_48dp_padding"
+        android:src="@drawable/navigation_bar_btn_search" />
+
+</LinearLayout>

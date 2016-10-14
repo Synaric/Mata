@@ -7,8 +7,10 @@ import com.flyco.tablayout.SlidingTabLayout;
 import com.synaric.app.mata.R;
 import com.synaric.app.mata.adapter.HomeAdapter;
 import com.synaric.app.mata.base.BaseFragment;
+import com.synaric.app.mata.event.RequestToggleDrawer;
 
 import butterknife.InjectView;
+import de.hdodenhof.circleimageview.CircleImageView;
 import me.yokeyword.fragmentation.SupportActivity;
 import me.yokeyword.fragmentation.SupportFragment;
 
@@ -24,6 +26,8 @@ public class HomeFragment extends BaseFragment {
     SlidingTabLayout slidingTabs;
     @InjectView(R.id.vp_container)
     ViewPager viewPager;
+    @InjectView(R.id.civ_head_portrait)
+    CircleImageView civHeadPortrait;
 
     public static HomeFragment newInstance() {
         return new HomeFragment();
@@ -40,5 +44,7 @@ public class HomeFragment extends BaseFragment {
         viewPager.setOffscreenPageLimit(3);
         viewPager.setAdapter(new HomeAdapter(getFragmentManager(), getContext()));
         slidingTabs.setViewPager(viewPager);
+
+        civHeadPortrait.setOnClickListener(v -> eventBus.post(RequestToggleDrawer.get()));
     }
 }
