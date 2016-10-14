@@ -16,4 +16,10 @@ public class MusicRoomFragment extends BaseFragment {
     public int getLayoutId() {
         return 0;
     }
+
+    @Override
+    protected void onCreate() {
+        super.onCreate();
+        setEnableSwipeBack(false);
+    }
 }

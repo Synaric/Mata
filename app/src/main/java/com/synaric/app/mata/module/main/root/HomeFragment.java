@@ -39,6 +39,12 @@ public class HomeFragment extends BaseFragment {
     }
 
     @Override
+    protected void onCreate() {
+        super.onCreate();
+        setEnableSwipeBack(false);
+    }
+
+    @Override
     protected void onCreateView(View root) {
         super.onCreateView(root);
         viewPager.setOffscreenPageLimit(3);

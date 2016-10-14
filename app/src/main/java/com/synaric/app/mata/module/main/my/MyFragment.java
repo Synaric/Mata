@@ -19,6 +19,12 @@ public class MyFragment extends BaseFragment implements MyView<String> {
     }
 
     @Override
+    protected void onCreate() {
+        super.onCreate();
+        setEnableSwipeBack(false);
+    }
+
+    @Override
     public void onSuccess(String data) {
 
     }

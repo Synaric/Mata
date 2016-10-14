@@ -1,8 +1,5 @@
 package com.synaric.app.mata.base;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-
 import com.synaric.app.mata.mvp.BasePresenter;
 
 /**
@@ -14,8 +11,8 @@ public abstract class MvpFragment<P extends BasePresenter> extends BaseFragment 
     protected P presenter;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onCreate() {
+        super.onCreate();
         presenter = createPresenter();
     }
 
