@@ -1,5 +1,6 @@
 package com.synaric.app.mata.base;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -17,6 +18,13 @@ import butterknife.ButterKnife;
 import me.yokeyword.fragmentation.SupportFragment;
 
 /**
+ * <pre>
+ *     如果要关闭swipe back模式：
+ *     protected void onCreate() {
+ *         setEnableSwipeBack(false);
+ *     }
+ *     例如{@link com.synaric.app.mata.module.main.root.HomeFragment}就不应该开启swipe back模式。
+ * </pre>
  * <br/><br/>Created by Synaric on 2016/10/11 0011.
  */
 public abstract class BaseFragment extends SupportFragment {
@@ -25,10 +33,20 @@ public abstract class BaseFragment extends SupportFragment {
 
     private SwipeBackLayout mSwipeBackLayout;
 
+    private OnLockDrawLayoutListener lockDrawLayoutListener;
+
     /**
      * 是否允许右滑退出。
      */
     private boolean enableSwipeBack = true;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (enableSwipeBack && context instanceof OnLockDrawLayoutListener) {
+            lockDrawLayoutListener = (OnLockDrawLayoutListener) context;
+        }
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,6 +67,10 @@ public abstract class BaseFragment extends SupportFragment {
         }
         ButterKnife.inject(this, root);
         onCreateView(root);
+        if(enableSwipeBack) {
+            if(lockDrawLayoutListener != null) lockDrawLayoutListener.onLockDrawLayout(true);
+            attachToSwipeBack(root);
+        }
         return root;
     }
 
@@ -60,6 +82,23 @@ public abstract class BaseFragment extends SupportFragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.reset(this);
+
+        if(enableSwipeBack && lockDrawLayoutListener != null)
+            lockDrawLayoutListener.onLockDrawLayout(false);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        lockDrawLayoutListener = null;
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (enableSwipeBack && hidden && mSwipeBackLayout != null) {
+            mSwipeBackLayout.hiddenFragment();
+        }
     }
 
     /**
@@ -75,21 +114,11 @@ public abstract class BaseFragment extends SupportFragment {
         ((BaseActivity) getContext()).screenTransitAnim(view, targetId, intent);
     }
 
-    private void onFragmentCreate() {
-        mSwipeBackLayout = new SwipeBackLayout(_mActivity);
-        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        mSwipeBackLayout.setLayoutParams(params);
-        mSwipeBackLayout.setBackgroundColor(Color.TRANSPARENT);
+    public void setEnableSwipeBack(boolean enableSwipeBack) {
+        this.enableSwipeBack = enableSwipeBack;
     }
 
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        if (enableSwipeBack && hidden && mSwipeBackLayout != null) {
-            mSwipeBackLayout.hiddenFragment();
-        }
-    }
+    public abstract int getLayoutId();
 
     @Override
     protected void initFragmentBackground(View view) {
@@ -103,9 +132,16 @@ public abstract class BaseFragment extends SupportFragment {
         }
     }
 
-    public void setEnableSwipeBack(boolean enableSwipeBack) {
-        this.enableSwipeBack = enableSwipeBack;
+    private void onFragmentCreate() {
+        mSwipeBackLayout = new SwipeBackLayout(_mActivity);
+        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        mSwipeBackLayout.setLayoutParams(params);
+        mSwipeBackLayout.setBackgroundColor(Color.TRANSPARENT);
     }
 
-    public abstract int getLayoutId();
+    public interface OnLockDrawLayoutListener {
+
+        void onLockDrawLayout(boolean lock);
+    }
 }

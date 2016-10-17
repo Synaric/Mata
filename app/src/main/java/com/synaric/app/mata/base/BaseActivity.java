@@ -9,8 +9,15 @@ import com.synaric.common.utils.StatusBarUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.List;
+
 import butterknife.ButterKnife;
+import me.yokeyword.fragmentation.Fragmentation;
 import me.yokeyword.fragmentation.SupportActivity;
+import me.yokeyword.fragmentation.debug.DebugFragmentRecord;
 
 /**
  * 所有Activity的基类。
@@ -19,6 +26,12 @@ import me.yokeyword.fragmentation.SupportActivity;
 public abstract class BaseActivity extends SupportActivity{
 
     private boolean enableTransitAnim;
+
+    private Class<?> myClass = getClass();
+
+    private Method getFragmentRecords;
+
+    private Fragmentation fragmentation;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,7 +50,34 @@ public abstract class BaseActivity extends SupportActivity{
     }
 
     protected void onCreate() {
+        //预加载可能用到的反射
+        fragmentation = getSuperFragmentation();
+        if (fragmentation != null) {
+            initFragmentationReflect();
+        }
+    }
 
+    protected Fragmentation getSuperFragmentation() {
+        try {
+            Field mFragmentation = myClass.getDeclaredField("mFragmentation");
+            return (Fragmentation) mFragmentation.get(this);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    @SuppressWarnings("unchecked")
+    protected List<DebugFragmentRecord> getFragmentRecords() {
+        if(getFragmentRecords == null || fragmentation == null) return null;
+        try {
+            return (List<DebugFragmentRecord>) getFragmentRecords.invoke(fragmentation);
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     /**
@@ -57,4 +97,13 @@ public abstract class BaseActivity extends SupportActivity{
     }
 
     public abstract int getLayoutId();
+
+    private void initFragmentationReflect() {
+        Class<?> fragClass = Fragmentation.class;
+        try {
+            getFragmentRecords = fragClass.getDeclaredMethod("getFragmentRecords");
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -25,6 +25,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 app:content="@+id/ll_player_main"
+                android:splitMotionEvents="false"
                 app:handle="@+id/view_bar"
                 app:handleWidthOffset="88dp">
 
