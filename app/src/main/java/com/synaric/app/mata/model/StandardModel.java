@@ -1,14 +1,10 @@
-package com.synaric.app.mata.service;
+package com.synaric.app.mata.model;
 
 import com.synaric.app.mata.BuildConfig;
 
 import java.util.Map;
 
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.POST;
-import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 import rx.Observable;
 

@@ -25,22 +25,24 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <!-- 播放器服务 -->
+
         <activity android:name=".module.main.root.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".module.experimental.ECaptureActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="landscape"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
+        android:name=".module.experimental.ECaptureActivity"
+        android:configChanges="keyboardHidden|orientation|screenSize"
+        android:screenOrientation="landscape"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
         <activity
-            android:name=".module.experimental.TestActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="landscape" />
+        android:name=".module.experimental.TestActivity"
+        android:configChanges="keyboardHidden|orientation|screenSize"
+        android:screenOrientation="landscape" />
     </application>
 
 </manifest>

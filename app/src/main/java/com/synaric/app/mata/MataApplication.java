@@ -1,7 +1,7 @@
 package com.synaric.app.mata;
 
 import com.synaric.common.BaseApplication;
-import com.synaric.app.mata.service.StandardModel;
+import com.synaric.app.mata.model.StandardModel;
 
 /**
  * 初始化与生命周期监听。

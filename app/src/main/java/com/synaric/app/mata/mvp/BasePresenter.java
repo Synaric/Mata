@@ -3,7 +3,7 @@ package com.synaric.app.mata.mvp;
 import com.google.gson.Gson;
 import com.synaric.app.mata.base.ApiCallback;
 import com.synaric.app.mata.base.SubscriberCallback;
-import com.synaric.app.mata.service.StandardModel;
+import com.synaric.app.mata.model.StandardModel;
 import com.synaric.common.CommonUtilsConfiguration;
 import com.synaric.mvp.Presenter;
 import com.synaric.mvp.View;
