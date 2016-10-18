@@ -58,23 +58,22 @@ public class PlayerService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         if(intent == null) return;
 
-        Logger.d(this);
-//        String action = intent.getAction();
-//        if(ACTION_INIT.equals(action)) {
-//            handleInit();
-//            return;
-//        }
-//
-//        if(!INITIALIZED) {
-//            Logger.e("MediaPlayer hasn't initialized.");
-//            return;
-//        }
-//
-//        switch (action) {
-//            case ACTION_PLAY:
-//                handlePlay(intent);
-//                break;
-//        }
+        String action = intent.getAction();
+        if(ACTION_INIT.equals(action)) {
+            handleInit();
+            return;
+        }
+
+        if(!INITIALIZED) {
+            Logger.e("MediaPlayer hasn't initialized.");
+            return;
+        }
+
+        switch (action) {
+            case ACTION_PLAY:
+                handlePlay(intent);
+                break;
+        }
     }
 
     private void handleInit() {

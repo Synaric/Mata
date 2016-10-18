@@ -3,13 +3,14 @@ package com.synaric.app.mata.module.main.root;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
-import android.widget.ImageView;
 
 import com.orhanobut.logger.Logger;
 import com.synaric.app.mata.R;
 import com.synaric.app.mata.base.BaseFragment;
 import com.synaric.app.mata.base.MvpActivity;
 import com.synaric.app.mata.event.RequestToggleDrawer;
+import com.synaric.app.mata.widget.PlayerBar;
+import com.synaric.app.mata.widget.PlayerLayout;
 import com.synaric.app.player.PlayerService;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -27,12 +28,10 @@ public class MainActivity extends MvpActivity<MainPresenter> implements MainView
 
     @InjectView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
-    @InjectView(R.id.iv_play)
-    ImageView ivPlay;
-    @InjectView(R.id.iv_next)
-    ImageView ivNext;
-    @InjectView(R.id.iv_cover_large)
-    ImageView ivCoverLarge;
+    @InjectView(R.id.player_bar)
+    PlayerBar playerBar;
+    @InjectView(R.id.player_layout)
+    PlayerLayout playerLayout;
 
     @Override
     public int getLayoutId() {
@@ -44,6 +43,8 @@ public class MainActivity extends MvpActivity<MainPresenter> implements MainView
         super.onCreate();
         //采用单Activity + 多Fragment的模式
         loadRootFragment(R.id.fl_container, HomeFragment.newInstance());
+        //同步底部播放条和上拉播放器
+        playerBar.syncState(playerLayout);
     }
 
     @Override

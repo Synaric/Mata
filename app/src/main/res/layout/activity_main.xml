@@ -20,7 +20,8 @@
                 android:layout_height="match_parent"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-            <com.synaric.app.widget.SlideUpLayout
+            <com.synaric.app.mata.widget.PlayerLayout
+                android:id="@+id/player_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
@@ -37,9 +38,10 @@
                     android:layout_height="@dimen/ic_60dp"
                     android:background="@color/transparent"/>
 
-            </com.synaric.app.widget.SlideUpLayout>
+            </com.synaric.app.mata.widget.PlayerLayout>
 
-            <com.synaric.app.mata.widget.PlayerLayout
+            <com.synaric.app.mata.widget.PlayerBar
+                android:id="@+id/player_bar"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/player_height"
                 android:layout_alignParentBottom="true"/>
