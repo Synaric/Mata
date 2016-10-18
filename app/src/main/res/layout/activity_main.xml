@@ -27,7 +27,7 @@
                 app:content="@+id/ll_player_main"
                 android:splitMotionEvents="false"
                 app:handle="@+id/view_bar"
-                app:handleWidthOffset="88dp">
+                app:handleWidthOffset="@dimen/handleWidthOffset">
 
                 <include layout="@layout/player_behind" />
 
@@ -38,6 +38,11 @@
                     android:background="@color/transparent"/>
 
             </com.synaric.app.widget.SlideUpLayout>
+
+            <com.synaric.app.mata.widget.PlayerLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/player_height"
+                android:layout_alignParentBottom="true"/>
 
         </RelativeLayout>
 

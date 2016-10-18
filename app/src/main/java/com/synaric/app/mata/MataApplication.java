@@ -1,5 +1,6 @@
 package com.synaric.app.mata;
 
+import com.synaric.app.player.PlayerService;
 import com.synaric.common.BaseApplication;
 import com.synaric.app.mata.model.StandardModel;
 
@@ -8,6 +9,13 @@ import com.synaric.app.mata.model.StandardModel;
  * <br/><br/>Created by Synaric on 2016/9/28 0028.
  */
 public class MataApplication extends BaseApplication {
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        //初始化播放器
+        PlayerService.actionInit(getApplicationContext());
+    }
 
     @Override
     protected String getBaseUrl() {

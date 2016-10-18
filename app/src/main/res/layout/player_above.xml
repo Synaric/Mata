@@ -2,12 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/ll_player_bar"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
+    android:layout_height="@dimen/player_height"
     android:background="@color/backgroundDark"
     android:gravity="center_vertical"
     android:orientation="horizontal">
 
     <LinearLayout
+        android:id="@+id/view_bar"
         android:layout_weight="1"
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -43,12 +44,12 @@
 
     <ImageView
         android:id="@+id/iv_play"
-        style="@style/ic_24dp_no_padding"
+        style="@style/ic_36x60dp_p6x18"
         android:src="@drawable/player_btn_radio_play_press" />
 
     <ImageView
         android:id="@+id/iv_next"
-        style="@style/ic_24dp_no_padding"
+        style="@style/ic_36x60dp_p6x18"
         android:layout_marginStart="@dimen/player_bar_margin"
         android:layout_marginEnd="@dimen/player_bar_margin"
         android:src="@drawable/player_btn_next_select" />

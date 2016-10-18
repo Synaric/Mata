@@ -194,6 +194,7 @@ public class SlideUpLayout extends ViewGroup {
             throw new IllegalArgumentException("The content attribute is must refer to an"
                     + " existing child.");
         }
+
         //mContent.setVisibility(View.GONE);
     }
 
@@ -237,8 +238,6 @@ public class SlideUpLayout extends ViewGroup {
         final View handle = mHandle;
         final boolean isVertical = mVertical;
 
-        drawChild(canvas, handle, drawingTime);
-
         if (mTracking || mAnimating || !mExpanded) {
             final Bitmap cache = mContent.getDrawingCache();
             if (cache != null) {
@@ -257,6 +256,8 @@ public class SlideUpLayout extends ViewGroup {
         } else {
             drawChild(canvas, mContent, drawingTime);
         }
+
+        drawChild(canvas, handle, drawingTime);
     }
 
     @Override
@@ -284,9 +285,12 @@ public class SlideUpLayout extends ViewGroup {
         final View content = mContent;
 
         if (mVertical) {
-            childLeft = (width - childWidth) / 2;
+            //handle居左
+            //childLeft = (width - childWidth) / 2;
+            childLeft = 0;
             childTop = mExpanded ? mTopOffset : height - childHeight + mBottomOffset;
 
+            //使content的top位置和handle对齐
 //            content.layout(0, mTopOffset + childHeight, content.getMeasuredWidth(),
 //                    mTopOffset + childHeight + content.getMeasuredHeight());
             content.layout(0, mTopOffset, content.getMeasuredWidth(),

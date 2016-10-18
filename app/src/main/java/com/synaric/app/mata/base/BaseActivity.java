@@ -60,6 +60,7 @@ public abstract class BaseActivity extends SupportActivity{
     protected Fragmentation getSuperFragmentation() {
         try {
             Field mFragmentation = myClass.getDeclaredField("mFragmentation");
+            mFragmentation.setAccessible(true);
             return (Fragmentation) mFragmentation.get(this);
         } catch (NoSuchFieldException | IllegalAccessException e) {
             e.printStackTrace();

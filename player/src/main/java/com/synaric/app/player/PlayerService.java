@@ -4,8 +4,12 @@ import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.net.Uri;
+import android.text.TextUtils;
 
 import com.orhanobut.logger.Logger;
+
+import java.io.IOException;
 
 /**
  * 播放器服务。
@@ -54,22 +58,23 @@ public class PlayerService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         if(intent == null) return;
 
-        String action = intent.getAction();
-        if(ACTION_INIT.equals(action)) {
-            handleInit();
-            return;
-        }
-
-        if(!INITIALIZED) {
-            Logger.e("MediaPlayer hasn't initialized.");
-            return;
-        }
-
-        switch (action) {
-            case ACTION_PLAY:
-                handlePlay(intent);
-                break;
-        }
+        Logger.d(this);
+//        String action = intent.getAction();
+//        if(ACTION_INIT.equals(action)) {
+//            handleInit();
+//            return;
+//        }
+//
+//        if(!INITIALIZED) {
+//            Logger.e("MediaPlayer hasn't initialized.");
+//            return;
+//        }
+//
+//        switch (action) {
+//            case ACTION_PLAY:
+//                handlePlay(intent);
+//                break;
+//        }
     }
 
     private void handleInit() {
@@ -85,6 +90,25 @@ public class PlayerService extends IntentService {
 
     private void handlePlay(Intent intent) {
         final String url = intent.getStringExtra(EXTRA_URL);
+        if(TextUtils.isEmpty(url)) {
+            Logger.e("Unsupported url: " + url);
+            return;
+        }
 
+        Uri uri = Uri.parse(url);
+        try {
+
+            mediaPlayer.setDataSource(getApplicationContext(), uri);
+            mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mp) {
+                    mediaPlayer.start();
+                }
+            });
+            mediaPlayer.prepareAsync();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

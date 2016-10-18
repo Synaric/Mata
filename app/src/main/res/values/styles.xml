@@ -28,6 +28,15 @@
         <item name="android:layout_height">@dimen/ic_24dp</item>
     </style>
 
+    <style name="ic_36x60dp_p6x18">
+        <item name="android:layout_width">@dimen/ic_36dp</item>
+        <item name="android:layout_height">@dimen/ic_60dp</item>
+        <item name="android:paddingLeft">@dimen/ic_36dp_padding</item>
+        <item name="android:paddingRight">@dimen/ic_36dp_padding</item>
+        <item name="android:paddingTop">@dimen/ic_60dp_padding</item>
+        <item name="android:paddingBottom">@dimen/ic_60dp_padding</item>
+    </style>
+
     <style name="ic_48dp_no_padding">
         <item name="android:layout_width">@dimen/ic_48dp</item>
         <item name="android:layout_height">@dimen/ic_48dp</item>
