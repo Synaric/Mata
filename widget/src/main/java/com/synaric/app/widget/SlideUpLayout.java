@@ -195,7 +195,7 @@ public class SlideUpLayout extends ViewGroup {
                     + " existing child.");
         }
 
-        //mContent.setVisibility(View.GONE);
+        mContent.setVisibility(View.GONE);
     }
 
     @Override
@@ -619,7 +619,7 @@ public class SlideUpLayout extends ViewGroup {
         content.getViewTreeObserver().dispatchOnPreDraw();
         if (!content.isHardwareAccelerated()) content.buildDrawingCache();
 
-        //content.setVisibility(View.GONE);
+        content.setVisibility(View.GONE);
     }
 
     private void stopTracking() {
@@ -781,8 +781,8 @@ public class SlideUpLayout extends ViewGroup {
 
     private void closeDrawer() {
         moveHandle(COLLAPSED_FULL_CLOSED);
-        //mContent.setVisibility(View.GONE);
-        //mContent.destroyDrawingCache();
+        mContent.setVisibility(View.GONE);
+        mContent.destroyDrawingCache();
 
         if (!mExpanded) {
             return;
@@ -796,7 +796,7 @@ public class SlideUpLayout extends ViewGroup {
 
     private void openDrawer() {
         moveHandle(EXPANDED_FULL_OPEN);
-        //mContent.setVisibility(View.VISIBLE);
+        mContent.setVisibility(View.VISIBLE);
 
         if (mExpanded) {
             return;

@@ -7,9 +7,15 @@ import com.flyco.tablayout.SlidingTabLayout;
 import com.synaric.app.mata.R;
 import com.synaric.app.mata.adapter.HomeAdapter;
 import com.synaric.app.mata.base.BaseFragment;
+import com.synaric.app.mata.event.RequestStartFragment;
 import com.synaric.app.mata.event.RequestToggleDrawer;
+import com.synaric.app.mata.module.local.LocalAudioFragment;
 
+import org.greenrobot.eventbus.Subscribe;
+
+import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.yokeyword.fragmentation.SupportActivity;
 import me.yokeyword.fragmentation.SupportFragment;
@@ -52,5 +58,22 @@ public class HomeFragment extends BaseFragment {
         slidingTabs.setViewPager(viewPager);
 
         civHeadPortrait.setOnClickListener(v -> eventBus.post(RequestToggleDrawer.get()));
+    }
+
+    @Subscribe
+    @Override
+    public void onEvent(RequestStartFragment event) {
+        super.onEvent(event);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.reset(this);
+    }
+
+    @OnClick(R.id.iv_find)
+    public void onClick() {
+        start(LocalAudioFragment.newInstance());
     }
 }

@@ -9,6 +9,7 @@ import com.synaric.app.mata.R;
 import com.synaric.app.mata.base.BaseFragment;
 import com.synaric.app.mata.base.MvpActivity;
 import com.synaric.app.mata.event.RequestToggleDrawer;
+import com.synaric.app.mata.module.local.LocalAudioFragment;
 import com.synaric.app.mata.widget.PlayerBar;
 import com.synaric.app.mata.widget.PlayerLayout;
 import com.synaric.app.player.PlayerService;
@@ -19,6 +20,8 @@ import java.util.List;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
+import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
+import me.yokeyword.fragmentation.anim.FragmentAnimator;
 import me.yokeyword.fragmentation.debug.DebugFragmentRecord;
 
 /**
@@ -98,6 +101,11 @@ public class MainActivity extends MvpActivity<MainPresenter> implements MainView
              */
             drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
         }
+    }
+
+    @Override
+    protected FragmentAnimator onCreateFragmentAnimator() {
+        return new DefaultHorizontalAnimator();
     }
 
     @OnClick({R.id.iv_play, R.id.iv_next, R.id.iv_cover_large})

@@ -5,14 +5,20 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.synaric.app.mata.R;
+import com.synaric.app.mata.event.NetworkStateChanged;
+import com.synaric.app.mata.event.RequestStartFragment;
 import com.synaric.app.mata.widget.SwipeBackLayout;
-import com.synaric.app.widget.ViewUtil;
+import com.synaric.app.widget.ViewUtils;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.ButterKnife;
 import me.yokeyword.fragmentation.SupportFragment;
@@ -31,7 +37,13 @@ public abstract class BaseFragment extends SupportFragment {
 
     protected final EventBus eventBus = EventBus.getDefault();
 
-    private SwipeBackLayout mSwipeBackLayout;
+    protected BaseActivity activity;
+
+    protected SwipeBackLayout mSwipeBackLayout;
+
+    protected Toolbar toolbar;
+
+    private boolean enableToolBar;
 
     private OnLockDrawLayoutListener lockDrawLayoutListener;
 
@@ -46,6 +58,7 @@ public abstract class BaseFragment extends SupportFragment {
         if (enableSwipeBack && context instanceof OnLockDrawLayoutListener) {
             lockDrawLayoutListener = (OnLockDrawLayoutListener) context;
         }
+        activity = (BaseActivity) context;
     }
 
     @Override
@@ -61,16 +74,19 @@ public abstract class BaseFragment extends SupportFragment {
         int layoutId = getLayoutId();
         View root;
         if(layoutId <= 0) {
-            root = ViewUtil.createDescriptionView(getContext(), getClass().getSimpleName());
+            root = ViewUtils.createDescriptionView(getContext(), getClass().getSimpleName());
         } else {
             root = inflater.inflate(layoutId, container, false);
         }
         ButterKnife.inject(this, root);
+        eventBus.register(this);
         onCreateView(root);
         if(enableSwipeBack) {
             if(lockDrawLayoutListener != null) lockDrawLayoutListener.onLockDrawLayout(true);
             attachToSwipeBack(root);
         }
+
+        initToolBar(root);
         return root;
     }
 
@@ -78,11 +94,28 @@ public abstract class BaseFragment extends SupportFragment {
 
     protected void onCreateView(View root) {}
 
+    protected void initToolBar(View root) {
+        toolbar = (Toolbar) root.findViewById(R.id.toolbar);
+        if(toolbar == null) {
+            enableToolBar = false;
+            return;
+        }
+        toolbar.setTitle(R.string.app_name);
+        activity.setSupportActionBar(toolbar);
+
+        ActionBar actionBar = activity.getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayUseLogoEnabled(false);
+            actionBar.setDisplayShowTitleEnabled(true);
+        }
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.reset(this);
-
+        eventBus.unregister(this);
         if(enableSwipeBack && lockDrawLayoutListener != null)
             lockDrawLayoutListener.onLockDrawLayout(false);
     }
@@ -91,6 +124,7 @@ public abstract class BaseFragment extends SupportFragment {
     public void onDetach() {
         super.onDetach();
         lockDrawLayoutListener = null;
+        activity = null;
     }
 
     @Override
@@ -132,12 +166,40 @@ public abstract class BaseFragment extends SupportFragment {
         }
     }
 
+    public void startFragment(BaseFragment fragment) {
+        startFragment(fragment, SupportFragment.STANDARD);
+    }
+
+    public void startFragment(BaseFragment fragment, int launchMode) {
+        BaseFragment parent = (BaseFragment) getParentFragment();
+        if(parent == null) {
+            start(fragment, launchMode);
+        } else {
+            parent.startFragment(fragment, launchMode);
+        }
+    }
+
+    public void syncStartFragment(Class<? extends BaseFragment> from, BaseFragment to, int launchMode) {
+        eventBus.post(new RequestStartFragment(from, to, launchMode));
+    }
+
     private void onFragmentCreate() {
         mSwipeBackLayout = new SwipeBackLayout(_mActivity);
         ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         mSwipeBackLayout.setLayoutParams(params);
         mSwipeBackLayout.setBackgroundColor(Color.TRANSPARENT);
+    }
+
+    public void onEvent(RequestStartFragment event) {
+        Class<?> from = event.from;
+        if(from == null || !(getClass() == from)) return;
+        start(event.to, event.launchMode);
+    }
+
+    @Subscribe
+    public void onEvent(NetworkStateChanged event) {
+
     }
 
     public interface OnLockDrawLayoutListener {

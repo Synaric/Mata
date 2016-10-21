@@ -10,7 +10,7 @@ import android.widget.TextView;
 /**
  * <br/><br/>Created by Synaric on 2016/10/9 0009.
  */
-public class ViewUtil {
+public class ViewUtils {
 
     /**
      * 获取屏幕宽高。

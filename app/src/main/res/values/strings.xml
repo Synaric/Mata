@@ -20,4 +20,5 @@
     <string name="main_find_collection">听大虾们的精选集</string>
     <string name="no_title">无标题</string>
     <string name="unknown">未知</string>
+    <string name="local_title">本地歌曲</string>
 </resources>
