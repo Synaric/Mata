@@ -80,12 +80,11 @@ public abstract class BaseFragment extends SupportFragment {
         }
         ButterKnife.inject(this, root);
         eventBus.register(this);
-        onCreateView(root);
         if(enableSwipeBack) {
             if(lockDrawLayoutListener != null) lockDrawLayoutListener.onLockDrawLayout(true);
-            attachToSwipeBack(root);
+            root = attachToSwipeBack(root);
         }
-
+        onCreateView(root);
         initToolBar(root);
         return root;
     }

@@ -27,6 +27,6 @@ public class LocalAudioFragment extends BaseFragment {
     protected void initToolBar(View root) {
         super.initToolBar(root);
 
-        toolbar.setTitle(R.string.local_title);
+        //toolbar.setTitle(R.string.local_title);
     }
 }
