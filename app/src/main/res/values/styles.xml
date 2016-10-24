@@ -23,6 +23,10 @@
         <item name="android:layout_marginBottom">@dimen/common_item_margin_bottom</item>
     </style>
 
+    <style name="common_item_no_margin" parent="common_item">
+        <item name="android:layout_marginBottom">0dp</item>
+    </style>
+
     <style name="ic_24dp_no_padding">
         <item name="android:layout_width">@dimen/ic_24dp</item>
         <item name="android:layout_height">@dimen/ic_24dp</item>
@@ -77,7 +81,7 @@
         <item name="android:layout_marginTop">20dp</item>
         <item name="android:paddingLeft">35dp</item>
         <item name="android:paddingRight">35dp</item>
-        <item name="android:background">@drawable/bg_white_border</item>
+        <item name="android:background">@drawable/bg_orange_border</item>
     </style>
 
     <style name="divider">

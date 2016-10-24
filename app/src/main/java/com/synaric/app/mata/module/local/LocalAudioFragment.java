@@ -1,12 +1,9 @@
 package com.synaric.app.mata.module.local;
 
-import android.os.Bundle;
 import android.view.View;
 
 import com.synaric.app.mata.R;
 import com.synaric.app.mata.base.BaseFragment;
-
-import me.yokeyword.fragmentation.anim.FragmentAnimator;
 
 /**
  * 本地歌曲界面。
@@ -20,13 +17,13 @@ public class LocalAudioFragment extends BaseFragment {
 
     @Override
     public int getLayoutId() {
-        return 0;
+        return R.layout.frag_local_audio;
     }
 
     @Override
     protected void initToolBar(View root) {
         super.initToolBar(root);
 
-        //toolbar.setTitle(R.string.local_title);
+        toolbar.setTitle(R.string.local_title);
     }
 }

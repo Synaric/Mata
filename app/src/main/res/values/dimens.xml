@@ -7,6 +7,8 @@
     <dimen name="navigation_max_width">300dp</dimen>
     <dimen name="default_general_margin">16dp</dimen>
     <dimen name="tab_height">48dp</dimen>
+    <dimen name="tab_indicator_height">1dp</dimen>
+
     <dimen name="ic_48dp_padding_small">5dp</dimen>
     <dimen name="ic_48dp_padding">10dp</dimen>
     <dimen name="ic_36dp_padding">6dp</dimen>
@@ -21,4 +23,5 @@
     <dimen name="player_bar_margin">20dp</dimen>
     <dimen name="player_height">60dp</dimen>
     <dimen name="handleWidthOffset">112dp</dimen>
+    <dimen name="drawable_left_padding">5dp</dimen>
 </resources>

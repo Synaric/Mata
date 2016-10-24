@@ -9,7 +9,6 @@ import com.synaric.app.mata.R;
 import com.synaric.app.mata.base.BaseFragment;
 import com.synaric.app.mata.base.MvpActivity;
 import com.synaric.app.mata.event.RequestToggleDrawer;
-import com.synaric.app.mata.module.local.LocalAudioFragment;
 import com.synaric.app.mata.widget.PlayerBar;
 import com.synaric.app.mata.widget.PlayerLayout;
 import com.synaric.app.player.PlayerService;

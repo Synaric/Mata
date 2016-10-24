@@ -1,8 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <include layout="@layout/toolbar" />
+
+    <com.flyco.tablayout.SlidingTabLayout
+        android:id="@+id/sliding_tabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="@dimen/app_bar_toolbar"
+        app:tl_tab_space_equal="true"
+        app:tl_textUnselectColor="@color/black"
+        app:tl_textSelectColor="@color/colorAccent"
+        app:tl_indicator_color="@color/colorAccent"
+        app:tl_indicator_height="@dimen/tab_indicator_height"
+        tools:targetApi="lollipop" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        style="@style/common_item_no_margin">
+
+        <TextView
+            android:id="@+id/tv_random_play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/local_random_play"
+            android:gravity="center_vertical"
+            android:drawableStart="@drawable/list_btn_orange_randomplay"
+            android:drawablePadding="@dimen/drawable_left_padding"
+            android:background="@drawable/bg_black_border"
+            android:padding="8dp"
+            style="@style/text_13_pri"/>
+
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="0首"
+            style="@style/text_12_sec"
+            android:layout_marginLeft="15dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="@string/local_manage"
+            style="@style/text_13_pri"/>
+
+    </LinearLayout>
+
+    <View style="@style/divider" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"/>
+
 </LinearLayout>
