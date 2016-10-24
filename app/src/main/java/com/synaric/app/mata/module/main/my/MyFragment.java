@@ -1,16 +1,12 @@
 package com.synaric.app.mata.module.main.my;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.synaric.app.mata.R;
 import com.synaric.app.mata.base.BaseFragment;
 import com.synaric.app.mata.module.local.LocalAudioFragment;
 import com.synaric.app.mata.module.main.root.HomeFragment;
 
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.yokeyword.fragmentation.SupportFragment;
 
@@ -61,7 +57,7 @@ public class MyFragment extends BaseFragment implements MyView<String> {
 
         switch (id) {
             case R.id.ll_local_audio:
-                syncStartFragment(HomeFragment.class, LocalAudioFragment.newInstance(), SupportFragment.STANDARD);
+                postStartFragment(HomeFragment.class, LocalAudioFragment.newInstance(), SupportFragment.STANDARD);
                 break;
         }
     }

@@ -7,6 +7,8 @@ import com.flyco.tablayout.SlidingTabLayout;
 import com.synaric.app.mata.R;
 import com.synaric.app.mata.adapter.HomeAdapter;
 import com.synaric.app.mata.base.BaseFragment;
+import com.synaric.app.mata.event.NetworkStateChanged;
+import com.synaric.app.mata.event.RequestFinish;
 import com.synaric.app.mata.event.RequestStartFragment;
 import com.synaric.app.mata.event.RequestToggleDrawer;
 import com.synaric.app.mata.module.local.LocalAudioFragment;
@@ -63,6 +65,12 @@ public class HomeFragment extends BaseFragment {
     @Subscribe
     @Override
     public void onEvent(RequestStartFragment event) {
+        super.onEvent(event);
+    }
+
+    @Subscribe
+    @Override
+    public void onEvent(RequestFinish event) {
         super.onEvent(event);
     }
 

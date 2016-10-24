@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.synaric.app.mata.R;
 import com.synaric.app.mata.event.NetworkStateChanged;
+import com.synaric.app.mata.event.RequestFinish;
 import com.synaric.app.mata.event.RequestStartFragment;
 import com.synaric.app.mata.widget.SwipeBackLayout;
 import com.synaric.app.widget.ViewUtils;
@@ -103,6 +104,9 @@ public abstract class BaseFragment extends SupportFragment {
             actionBar.setDisplayUseLogoEnabled(false);
             actionBar.setDisplayShowTitleEnabled(true);
         }
+
+        //必须在setSupportActionBar之后设置
+        toolbar.setNavigationOnClickListener(v -> postBackPressed());
     }
 
     @Override
@@ -177,7 +181,7 @@ public abstract class BaseFragment extends SupportFragment {
      * 以SingleTask模式启动Fragment。
      * @param from 当前Fragment。
      * @param to 目标Fragment。
-     * @param post 是否使用异步请求。参考{@link #syncStartFragment(Class, BaseFragment, int)}。
+     * @param post 是否使用异步请求。参考{@link #postStartFragment(Class, BaseFragment, int)}。
      */
     public void startFragmentSingleTask(
             Class<? extends BaseFragment> from,
@@ -191,7 +195,7 @@ public abstract class BaseFragment extends SupportFragment {
                     if (post) {
                         start(to.newInstance());
                     } else {
-                        syncStartFragment(from, to.newInstance(), SupportFragment.STANDARD);
+                        postStartFragment(from, to.newInstance(), SupportFragment.STANDARD);
                     }
                 } catch (java.lang.InstantiationException | IllegalAccessException e) {
                     e.printStackTrace();
@@ -202,7 +206,7 @@ public abstract class BaseFragment extends SupportFragment {
             if (post) {
                 start(fragment, SupportFragment.SINGLETASK);
             } else {
-                syncStartFragment(from, fragment, SupportFragment.STANDARD);
+                postStartFragment(from, fragment, SupportFragment.STANDARD);
             }
         }
     }
@@ -217,8 +221,12 @@ public abstract class BaseFragment extends SupportFragment {
      * @param to 目标Fragment。
      * @param launchMode 启动模式。
      */
-    public void syncStartFragment(Class<? extends BaseFragment> from, BaseFragment to, int launchMode) {
+    public void postStartFragment(Class<? extends BaseFragment> from, BaseFragment to, int launchMode) {
         eventBus.post(new RequestStartFragment(from, to, launchMode));
+    }
+
+    public void postBackPressed() {
+        eventBus.post(new RequestFinish());
     }
 
     private void onFragmentCreate() {
@@ -229,13 +237,26 @@ public abstract class BaseFragment extends SupportFragment {
         mSwipeBackLayout.setBackgroundColor(Color.TRANSPARENT);
     }
 
+    /**
+     * 根Fragment需要覆写本方法并监听事件（加上{@link Subscribe}注解）。
+     */
     public void onEvent(RequestStartFragment event) {
         Class<?> from = event.from;
         if(from == null || !(getClass() == from)) return;
         start(event.to, event.launchMode);
     }
 
-    @Subscribe
+    /**
+     * 根Fragment需要覆写本方法并监听事件（加上{@link Subscribe}注解）。
+     */
+    @SuppressWarnings("deprecation")
+    public void onEvent(RequestFinish event) {
+        activity.onBackPressed();
+    }
+
+    /**
+     * 子Fragment如要监听网络情况，需覆写本方法并监听事件（加上{@link Subscribe}注解）。
+     */
     public void onEvent(NetworkStateChanged event) {
 
     }
