@@ -7,13 +7,21 @@
         <item>@string/tab_find</item>
     </string-array>
 
+    <string-array name="local_tabs">
+        <item>@string/local_audio</item>
+        <item>@string/local_artist</item>
+        <item>@string/local_album</item>
+        <item>@string/local_compilation</item>
+        <item>@string/local_folder</item>
+    </string-array>
+
     <string name="tab_me">我的</string>
     <string name="tab_music_room">音乐馆</string>
     <string name="tab_find">发现</string>
     <string name="main_local_music">本地歌曲</string>
     <string name="main_favour">收藏</string>
     <string name="main_artist">关注的艺人</string>
-    <string name="main_rss">订阅的精选集</string>
+    <string name="main_compilation">订阅的精选集</string>
     <string name="main_hint_rss1">把私房音乐收录到精选集</string>
     <string name="main_hint_rss2">在虾米音乐快乐地聆听和分享</string>
     <string name="main_first_collection">制作第一张精选集</string>
@@ -23,4 +31,9 @@
     <string name="local_title">本地歌曲</string>
     <string name="local_random_play">随机播放</string>
     <string name="local_manage">批量管理</string>
+    <string name="local_audio">歌曲</string>
+    <string name="local_artist">艺人</string>
+    <string name="local_album">专辑</string>
+    <string name="local_compilation">精选集</string>
+    <string name="local_folder">文件夹</string>
 </resources>

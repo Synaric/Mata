@@ -4,7 +4,7 @@ import android.view.View;
 
 import com.synaric.app.mata.R;
 import com.synaric.app.mata.base.BaseFragment;
-import com.synaric.app.mata.module.local.LocalAudioFragment;
+import com.synaric.app.mata.module.local.LocalAudiosFragment;
 import com.synaric.app.mata.module.main.root.HomeFragment;
 
 import butterknife.OnClick;
@@ -57,7 +57,7 @@ public class MyFragment extends BaseFragment implements MyView<String> {
 
         switch (id) {
             case R.id.ll_local_audio:
-                postStartFragment(HomeFragment.class, LocalAudioFragment.newInstance(), SupportFragment.STANDARD);
+                postStartFragment(HomeFragment.class, LocalAudiosFragment.newInstance(), SupportFragment.STANDARD);
                 break;
         }
     }

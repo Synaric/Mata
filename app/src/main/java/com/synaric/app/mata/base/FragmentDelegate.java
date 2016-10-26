@@ -39,7 +39,7 @@ public class FragmentDelegate {
         View root;
 
         if(layoutId <= 0) {
-            root = ViewUtils.createDescriptionView(wrapper.getContext(), getClass().getSimpleName());
+            root = ViewUtils.createDescriptionView(wrapper.getContext(), wrapper.getClass().getSimpleName());
         } else {
             root = inflater.inflate(layoutId, container, false);
         }

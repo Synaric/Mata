@@ -11,11 +11,10 @@ import com.synaric.app.mata.base.BaseFragment;
 import com.synaric.app.mata.event.RequestFinish;
 import com.synaric.app.mata.event.RequestStartFragment;
 import com.synaric.app.mata.event.RequestToggleDrawer;
-import com.synaric.app.mata.module.local.LocalAudioFragment;
+import com.synaric.app.mata.module.local.LocalAudiosFragment;
 
 import org.greenrobot.eventbus.Subscribe;
 
-import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -81,14 +80,8 @@ public class HomeFragment extends BaseFragment {
         super.onEvent(event);
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.reset(this);
-    }
-
     @OnClick(R.id.iv_find)
     public void onClick() {
-        start(LocalAudioFragment.newInstance());
+        start(LocalAudiosFragment.newInstance());
     }
 }

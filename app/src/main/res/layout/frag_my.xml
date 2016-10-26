@@ -120,7 +120,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             style="@style/text_13_pri"
-            android:text="@string/main_rss"/>
+            android:text="@string/main_compilation"/>
 
         <ImageView
             android:layout_width="wrap_content"
