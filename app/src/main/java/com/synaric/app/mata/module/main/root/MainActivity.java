@@ -6,7 +6,7 @@ import android.view.View;
 
 import com.orhanobut.logger.Logger;
 import com.synaric.app.mata.R;
-import com.synaric.app.mata.base.BaseManagedFragment;
+import com.synaric.app.mata.base.BaseFragment;
 import com.synaric.app.mata.base.MvpActivity;
 import com.synaric.app.mata.event.RequestToggleDrawer;
 import com.synaric.app.mata.event.ShowFragmentStack;
@@ -27,7 +27,7 @@ import me.yokeyword.fragmentation.debug.DebugFragmentRecord;
 /**
  * 主界面。
  */
-public class MainActivity extends MvpActivity<MainPresenter> implements MainView<String>, BaseManagedFragment.OnLockDrawLayoutListener {
+public class MainActivity extends MvpActivity<MainPresenter> implements MainView<String>, BaseFragment.OnLockDrawLayoutListener {
 
     @InjectView(R.id.drawer_layout)
     DrawerLayout drawerLayout;

@@ -29,7 +29,6 @@ public class FragmentDelegate {
     private Fragment wrapper;
 
     private EventBus eventBus = EventBus.getDefault();
-    private Toolbar toolbar;
 
     public FragmentDelegate(Context context, Fragment fragment) {
         activity = (BaseActivity) context;
@@ -60,7 +59,7 @@ public class FragmentDelegate {
     }
 
     public Toolbar initToolBar(View root) {
-        toolbar = (Toolbar) root.findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) root.findViewById(R.id.toolbar);
         if(toolbar == null) return null;
         toolbar.setTitle(R.string.app_name);
         activity.setSupportActionBar(toolbar);
@@ -80,7 +79,7 @@ public class FragmentDelegate {
     /**
      * 异步通过EventBus请求跳转新Fragment。接收端需要监听{@link RequestStartFragment}事件，并且必须
      * 为一个{@link me.yokeyword.fragmentation.SupportActivity}。这个方法区别于
-     * {@link BaseManagedFragment#startFragment(BaseManagedFragment, int)}，
+     * {@link BaseFragment#startFragment(BaseFragment, int)}，
      * 适用{@link android.app.Fragment#getParentFragment()}返回null的情况（例如：ViewPager中的
      * Fragment）。如果需要在这种Fragment内跳转新Fragment，就需要通过这个方法发送消息给顶层控制
      * {@link me.yokeyword.fragmentation.SupportActivity}。
@@ -89,7 +88,7 @@ public class FragmentDelegate {
      * @param launchMode 启动模式。
      */
     public void postStartFragment(
-            Class<? extends BaseManagedFragment> from,
+            Class<? extends BaseFragment> from,
             SupportFragment to,
             int launchMode) {
         eventBus.post(new RequestStartFragment(from, to, launchMode));

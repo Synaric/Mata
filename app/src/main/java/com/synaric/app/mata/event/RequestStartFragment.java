@@ -1,11 +1,11 @@
 package com.synaric.app.mata.event;
 
-import com.synaric.app.mata.base.BaseManagedFragment;
+import com.synaric.app.mata.base.BaseFragment;
 
 import me.yokeyword.fragmentation.SupportFragment;
 
 /**
- * 一些难以通过{@link BaseManagedFragment#startFragment(BaseManagedFragment, int)}
+ * 一些难以通过{@link BaseFragment#startFragment(BaseFragment, int)}
  * 或者{@link me.yokeyword.fragmentation.SupportFragment#start(SupportFragment, int)}来启动新
  * Fragment的情况下（例如ViewPager内的Fragment想要打开新Fragment），需要通过本事件请求。
  * {@link com.synaric.app.mata.module.main.root.HomeFragment}处理事件。
@@ -17,13 +17,13 @@ public class RequestStartFragment {
     public SupportFragment to;
     public int launchMode;
 
-    public RequestStartFragment(Class<? extends BaseManagedFragment> from, SupportFragment to, int launchMode) {
+    public RequestStartFragment(Class<? extends BaseFragment> from, SupportFragment to, int launchMode) {
         this.from = from;
         this.to = to;
         this.launchMode = launchMode;
     }
 
-    public RequestStartFragment(Class<? extends BaseManagedFragment> from, SupportFragment to) {
+    public RequestStartFragment(Class<? extends BaseFragment> from, SupportFragment to) {
         this(from, to, SupportFragment.STANDARD);
     }
 }

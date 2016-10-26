@@ -3,12 +3,11 @@ package com.synaric.app.mata.module.main.root;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
-import android.view.View;
 
 import com.flyco.tablayout.SlidingTabLayout;
 import com.synaric.app.mata.R;
 import com.synaric.app.mata.adapter.HomeAdapter;
-import com.synaric.app.mata.base.BaseManagedFragment;
+import com.synaric.app.mata.base.BaseFragment;
 import com.synaric.app.mata.event.RequestFinish;
 import com.synaric.app.mata.event.RequestStartFragment;
 import com.synaric.app.mata.event.RequestToggleDrawer;
@@ -31,7 +30,7 @@ import me.yokeyword.fragmentation.anim.FragmentAnimator;
  *
  * @see SupportActivity#loadRootFragment(int, SupportFragment)
  */
-public class HomeFragment extends BaseManagedFragment {
+public class HomeFragment extends BaseFragment {
 
     @InjectView(R.id.sliding_tabs)
     SlidingTabLayout slidingTabs;
