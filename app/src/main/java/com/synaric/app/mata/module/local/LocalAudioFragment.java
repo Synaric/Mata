@@ -3,13 +3,13 @@ package com.synaric.app.mata.module.local;
 import android.view.View;
 
 import com.synaric.app.mata.R;
-import com.synaric.app.mata.base.BaseFragment;
+import com.synaric.app.mata.base.BaseManagedFragment;
 
 /**
  * 本地歌曲界面。
  * <br/><br/>Created by Synaric on 2016/10/21 0021.
  */
-public class LocalAudioFragment extends BaseFragment {
+public class LocalAudioFragment extends BaseManagedFragment {
 
     public static LocalAudioFragment newInstance() {
         return new LocalAudioFragment();

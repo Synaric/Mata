@@ -1,12 +1,12 @@
 package com.synaric.app.mata.module.main.find;
 
-import com.synaric.app.mata.base.BaseFragment;
+import com.synaric.app.mata.base.BaseManagedFragment;
 
 /**
  * "发现"界面。
  * <br/><br/>Created by Synaric on 2016/10/11 0011.
  */
-public class FindFragment extends BaseFragment {
+public class FindFragment extends BaseManagedFragment {
 
     public static FindFragment newInstance() {
         return new FindFragment();

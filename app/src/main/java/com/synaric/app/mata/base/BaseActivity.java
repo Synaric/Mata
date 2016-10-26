@@ -36,7 +36,7 @@ public abstract class BaseActivity extends SupportActivity{
         setContentView(getLayoutId());
         ButterKnife.inject(this);
         EventBus.getDefault().register(this);
-        onCreate();
+        if(savedInstanceState == null) onCreate();
         StatusBarUtils.compat(this);
     }
 
@@ -46,6 +46,9 @@ public abstract class BaseActivity extends SupportActivity{
         EventBus.getDefault().unregister(this);
     }
 
+    /**
+     * 在{@link #onCreate(Bundle)}中调用，条件是savedInstanceState == null。
+     */
     protected void onCreate() {
         //预加载可能用到的反射
         fragmentation = (Fragmentation) ReflectUtils.getDeclaredFieldValue(this, "mFragmentation");

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.synaric.app.mata.base.BaseFragment;
+import com.synaric.app.mata.base.BaseManagedFragment;
 
 /**
  * <br/><br/>Created by Synaric on 2016/10/14 0014.
@@ -23,7 +23,7 @@ public class SwipeBackLayout extends me.yokeyword.fragmentation.SwipeBackLayout 
         super(context, attrs, defStyleAttr);
     }
 
-    public void attachToFragment(BaseFragment swipeBackFragment, View view) {
+    public void attachToFragment(BaseManagedFragment swipeBackFragment, View view) {
         addView(view);
         setFragment(swipeBackFragment, view);
     }

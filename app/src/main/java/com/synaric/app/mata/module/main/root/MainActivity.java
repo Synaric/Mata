@@ -6,9 +6,10 @@ import android.view.View;
 
 import com.orhanobut.logger.Logger;
 import com.synaric.app.mata.R;
-import com.synaric.app.mata.base.BaseFragment;
+import com.synaric.app.mata.base.BaseManagedFragment;
 import com.synaric.app.mata.base.MvpActivity;
 import com.synaric.app.mata.event.RequestToggleDrawer;
+import com.synaric.app.mata.event.ShowFragmentStack;
 import com.synaric.app.mata.widget.PlayerBar;
 import com.synaric.app.mata.widget.PlayerLayout;
 import com.synaric.app.player.PlayerService;
@@ -26,7 +27,7 @@ import me.yokeyword.fragmentation.debug.DebugFragmentRecord;
 /**
  * 主界面。
  */
-public class MainActivity extends MvpActivity<MainPresenter> implements MainView<String>, BaseFragment.OnLockDrawLayoutListener {
+public class MainActivity extends MvpActivity<MainPresenter> implements MainView<String>, BaseManagedFragment.OnLockDrawLayoutListener {
 
     @InjectView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
@@ -47,6 +48,13 @@ public class MainActivity extends MvpActivity<MainPresenter> implements MainView
         loadRootFragment(R.id.fl_container, HomeFragment.newInstance());
         //同步底部播放条和上拉播放器
         playerBar.syncState(playerLayout);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+//        start(SwipeBackSampleFragment.newInstance());
+//        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
     }
 
     @Override
@@ -82,6 +90,11 @@ public class MainActivity extends MvpActivity<MainPresenter> implements MainView
         }
     }
 
+    @Subscribe
+    public void onEvent(ShowFragmentStack event) {
+        showFragmentStackHierarchyView();
+    }
+
     /**
      * 退栈到HomeFragment的时候，允许DrawerLayout滑动，反之禁止。
      *
@@ -93,10 +106,10 @@ public class MainActivity extends MvpActivity<MainPresenter> implements MainView
             drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         } else {
             List<DebugFragmentRecord> records = getFragmentRecords();
-            if (records == null || records.size() != 2) return;
+            if (records == null || records.size() != 5) return;
             /*
                 这种情况下，onLockDrawLayout在onDestroyView中被调用。
-                此时records.size()为2，但是实际上栈顶的Fragment将要退栈。
+                此时records.size()为5，但是实际上栈顶的Fragment将要退栈。
              */
             drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
         }

@@ -3,7 +3,7 @@ package com.synaric.app.mata.module.main.my;
 import android.view.View;
 
 import com.synaric.app.mata.R;
-import com.synaric.app.mata.base.BaseFragment;
+import com.synaric.app.mata.base.BaseManagedFragment;
 import com.synaric.app.mata.module.local.LocalAudioFragment;
 import com.synaric.app.mata.module.main.root.HomeFragment;
 
@@ -14,7 +14,7 @@ import me.yokeyword.fragmentation.SupportFragment;
  * "我的"界面。
  * <br/><br/>Created by Synaric on 2016/10/11 0011.
  */
-public class MyFragment extends BaseFragment implements MyView<String> {
+public class MyFragment extends BaseManagedFragment implements MyView<String> {
 
     public static MyFragment newInstance() {
         return new MyFragment();

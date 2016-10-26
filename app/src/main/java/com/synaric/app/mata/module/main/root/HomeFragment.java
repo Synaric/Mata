@@ -1,13 +1,14 @@
 package com.synaric.app.mata.module.main.root;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import com.flyco.tablayout.SlidingTabLayout;
 import com.synaric.app.mata.R;
 import com.synaric.app.mata.adapter.HomeAdapter;
-import com.synaric.app.mata.base.BaseFragment;
-import com.synaric.app.mata.event.NetworkStateChanged;
+import com.synaric.app.mata.base.BaseManagedFragment;
 import com.synaric.app.mata.event.RequestFinish;
 import com.synaric.app.mata.event.RequestStartFragment;
 import com.synaric.app.mata.event.RequestToggleDrawer;
@@ -21,6 +22,8 @@ import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.yokeyword.fragmentation.SupportActivity;
 import me.yokeyword.fragmentation.SupportFragment;
+import me.yokeyword.fragmentation.anim.DefaultNoAnimator;
+import me.yokeyword.fragmentation.anim.FragmentAnimator;
 
 /**
  * 主界面，这个Fragment将被设置为根Fragment,用于单Activity + 多Fragment模式。
@@ -28,7 +31,7 @@ import me.yokeyword.fragmentation.SupportFragment;
  *
  * @see SupportActivity#loadRootFragment(int, SupportFragment)
  */
-public class HomeFragment extends BaseFragment {
+public class HomeFragment extends BaseManagedFragment {
 
     @InjectView(R.id.sliding_tabs)
     SlidingTabLayout slidingTabs;
@@ -53,13 +56,18 @@ public class HomeFragment extends BaseFragment {
     }
 
     @Override
-    protected void onCreateView(View root) {
-        super.onCreateView(root);
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         viewPager.setOffscreenPageLimit(3);
-        viewPager.setAdapter(new HomeAdapter(getFragmentManager(), getContext()));
+        viewPager.setAdapter(new HomeAdapter(getChildFragmentManager(), getContext()));
         slidingTabs.setViewPager(viewPager);
 
         civHeadPortrait.setOnClickListener(v -> eventBus.post(RequestToggleDrawer.get()));
+    }
+
+    @Override
+    protected FragmentAnimator onCreateFragmentAnimator() {
+        return new DefaultNoAnimator();
     }
 
     @Subscribe
