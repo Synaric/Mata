@@ -6,8 +6,8 @@ package com.synaric.mvp;
  */
 public interface Presenter<V> {
 
-    void attachView(V view);
+    View attachView(V view);
 
-    void detachView();
+    View detachView(V view);
 
 }

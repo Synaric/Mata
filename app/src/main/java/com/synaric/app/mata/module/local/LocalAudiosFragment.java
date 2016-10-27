@@ -8,7 +8,7 @@ import android.view.View;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.synaric.app.mata.R;
 import com.synaric.app.mata.adapter.LocalAudioAdapter;
-import com.synaric.app.mata.base.BaseFragment;
+import com.synaric.app.mata.base.MvpFragment;
 
 import butterknife.InjectView;
 
@@ -16,7 +16,7 @@ import butterknife.InjectView;
  * 本地歌曲界面。
  * <br/><br/>Created by Synaric on 2016/10/21 0021.
  */
-public class LocalAudiosFragment extends BaseFragment {
+public class LocalAudiosFragment extends MvpFragment<LocalAudiosPresenter> {
 
     @InjectView(R.id.sliding_tabs)
     SlidingTabLayout slidingTabs;
@@ -43,7 +43,12 @@ public class LocalAudiosFragment extends BaseFragment {
         super.onActivityCreated(savedInstanceState);
 
         viewPager.setOffscreenPageLimit(5);
-        viewPager.setAdapter(new LocalAudioAdapter(getChildFragmentManager(), getContext()));
+        viewPager.setAdapter(new LocalAudioAdapter(getChildFragmentManager(), getContext(), presenter));
         slidingTabs.setViewPager(viewPager);
+    }
+
+    @Override
+    protected LocalAudiosPresenter createPresenter() {
+        return new LocalAudiosPresenter();
     }
 }

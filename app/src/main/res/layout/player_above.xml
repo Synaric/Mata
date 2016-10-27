@@ -24,7 +24,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:gravity="center_vertical"
-            android:layout_marginStart="10dp">
+            android:layout_marginStart="@dimen/player_text_cover_margin">
 
             <TextView
                 android:layout_width="wrap_content"

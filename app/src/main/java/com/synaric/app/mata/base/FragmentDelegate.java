@@ -56,6 +56,8 @@ public class FragmentDelegate {
     public void onDestroyView() {
         ButterKnife.reset(wrapper);
         eventBus.unregister(wrapper);
+        activity = null;
+        wrapper = null;
     }
 
     public Toolbar initToolBar(View root) {

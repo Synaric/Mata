@@ -26,7 +26,7 @@ public class AudioInfoUtils {
     /**
      * 扫描所有本地音乐信息。
      */
-    public static List<AudioInfo> findAllinExternalDir(Context context, ScanConfig config){
+    public static List<AudioInfo> findAllInExternalDir(Context context, ScanConfig config){
         List<AudioInfo> audioInfoList = new ArrayList<>();
 
         ContentResolver resolver = context.getContentResolver();
@@ -123,7 +123,7 @@ public class AudioInfoUtils {
         return cover;
     }
 
-    public class ScanConfig {
+    public static class ScanConfig {
 
         //歌曲最少时长
         public int minDuration;

@@ -20,7 +20,8 @@
         app:tl_textSelectColor="@color/colorAccent"
         app:tl_indicator_color="@color/colorAccent"
         app:tl_indicator_height="@dimen/tab_indicator_height"
-        tools:targetApi="lollipop" />
+        tools:targetApi="lollipop"
+        android:background="@color/white"/>
 
     <View style="@style/divider" />
 

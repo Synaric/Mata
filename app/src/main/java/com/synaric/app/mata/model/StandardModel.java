@@ -17,7 +17,7 @@ import rx.Observable;
 public interface StandardModel {
 
     /**
-     * 普通网络访问URL。
+     * 网络请求BASE URL。
      */
     String BASE_URL = "http://" + BuildConfig.HOST + "/mata-service/dispatcher/";
 

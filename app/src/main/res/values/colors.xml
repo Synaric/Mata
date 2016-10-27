@@ -6,6 +6,7 @@
 
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
+    <color name="light_grey">#DDDDDD</color>
     <color name="transparent">#00000000</color>
     <color name="green">#26b156</color>
 
@@ -13,6 +14,7 @@
     <color name="secondText">#757575</color>
     <color name="dividerColor">#BDBDBD</color>
 
+    <color name="img_load_failed">@color/light_grey</color>
     <color name="background">#EDEDED</color>
     <color name="backgroundDark">#414141</color>
 </resources>

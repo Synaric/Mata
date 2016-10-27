@@ -24,6 +24,8 @@
     <dimen name="common_item_margin_bottom">10dp</dimen>
     <dimen name="player_bar_margin">20dp</dimen>
     <dimen name="player_height">60dp</dimen>
+    <dimen name="player_text_cover_margin">10dp</dimen>
+
     <dimen name="handleWidthOffset">112dp</dimen>
     <dimen name="drawable_left_padding">5dp</dimen>
 </resources>
