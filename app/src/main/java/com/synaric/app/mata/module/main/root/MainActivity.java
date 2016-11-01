@@ -51,13 +51,6 @@ public class MainActivity extends MvpActivity<MainPresenter> implements MainView
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-//        start(SwipeBackSampleFragment.newInstance());
-//        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-    }
-
-    @Override
     protected MainPresenter createPresenter() {
         return new MainPresenter(this);
     }

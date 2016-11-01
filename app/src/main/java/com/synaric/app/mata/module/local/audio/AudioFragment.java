@@ -26,7 +26,8 @@ import butterknife.OnClick;
  * 本地歌曲-歌曲界面。
  * <br/><br/>Created by Synaric on 2016/10/26 0026.
  */
-public class AudioFragment extends MvpFragment<LocalAudiosPresenter> {
+public class AudioFragment extends MvpFragment<LocalAudiosPresenter>
+        implements com.synaric.mvp.View<List<AudioInfo>> {
 
     @InjectView(R.id.tv_random_play)
     TextView tvRandomPlay;
@@ -64,31 +65,7 @@ public class AudioFragment extends MvpFragment<LocalAudiosPresenter> {
                 getContext(), tvRandomPlay, R.drawable.list_btn_orange_randomplay, 14
         );
 
-        presenter.loadLocalAudios(new com.synaric.mvp.View<List<AudioInfo>>() {
-            @Override
-            public void onSuccess(List<AudioInfo> data) {
-                Logger.d("读取成功：" + data.size());
-                crvContainer.notifyDataSetChanged(
-                        audioInfo,
-                        data,
-                        (oldItem, newItem) -> Objects.equals(oldItem.getId(), newItem.getId()));
-            }
-
-            @Override
-            public void onFailed(String error) {
-                Logger.d("读取失败");
-            }
-
-            @Override
-            public void onLoading() {
-
-            }
-
-            @Override
-            public void onComplete() {
-
-            }
-        });
+        presenter.loadLocalAudios(this);
     }
 
     @OnClick(R.id.tv_random_play)
@@ -99,5 +76,29 @@ public class AudioFragment extends MvpFragment<LocalAudiosPresenter> {
     @Override
     protected LocalAudiosPresenter createPresenter() {
         return new LocalAudiosPresenter();
+    }
+
+    @Override
+    public void onSuccess(List<AudioInfo> data) {
+        Logger.d("读取本地歌曲成功：" + data.size());
+        crvContainer.notifyDataSetChanged(
+                audioInfo,
+                data,
+                (oldItem, newItem) -> Objects.equals(oldItem.getId(), newItem.getId()));
+    }
+
+    @Override
+    public void onFailed(String error) {
+
+    }
+
+    @Override
+    public void onLoading() {
+
+    }
+
+    @Override
+    public void onComplete() {
+
     }
 }

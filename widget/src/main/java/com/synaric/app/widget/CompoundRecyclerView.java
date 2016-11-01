@@ -16,8 +16,13 @@ import java.util.List;
 
 /**
  * 纵向列表视图。
- * 支持下拉刷新，上拉加载更多。
- * 支持显示头布局，尾布局。
+ * <ul>
+ *     <li>支持下拉刷新，上拉加载更多。</li>
+ *     <li>支持显示头布局headerView，尾布局footerView。</li>
+ *     <li>支持显示空布局（加载的数据为空）emptyView，失败布局（加载数据失败）errorView。</li>
+ *     <li>支持列表局部更新，无需使用RecyclerView的刷新方法。</li>
+ * </ul>
+ *
  * <br/><br/>Created by Synaric on 2016/10/31 0031.
  */
 public class CompoundRecyclerView extends FrameLayout {
@@ -82,12 +87,13 @@ public class CompoundRecyclerView extends FrameLayout {
     public void setAdapter(CommonAdapter<?> adapter) {
         contentView.setAdapter(adapter);
         this.adapter = adapter;
-        notifyDataSetChanged(null, null, null);
+        notifyDataSetChanged(null, null, false, null);
     }
 
     /**
      * 开启线程比较数据，并将更新异步通知adapter。
      * 数据为空或者数据加载失败，会显示相应的提示视图（如果有的话）。
+     * 默认非强制刷新，参考{@link #notifyDataSetChanged(List, List, boolean, BaseDiffCallBack.OnItemCompare)}。
      * @param oldData 旧数据。
      * @param newData 新数据。
      * @param onItemCompare 比较规则。
@@ -96,18 +102,36 @@ public class CompoundRecyclerView extends FrameLayout {
             final List<T> oldData,
             final List<T> newData,
             BaseDiffCallBack.OnItemCompare<T> onItemCompare) {
+        notifyDataSetChanged(oldData, newData, false, onItemCompare);
+    }
+
+    /**
+     * 开启线程比较数据，并将更新异步通知adapter。
+     * 数据为空或者数据加载失败，会显示相应的提示视图（如果有的话）。
+     * @param oldData 旧数据。
+     * @param newData 新数据。
+     * @param forceUpdate 是否强制刷新数据。开启强制刷新时，如果newData为空，则显示emptyView（如果有
+     *                    的话）;反之，显示contentView，并保留上一次的数据，并且不刷新adapter。
+     * @param onItemCompare 比较规则。
+     */
+    public <T> void  notifyDataSetChanged(
+            final List<T> oldData,
+            final List<T> newData,
+            boolean forceUpdate,
+            BaseDiffCallBack.OnItemCompare<T> onItemCompare) {
         if(oldData == null && newData == null) {
             toggleEmpty();
             return;
         }
 
         final int itemCount = newData == null ? 0 : newData.size();
-        if(itemCount <= 0) {
+        if(itemCount <= 0 && forceUpdate) {
             toggleEmpty();
         } else {
             toggleContent();
         }
 
-        ViewUtils.calculateDiff(adapter, oldData, newData, onItemCompare);
+        if(itemCount > 0 || forceUpdate)
+            ViewUtils.calculateDiff(adapter, oldData, newData, onItemCompare);
     }
 }
