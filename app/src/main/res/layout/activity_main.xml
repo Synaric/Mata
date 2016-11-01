@@ -18,6 +18,7 @@
                 android:id="@+id/fl_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/player_height"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
             <com.synaric.app.mata.widget.PlayerLayout

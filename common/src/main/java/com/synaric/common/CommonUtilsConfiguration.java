@@ -2,6 +2,7 @@ package com.synaric.common;
 
 import android.content.Context;
 
+import com.synaric.app.rxmodel.RxModel;
 import com.synaric.common.utils.SystemUtils;
 import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;
@@ -20,19 +21,22 @@ public class CommonUtilsConfiguration {
 
     public static Retrofit retrofit;
 
+    public static RxModel rxModel;
+
     public static void init(Context context, String baseUrl) {
         initLogger(context);
         initRetrofit(baseUrl);
+        initRxModel(context);
     }
 
-    public static void initLogger(Context context) {
+    private static void initLogger(Context context) {
         Logger
             .init()
             .logLevel(SystemUtils.isDebugMode(context) ? LogLevel.FULL : LogLevel.NONE)
             .methodCount(3);
     }
 
-    public static Retrofit initRetrofit(String baseUrl) {
+    private static void initRetrofit(String baseUrl) {
         if (retrofit == null) {
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
             OkHttpClient okHttpClient = builder.build();
@@ -43,6 +47,11 @@ public class CommonUtilsConfiguration {
                     .client(okHttpClient)
                     .build();
         }
-        return retrofit;
+    }
+
+    private static void initRxModel(Context context) {
+        if (rxModel == null) {
+            rxModel = new RxModel.Builder(context).dbName("mata.db").build();
+        }
     }
 }

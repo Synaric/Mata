@@ -13,4 +13,10 @@
         <attr name="topOffset" format="dimension"/>
         <attr name="handleWidthOffset" format="dimension"/>
     </declare-styleable>
+
+    <declare-styleable name="CompoundRecyclerView">
+        <attr name="empty_view" format="reference"/>
+        <attr name="error_view" format="reference"/>
+        <attr name="content_view" format="reference" />
+    </declare-styleable>
 </resources>

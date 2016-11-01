@@ -51,7 +51,7 @@
 
             <ImageView
                 android:id="@+id/iv_more"
-                style="@style/ic_48dp"
+                style="@style/ic_24dp_no_padding"
                 android:src="@drawable/bg_more"/>
 
         </LinearLayout>

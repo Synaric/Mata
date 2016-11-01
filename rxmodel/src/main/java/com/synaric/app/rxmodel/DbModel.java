@@ -34,11 +34,12 @@ public abstract class DbModel<T> {
     private String tableName;
     private Converter<T> converter;
     private ReadWriteLock lock;
+    private final Class<T> clz;
 
     @SuppressWarnings("unchecked")
     public DbModel(RxModel rxModel) {
         this.rxModel = rxModel;
-        Class<T> clz = (Class<T>) ReflectUtils.getActualClass(this.getClass(), 0);
+        clz = (Class<T>) ReflectUtils.getActualClass(this.getClass(), 0);
         tableName = clz.getSimpleName();
         converter = new JsonConverter<T>(clz) {
             @Override
@@ -124,12 +125,23 @@ public abstract class DbModel<T> {
     }
 
     /**
+     * 同步插入多个对象模型。一类对象模型对应一个表，表名为类名。
+     * 如果对象模型对应的表没有创建，将会首先创建表，再插入数据。
+     * 如果已经存在相同id的文档模型，将会覆盖。
+     * 底层插入逻辑遵循SQL的INSERT OR REPLACE逻辑。
+     * @param collection 要插入的对象模型的集合。
+     * @return 插入结果。
+     */
+    public boolean syncSaveAll(Collection<? extends T> collection) {
+        return insertAllInternal(collection, SqlUtils.Operations.INSERT_OR_REPLACE);
+    }
+
+    /**
      * 查询所有满足条件的指定类型数据。如果数据不存在或者表尚未创建，则返回为空列表。
-     * @param clz 要查询的对象模型类型。
      * @param filter 筛选器
      * @return 满足条件的数据。
      */
-    public Observable<List<T>> query(final Class<T> clz, final Filter<T> filter) {
+    public Observable<List<T>> query(final Filter<T> filter) {
         return RxUtils.makeModelObservable(new Callable<List<T>>() {
             @Override
             public List<T> call() throws Exception {
@@ -140,10 +152,9 @@ public abstract class DbModel<T> {
 
     /**
      * 查询所有指定类型数据。如果数据不存在或者表尚未创建，则返回为空列表。
-     * @param clz 要查询的对象模型类型。
      * @return 所有指定类型的数据。
      */
-    public Observable<List<T>> queryAll(final Class<T> clz) {
+    public Observable<List<T>> queryAll() {
         return RxUtils.makeModelObservable(new Callable<List<T>>() {
             @Override
             public List<T> call() throws Exception {
@@ -154,11 +165,10 @@ public abstract class DbModel<T> {
 
     /**
      * 查询指定类型数据满足条件的第一条数据。
-     * @param clz 要查询的对象模型类型。
      * @param filter 筛选器。
      * @return 满足条件的第一条数据。
      */
-    public Observable<T> queryFirst(final Class<T> clz, final Filter<T> filter) {
+    public Observable<T> queryFirst(final Filter<T> filter) {
         return RxUtils.makeModelObservable(new Callable<T>() {
             @Override
             public T call() throws Exception {
@@ -169,10 +179,9 @@ public abstract class DbModel<T> {
 
     /**
      * 查询所有指定类型数据在表中的第一条数据。
-     * @param clz 要查询的对象模型类型。
      * @return 第一条查找到的数据。
      */
-    public Observable<T> queryFirst(final Class<T> clz) {
+    public Observable<T> queryFirst() {
         return RxUtils.makeModelObservable(new Callable<T>() {
             @Override
             public T call() throws Exception {
@@ -183,14 +192,13 @@ public abstract class DbModel<T> {
 
     /**
      * 删除满足条件的指定类型的数据。
-     * 首先，会基于{@link DbModel#query(Class, Filter)}进行一次查询，对所有查询到的数据,开启事务
+     * 首先，会基于{@link DbModel#query(Filter)}进行一次查询，对所有查询到的数据,开启事务
      * 进行删除。
-     * @param clz 要删除的对象模型类型。
      * @param filter 筛选器
      * @return 删除文档数。
      */
-    public Observable<Integer> delete(final Class<T> clz, final Filter<T> filter) {
-        return query(clz, filter)
+    public Observable<Integer> delete(final Filter<T> filter) {
+        return query(filter)
         .map(new Func1<List<T>, Integer>() {
             @Override
             public Integer call(List<T> ts) {

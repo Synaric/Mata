@@ -2,21 +2,22 @@ package com.synaric.app.mata.module.local.audio;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.orhanobut.logger.Logger;
 import com.synaric.app.mata.R;
-import com.synaric.app.mata.base.BaseFragment;
+import com.synaric.app.mata.base.MvpFragment;
+import com.synaric.app.mata.module.local.LocalAudiosPresenter;
+import com.synaric.app.widget.CompoundRecyclerView;
 import com.synaric.app.widget.ViewUtils;
+import com.synaric.app.widget.adapter.CommonAdapter;
+import com.synaric.app.widget.adapter.CommonViewHolder;
 import com.synaric.common.entity.AudioInfo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -25,14 +26,15 @@ import butterknife.OnClick;
  * 本地歌曲-歌曲界面。
  * <br/><br/>Created by Synaric on 2016/10/26 0026.
  */
-public class AudioFragment extends BaseFragment {
+public class AudioFragment extends MvpFragment<LocalAudiosPresenter> {
 
     @InjectView(R.id.tv_random_play)
     TextView tvRandomPlay;
-    @InjectView(R.id.rv_container)
-    RecyclerView rvContainer;
+    @InjectView(R.id.crv_container)
+    CompoundRecyclerView crvContainer;
 
-    private List<AudioInfo> audioInfos = new ArrayList<>();
+
+    private List<AudioInfo> audioInfo = new ArrayList<>();
 
     public static AudioFragment newInstance() {
         return new AudioFragment();
@@ -46,9 +48,12 @@ public class AudioFragment extends BaseFragment {
     @Override
     protected void onCreateView(View root) {
         super.onCreateView(root);
+        crvContainer.setAdapter(new CommonAdapter<AudioInfo>(getContext(), audioInfo, R.layout.item_audio_info) {
+            @Override
+            public void onBindViewHolder(CommonViewHolder holder, int position) {
 
-        rvContainer.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        rvContainer.setAdapter(new MyAdapter<>(audioInfos));
+            }
+        });
     }
 
     @Override
@@ -59,6 +64,31 @@ public class AudioFragment extends BaseFragment {
                 getContext(), tvRandomPlay, R.drawable.list_btn_orange_randomplay, 14
         );
 
+        presenter.loadLocalAudios(new com.synaric.mvp.View<List<AudioInfo>>() {
+            @Override
+            public void onSuccess(List<AudioInfo> data) {
+                Logger.d("读取成功：" + data.size());
+                crvContainer.notifyDataSetChanged(
+                        audioInfo,
+                        data,
+                        (oldItem, newItem) -> Objects.equals(oldItem.getId(), newItem.getId()));
+            }
+
+            @Override
+            public void onFailed(String error) {
+                Logger.d("读取失败");
+            }
+
+            @Override
+            public void onLoading() {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
     }
 
     @OnClick(R.id.tv_random_play)
@@ -66,46 +96,8 @@ public class AudioFragment extends BaseFragment {
 
     }
 
-    private class MyAdapter<T> extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
-
-        private LayoutInflater inflater = LayoutInflater.from(getContext());
-
-        private List<T> data;
-
-        public MyAdapter(List<T> data) {
-            this.data = data;
-        }
-
-        @Override
-        public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = inflater.inflate(R.layout.item_audio_info, parent, false);
-            return new MyViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(MyViewHolder holder, int position) {
-
-        }
-
-        @Override
-        public int getItemCount() {
-            return data.size();
-        }
-
-        class MyViewHolder extends RecyclerView.ViewHolder {
-
-            public ImageView ivCover;
-            public TextView tvTitle;
-            public TextView tvArtist;
-            public ImageView ivMore;
-
-            public MyViewHolder(View itemView) {
-                super(itemView);
-                ivCover = (ImageView) itemView.findViewById(R.id.iv_cover);
-                tvTitle = (TextView) itemView.findViewById(R.id.tv_title);
-                tvArtist = (TextView) itemView.findViewById(R.id.tv_artist);
-                ivMore = (ImageView) itemView.findViewById(R.id.iv_more);
-            }
-        }
+    @Override
+    protected LocalAudiosPresenter createPresenter() {
+        return new LocalAudiosPresenter();
     }
 }

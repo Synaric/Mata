@@ -15,11 +15,6 @@ public class MyPresenter extends BasePresenter {
      * 读取"我的"界面内容。
      */
     public void loadMyData() {
-        loadData(new SimpleApiCallback<String>(null) {
-            @Override
-            public Observable<String> onLoad() {
-                return standardModel.emptyRequest(queryBy(null));
-            }
-        });
+        accessData(new SimpleApiCallback<String>(standardModel.emptyRequest(queryBy(null))));
     }
 }

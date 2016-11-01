@@ -10,12 +10,16 @@ import android.net.Uri;
 import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
 
+import com.synaric.app.rxmodel.utils.RxUtils;
 import com.synaric.common.entity.AudioInfo;
 
 import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
+
+import rx.Observable;
 
 /**
  * 本地歌曲扫描工具类。
@@ -26,7 +30,26 @@ public class AudioInfoUtils {
     /**
      * 扫描所有本地音乐信息。
      */
-    public static List<AudioInfo> findAllInExternalDir(Context context, ScanConfig config){
+    public static Observable<List<AudioInfo>> findAllInExternalDir(final Context context) {
+        return RxUtils.makeModelObservable(new Callable<List<AudioInfo>>() {
+            @Override
+            public List<AudioInfo> call() throws Exception {
+                return findAllInternal(context);
+            }
+        });
+    }
+
+    /**
+     * 扫描所有本地音乐信息。
+     */
+    private static List<AudioInfo> findAllInternal(Context context) {
+        return findAllInternal(context, new ScanConfig());
+    }
+
+    /**
+     * 扫描所有本地音乐信息。
+     */
+    private static List<AudioInfo> findAllInternal(Context context, ScanConfig config){
         List<AudioInfo> audioInfoList = new ArrayList<>();
 
         ContentResolver resolver = context.getContentResolver();
@@ -126,10 +149,10 @@ public class AudioInfoUtils {
     public static class ScanConfig {
 
         //歌曲最少时长
-        public int minDuration;
+        public int minDuration = 60000;
 
         //歌曲最小大小
-        public long minSize;
+        public long minSize = 500000;
 
         public boolean validate(AudioInfo info) {
             return validate(info.getDuration(), info.getSize());

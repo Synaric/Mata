@@ -29,7 +29,7 @@ public class RxUtils {
                         }
                     }
                 })
-                .observeOn(Schedulers.computation())
-                .subscribeOn(AndroidSchedulers.mainThread());
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.computation());
     }
 }

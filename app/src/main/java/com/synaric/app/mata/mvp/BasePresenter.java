@@ -19,9 +19,9 @@ import rx.subscriptions.CompositeSubscription;
 
 /**
  * 提供了Presenter的基础实现，包括绑定和解绑View。View需要实现{@link View}。
- * 读取数据并更新绑定的View，调用{@link #loadData(ApiCallback)}即可。
+ * 读取数据并更新绑定的View，调用{@link #accessData(ApiCallback)}即可。
  * 如果这个View内部有许多子View（例如一个Activity中存在ViewPager + Fragment，并且每一个Fragment又实现
- * 了View接口），那么读取数据并更新子View需要调用{@link #loadData(View, ApiCallback)}。
+ * 了View接口），那么读取数据并更新子View需要调用{@link #accessData(View, ApiCallback)}。
  * <br/><br/>Created by Synaric on 2016/10/8 0008.
  */
 public class BasePresenter implements Presenter<View> {
@@ -91,6 +91,9 @@ public class BasePresenter implements Presenter<View> {
         onUnsubscribe();
     }
 
+    /**
+     * 将Observable加入统一管理池。
+     */
     @SuppressWarnings("unchecked")
     public void addSubscription(Observable observable, Subscriber subscriber) {
         if (compositeSubscription == null) {
@@ -102,17 +105,34 @@ public class BasePresenter implements Presenter<View> {
                 .subscribe(subscriber));
     }
 
+    /**
+     * 解除所有订阅，通常在View层销毁的时候调用。
+     */
     public void onUnsubscribe() {
         if (compositeSubscription != null && compositeSubscription.hasSubscriptions()) {
             compositeSubscription.unsubscribe();
         }
     }
 
-    protected <T> void loadData(ApiCallback<T> apiCallBack) {
-        loadData(mainView, apiCallBack);
+    /**
+     * 对数据进行操作（增删改查）后，异步返回操作结果，同时通知V主View（如果有的话）。主View是指调用
+     * {@link #BasePresenter(View)}构造时传入的View。
+     * 数据操作包括数据库操作和网络访问，以及其他任何以{@link Observable}封装的数据操作。
+     * @param apiCallBack 异步回调。
+     * @param <T> 操作结果的类型。
+     */
+    protected <T> void accessData(ApiCallback<T> apiCallBack) {
+        accessData(mainView, apiCallBack);
     }
 
-    protected <T> void loadData(View<?> view, ApiCallback<T> apiCallBack) {
+    /**
+     * 对数据进行操作（增删改查）后，异步返回操作结果，同时通知View层。
+     * 数据操作包括数据库操作和网络访问，以及其他任何以{@link Observable}封装的数据操作。
+     * @param view 需要告知操作结果的View。
+     * @param apiCallBack 异步回调。
+     * @param <T> 操作结果的类型。
+     */
+    protected <T> void accessData(View<?> view, ApiCallback<T> apiCallBack) {
         if(view != null) {
             view.onLoading();
             if(apiCallBack instanceof SimpleApiCallback)
@@ -124,6 +144,11 @@ public class BasePresenter implements Presenter<View> {
         );
     }
 
+    /**
+     * 将访问请求适配为接口{@link StandardModel}。
+     * @param obj 网络请求实体。
+     * @return 适配后的网络请求。
+     */
     protected Map<String, String> queryBy(Object obj) {
         Map<String, String> params = new HashMap<>();
         params.put("params", obj == null ? "{}" : gson.toJson(obj));
@@ -131,18 +156,28 @@ public class BasePresenter implements Presenter<View> {
         return params;
     }
 
-    public abstract class SimpleApiCallback<T> implements ApiCallback<T> {
+    public class SimpleApiCallback<T> implements ApiCallback<T> {
 
         private View view;
 
-        public SimpleApiCallback() {}
+        private Observable<T> observable;
 
-        public SimpleApiCallback(View view) {
+        public SimpleApiCallback(Observable<T> observable) {
+            this.observable = observable;
+        }
+
+        public SimpleApiCallback(View view, Observable<T> observable) {
             this.view = view;
+            this.observable = observable;
         }
 
         public void attachView(View view) {
             this.view = view;
+        }
+
+        @Override
+        public Observable<T> onLoad() {
+            return observable;
         }
 
         @SuppressWarnings("unchecked")

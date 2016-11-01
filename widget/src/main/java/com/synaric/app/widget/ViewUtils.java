@@ -2,13 +2,21 @@ package com.synaric.app.widget;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.support.v7.util.DiffUtil;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.synaric.app.rxmodel.utils.RxUtils;
+import com.synaric.app.widget.adapter.CommonAdapter;
 import com.synaric.common.utils.SystemUtils;
+
+import java.util.List;
+import java.util.concurrent.Callable;
+
+import rx.functions.Action1;
 
 /**
  * <br/><br/>Created by Synaric on 2016/10/9 0009.
@@ -24,6 +32,36 @@ public class ViewUtils {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         display.getMetrics(displayMetrics);
         return displayMetrics;
+    }
+
+    /**
+     * 开启线程比较数据，并将更新异步通知adapter。
+     */
+    public static <T> void calculateDiff(
+            final CommonAdapter adapter,
+            final List<T> oldData,
+            final List<T> newData,
+            final BaseDiffCallBack.OnItemCompare<T> onItemCompare) {
+        RxUtils.makeModelObservable(new Callable<DiffUtil.DiffResult>() {
+            @Override
+            public DiffUtil.DiffResult call() throws Exception {
+                return DiffUtil.calculateDiff(new BaseDiffCallBack(oldData, newData) {
+                    @Override
+                    public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
+                        return onItemCompare.areItemsTheSame(
+                                oldData.get(oldItemPosition),
+                                newData.get(newItemPosition));
+                    }
+                });
+            }
+        }).subscribe(new Action1<DiffUtil.DiffResult>() {
+            @SuppressWarnings("unchecked")
+            @Override
+            public void call(DiffUtil.DiffResult diffResult) {
+                adapter.setData(newData);
+                diffResult.dispatchUpdatesTo(adapter);
+            }
+        });
     }
 
     /**
