@@ -1,12 +1,18 @@
 package com.synaric.common.entity;
 
+import java.io.Serializable;
+
 /**
  * 描述音乐信息的封装类。
  * <br/><br/>Created by Synaric on 2016/10/21 0021.
  */
-public class AudioInfo {
+public class AudioInfo implements Serializable {
 
-    private int id;
+    /*
+        本地、网络歌曲公用属性。
+     */
+
+    private String id;
 
     private String title;
 
@@ -26,11 +32,17 @@ public class AudioInfo {
 
     private long modified;
 
-    public int getId() {
+    /*
+        网络歌曲属性。
+     */
+
+    private String coverUrl;
+
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -104,5 +116,13 @@ public class AudioInfo {
 
     public void setModified(long modified) {
         this.modified = modified;
+    }
+
+    public String getCoverUrl() {
+        return coverUrl;
+    }
+
+    public void setCoverUrl(String coverUrl) {
+        this.coverUrl = coverUrl;
     }
 }

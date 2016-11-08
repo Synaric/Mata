@@ -11,6 +11,7 @@ import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import xiaofei.library.hermeseventbus.HermesEventBus;
 
 /**
  * Common模块初始化类。
@@ -27,6 +28,7 @@ public class CommonUtilsConfiguration {
         initLogger(context);
         initRetrofit(baseUrl);
         initRxModel(context);
+        HermesEventBus.getDefault().init(context);
     }
 
     private static void initLogger(Context context) {

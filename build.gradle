@@ -15,13 +15,9 @@ buildscript {
 
 allprojects {
     repositories {
-        maven { url 'http://43.254.53.21:8989/nexus/content/groups/public/' }
-        maven { url "https://jitpack.io" }
         jcenter()
-    }
-
-    repositories {
         maven { url "https://jitpack.io" }
+        maven { url 'http://43.254.53.21:8989/nexus/content/groups/public/' }
     }
 }
 

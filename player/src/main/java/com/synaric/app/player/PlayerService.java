@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.text.TextUtils;
 
 import com.orhanobut.logger.Logger;
+import com.synaric.common.entity.AudioInfo;
 
 import java.io.IOException;
 
@@ -20,9 +21,7 @@ public class PlayerService extends IntentService {
 
     public static final String ACTION_PLAY = "play";
 
-    public static final String EXTRA_FILE = "extraFile";
-
-    public static final String EXTRA_URL = "extraUrl";
+    public static final String EXTRA_AUDIO_INFO = "extraAudioInfo";
 
     public static final String EXTRA_TYPE = "extraType";
 
@@ -48,33 +47,13 @@ public class PlayerService extends IntentService {
     }
 
     /**
-     * 播放本地音频。
-     */
-    public static void playLocal(Context context, String filepath) {
-        play(context, filepath, TYPE_LOCAL);
-    }
-
-    /**
-     * 播放网络音频。
-     */
-    public static void playNet(Context context, String url) {
-        play(context, url, TYPE_NET);
-    }
-
-    /**
      * 播放音频。
-     *
-     * @param content 网络音频填写URL，本地音频填写文件路径。
      */
-    public static void play(Context context, String content, int from) {
+    public static void play(Context context, AudioInfo info, int from) {
         Intent intent = newIntent(context.getApplicationContext());
         intent.setAction(ACTION_PLAY);
         intent.putExtra(EXTRA_TYPE, from);
-        if (from == TYPE_LOCAL) {
-            intent.putExtra(EXTRA_FILE, content);
-        } else if (from == TYPE_NET) {
-            intent.putExtra(EXTRA_URL, content);
-        }
+        intent.putExtra(EXTRA_AUDIO_INFO, info);
         context.startService(intent);
     }
 
@@ -105,7 +84,7 @@ public class PlayerService extends IntentService {
     }
 
     private void handleInit() {
-        //初始化一次，防止泄露
+        //仅初始化一次，防止泄露
         //由于onHandleIntent处理时其他请求被挂起，因此无需同步
         if (INITIALIZED) {
             Logger.e("init() should be called only once!");
@@ -116,7 +95,10 @@ public class PlayerService extends IntentService {
     }
 
     private void handlePlay(Intent intent) {
-        final String url = intent.getStringExtra(EXTRA_URL);
+        AudioInfo audioInfo = (AudioInfo) intent.getSerializableExtra(EXTRA_AUDIO_INFO);
+        if(audioInfo == null) return;
+
+        final String url = audioInfo.getData();
         if (TextUtils.isEmpty(url)) {
             Logger.e("Unsupported url: " + url);
             return;
@@ -137,5 +119,13 @@ public class PlayerService extends IntentService {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 监听播放器状态。
+     */
+    public interface PlayerStateListener {
+
+        void onPlay(AudioInfo info);
     }
 }

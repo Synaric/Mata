@@ -64,7 +64,7 @@ public class AudioFragment extends MvpFragment<LocalAudiosPresenter>
                     holder.setText(R.id.tv_title, entity.getTitle());
                     holder.setText(R.id.tv_artist, entity.getArtist());
                     holder.setOnClickListener(
-                            v -> PlayerService.playLocal(getContext(), entity.getData())
+                            v -> PlayerService.play(getContext(), entity, PlayerService.TYPE_LOCAL)
                     );
                 }
             });

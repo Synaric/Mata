@@ -32,9 +32,8 @@ dependencies {
     compile rootProject.ext.supportAppCompat
     compile rootProject.ext.supportDesign
     compile 'com.jakewharton:butterknife:5.1.1'
-    compile 'org.greenrobot:eventbus:3.0.0'
+    compile 'xiaofei.library:hermes-eventbus:0.1.1'
     compile 'com.squareup.retrofit2:retrofit:2.0.2'
-    compile 'com.synaric.web:mata-entity:0.0.6-SNAPSHOT'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.0.2'
     compile 'com.squareup.retrofit2:converter-gson:2.0.2'
     compile 'com.squareup.picasso:picasso:2.5.2'

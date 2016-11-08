@@ -3,7 +3,6 @@ package com.synaric.app.widget;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
@@ -94,7 +93,7 @@ public class CompoundRecyclerView extends FrameLayout {
      * 数据为空或者数据加载失败，会显示相应的提示视图（如果有的话）。
      * 默认非强制刷新。如果需要开闭强制刷新，
      * 参考{@link #notifyDataSetChanged(List, List, boolean, BaseDiffCallBack.OnItemCompare)}。
-     * @param oldData 旧数据。
+     * @param oldData 旧数据。比较数据变动后，旧数据内容会被新数据覆盖。
      * @param newData 新数据。
      * @param onItemCompare 指定数据的主键。新旧数据列表中主键相同的数据，则被认为是同一条数据。
      */

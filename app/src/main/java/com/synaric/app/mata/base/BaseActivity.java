@@ -8,8 +8,6 @@ import android.view.View;
 import com.synaric.app.rxmodel.utils.ReflectUtils;
 import com.synaric.common.utils.StatusBarUtils;
 
-import org.greenrobot.eventbus.EventBus;
-
 import java.lang.reflect.Method;
 import java.util.List;
 
@@ -17,6 +15,7 @@ import butterknife.ButterKnife;
 import me.yokeyword.fragmentation.Fragmentation;
 import me.yokeyword.fragmentation.SupportActivity;
 import me.yokeyword.fragmentation.debug.DebugFragmentRecord;
+import xiaofei.library.hermeseventbus.HermesEventBus;
 
 /**
  * 所有Activity的基类。
@@ -35,7 +34,7 @@ public abstract class BaseActivity extends SupportActivity{
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
         ButterKnife.inject(this);
-        EventBus.getDefault().register(this);
+        HermesEventBus.getDefault().register(this);
         if(savedInstanceState == null) onCreate();
         StatusBarUtils.compat(this);
     }
@@ -43,7 +42,7 @@ public abstract class BaseActivity extends SupportActivity{
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
+        HermesEventBus.getDefault().unregister(this);
     }
 
     /**

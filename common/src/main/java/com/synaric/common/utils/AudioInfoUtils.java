@@ -73,7 +73,7 @@ public class AudioInfoUtils {
 
             try {
 
-                info.setId(cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media._ID)));
+                info.setId(String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media._ID))));
                 info.setTitle(cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.TITLE)));
                 info.setArtist(cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST)));
                 info.setAlbum(cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM)));
@@ -109,8 +109,9 @@ public class AudioInfoUtils {
      * 根据歌曲id获取专辑封面缩略图Uri。
      * @return 封面图。
      */
-    public static Uri getUriFromId(long id){
-        if(id < 0){
+    public static Uri getUriFromId(String id){
+        long lid = Long.valueOf(id);
+        if(lid < 0){
             throw new IllegalArgumentException("id must > 0. id = " + id);
         }
         return Uri.parse("content://media/external/audio/media/" + id + "/albumart");
