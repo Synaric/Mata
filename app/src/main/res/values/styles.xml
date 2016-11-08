@@ -32,6 +32,10 @@
         <item name="android:layout_height">@dimen/ic_24dp</item>
     </style>
 
+    <style name="ic_24dp" parent="ic_24dp_no_padding">
+        <item name="android:padding">@dimen/ic_24dp_padding</item>
+    </style>
+
     <style name="ic_36x60dp_p6x18">
         <item name="android:layout_width">@dimen/ic_36dp</item>
         <item name="android:layout_height">@dimen/ic_60dp</item>

@@ -30,7 +30,6 @@ public class CompoundRecyclerView extends FrameLayout {
     private View emptyView;
     private View errorView;
     private RecyclerView contentView;
-
     private CommonAdapter adapter;
 
     public CompoundRecyclerView(Context context) {
@@ -48,8 +47,8 @@ public class CompoundRecyclerView extends FrameLayout {
 
     private void init(Context context, @Nullable AttributeSet attrs) {
         final TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.CompoundRecyclerView);
-        int emptyId = typedArray.getResourceId(R.styleable.CompoundRecyclerView_empty_view, 0);
-        int errorId = typedArray.getResourceId(R.styleable.CompoundRecyclerView_error_view, 0);
+        final int emptyId = typedArray.getResourceId(R.styleable.CompoundRecyclerView_empty_view, 0);
+        final int errorId = typedArray.getResourceId(R.styleable.CompoundRecyclerView_error_view, 0);
         if(emptyId != 0) {
             emptyView = findViewById(emptyId);
         }
@@ -60,7 +59,7 @@ public class CompoundRecyclerView extends FrameLayout {
         FrameLayout.LayoutParams params = new LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         contentView = new RecyclerView(context);
-        contentView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        contentView.setLayoutManager(ViewUtils.defaultLayoutManger(getContext()));
         typedArray.recycle();
 
         addView(contentView, params);
@@ -91,34 +90,37 @@ public class CompoundRecyclerView extends FrameLayout {
     }
 
     /**
-     * 开启线程比较数据，并将更新异步通知adapter。
+     * 开启线程比较数据变动，计算刷新范围并将更新异步通知adapter。
      * 数据为空或者数据加载失败，会显示相应的提示视图（如果有的话）。
-     * 默认非强制刷新，参考{@link #notifyDataSetChanged(List, List, boolean, BaseDiffCallBack.OnItemCompare)}。
+     * 默认非强制刷新。如果需要开闭强制刷新，
+     * 参考{@link #notifyDataSetChanged(List, List, boolean, BaseDiffCallBack.OnItemCompare)}。
      * @param oldData 旧数据。
      * @param newData 新数据。
-     * @param onItemCompare 比较规则。
+     * @param onItemCompare 指定数据的主键。新旧数据列表中主键相同的数据，则被认为是同一条数据。
      */
     public <T> void  notifyDataSetChanged(
             final List<T> oldData,
             final List<T> newData,
             BaseDiffCallBack.OnItemCompare<T> onItemCompare) {
+
         notifyDataSetChanged(oldData, newData, false, onItemCompare);
     }
 
     /**
-     * 开启线程比较数据，并将更新异步通知adapter。
+     * 开启线程比较数据变动，计算刷新范围并将更新异步通知adapter。
      * 数据为空或者数据加载失败，会显示相应的提示视图（如果有的话）。
-     * @param oldData 旧数据。
+     * @param oldData 旧数据。比较数据变动后，旧数据内容会被新数据覆盖。
      * @param newData 新数据。
      * @param forceUpdate 是否强制刷新数据。开启强制刷新时，如果newData为空，则显示emptyView（如果有
      *                    的话）;反之，显示contentView，并保留上一次的数据，并且不刷新adapter。
-     * @param onItemCompare 比较规则。
+     * @param onItemCompare 指定数据的主键。新旧数据列表中主键相同的数据，则被认为是同一条数据。
      */
     public <T> void  notifyDataSetChanged(
             final List<T> oldData,
             final List<T> newData,
             boolean forceUpdate,
             BaseDiffCallBack.OnItemCompare<T> onItemCompare) {
+
         if(oldData == null && newData == null) {
             toggleEmpty();
             return;

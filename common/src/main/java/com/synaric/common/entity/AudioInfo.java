@@ -10,6 +10,8 @@ public class AudioInfo {
 
     private String title;
 
+    private String titleKey;
+
     private String artist;
 
     private String album;
@@ -21,6 +23,8 @@ public class AudioInfo {
     private String data;
 
     private long size;
+
+    private long modified;
 
     public int getId() {
         return id;
@@ -36,6 +40,14 @@ public class AudioInfo {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getTitleKey() {
+        return titleKey;
+    }
+
+    public void setTitleKey(String titleKey) {
+        this.titleKey = titleKey;
     }
 
     public String getArtist() {
@@ -84,5 +96,13 @@ public class AudioInfo {
 
     public void setSize(long size) {
         this.size = size;
+    }
+
+    public long getModified() {
+        return modified;
+    }
+
+    public void setModified(long modified) {
+        this.modified = modified;
     }
 }

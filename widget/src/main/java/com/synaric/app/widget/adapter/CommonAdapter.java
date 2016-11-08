@@ -32,6 +32,11 @@ public abstract class CommonAdapter<T> extends RecyclerView.Adapter<CommonViewHo
         return new CommonViewHolder(view);
     }
 
+    @Override
+    public void onBindViewHolder(CommonViewHolder holder, int position) {
+        onBindViewHolder(holder, data.get(position));
+    }
+
     public List<?> getData() {
         return data;
     }
@@ -44,4 +49,6 @@ public abstract class CommonAdapter<T> extends RecyclerView.Adapter<CommonViewHo
     public int getItemCount() {
         return data.size();
     }
+
+    protected abstract void onBindViewHolder(CommonViewHolder holder, T entity);
 }

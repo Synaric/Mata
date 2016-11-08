@@ -16,11 +16,19 @@ import java.io.IOException;
  */
 public class PlayerService extends IntentService {
 
-    public static final String ACTION_INIT = "actionInit";
+    public static final String ACTION_INIT = "init";
 
-    public static final String ACTION_PLAY = "actionPlay";
+    public static final String ACTION_PLAY = "play";
+
+    public static final String EXTRA_FILE = "extraFile";
 
     public static final String EXTRA_URL = "extraUrl";
+
+    public static final String EXTRA_TYPE = "extraType";
+
+    public static final int TYPE_LOCAL = 0;
+
+    public static final int TYPE_NET = 2;
 
     private static boolean INITIALIZED = false;
 
@@ -33,20 +41,40 @@ public class PlayerService extends IntentService {
     /**
      * 初始化播放器。
      */
-    public static void actionInit(Context context) {
-        Intent intent = newIntent(context);
+    public static void init(Context context) {
+        Intent intent = newIntent(context.getApplicationContext());
         intent.setAction(ACTION_INIT);
         context.startService(intent);
     }
 
     /**
-     * 播放网络音频。
-     * @param url 音频的URL。
+     * 播放本地音频。
      */
-    public static void actionPlay(Context context, String url) {
-        Intent intent = newIntent(context);
+    public static void playLocal(Context context, String filepath) {
+        play(context, filepath, TYPE_LOCAL);
+    }
+
+    /**
+     * 播放网络音频。
+     */
+    public static void playNet(Context context, String url) {
+        play(context, url, TYPE_NET);
+    }
+
+    /**
+     * 播放音频。
+     *
+     * @param content 网络音频填写URL，本地音频填写文件路径。
+     */
+    public static void play(Context context, String content, int from) {
+        Intent intent = newIntent(context.getApplicationContext());
         intent.setAction(ACTION_PLAY);
-        intent.putExtra(EXTRA_URL, url);
+        intent.putExtra(EXTRA_TYPE, from);
+        if (from == TYPE_LOCAL) {
+            intent.putExtra(EXTRA_FILE, content);
+        } else if (from == TYPE_NET) {
+            intent.putExtra(EXTRA_URL, content);
+        }
         context.startService(intent);
     }
 
@@ -56,15 +84,15 @@ public class PlayerService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        if(intent == null) return;
+        if (intent == null) return;
 
         String action = intent.getAction();
-        if(ACTION_INIT.equals(action)) {
+        if (ACTION_INIT.equals(action)) {
             handleInit();
             return;
         }
 
-        if(!INITIALIZED) {
+        if (!INITIALIZED) {
             Logger.e("MediaPlayer hasn't initialized.");
             return;
         }
@@ -79,8 +107,8 @@ public class PlayerService extends IntentService {
     private void handleInit() {
         //初始化一次，防止泄露
         //由于onHandleIntent处理时其他请求被挂起，因此无需同步
-        if(INITIALIZED) {
-            Logger.e("actionInit() should be called only once!");
+        if (INITIALIZED) {
+            Logger.e("init() should be called only once!");
             return;
         }
         mediaPlayer = new MediaPlayer();
@@ -89,7 +117,7 @@ public class PlayerService extends IntentService {
 
     private void handlePlay(Intent intent) {
         final String url = intent.getStringExtra(EXTRA_URL);
-        if(TextUtils.isEmpty(url)) {
+        if (TextUtils.isEmpty(url)) {
             Logger.e("Unsupported url: " + url);
             return;
         }

@@ -14,7 +14,7 @@ public class MataApplication extends BaseApplication {
     public void onCreate() {
         super.onCreate();
         //初始化播放器
-        PlayerService.actionInit(getApplicationContext());
+        PlayerService.init(getApplicationContext());
     }
 
     @Override

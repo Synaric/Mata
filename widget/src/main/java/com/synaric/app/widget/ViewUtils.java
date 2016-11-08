@@ -3,6 +3,8 @@ package com.synaric.app.widget;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v7.util.DiffUtil;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.View;
@@ -14,6 +16,7 @@ import com.synaric.app.widget.adapter.CommonAdapter;
 import com.synaric.common.utils.SystemUtils;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.Callable;
 
 import rx.functions.Action1;
@@ -35,22 +38,24 @@ public class ViewUtils {
     }
 
     /**
-     * 开启线程比较数据，并将更新异步通知adapter。
+     * 开启线程比较数据变动，并将更新异步通知adapter。
      */
     public static <T> void calculateDiff(
             final CommonAdapter adapter,
             final List<T> oldData,
             final List<T> newData,
             final BaseDiffCallBack.OnItemCompare<T> onItemCompare) {
+
         RxUtils.makeModelObservable(new Callable<DiffUtil.DiffResult>() {
             @Override
             public DiffUtil.DiffResult call() throws Exception {
                 return DiffUtil.calculateDiff(new BaseDiffCallBack(oldData, newData) {
                     @Override
                     public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-                        return onItemCompare.areItemsTheSame(
-                                oldData.get(oldItemPosition),
-                                newData.get(newItemPosition));
+                        return Objects.equals(
+                                onItemCompare.getPrimaryKey(oldData.get(oldItemPosition)),
+                                onItemCompare.getPrimaryKey(newData.get(newItemPosition))
+                        );
                     }
                 });
             }
@@ -64,6 +69,10 @@ public class ViewUtils {
         });
     }
 
+    public static RecyclerView.LayoutManager defaultLayoutManger(Context context) {
+        return new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+    }
+
     /**
      * 创建一个描述TextView。
      */
@@ -74,14 +83,14 @@ public class ViewUtils {
     }
 
     /**
-     * 适配drawableLeft大小。
+     * 适配drawableLeft大小，单位dp。
      */
     public static void resizeDrawableLeft(Context context, TextView tv, int id, int size) {
         resizeDrawableLeft(context, tv, id, size, size);
     }
 
     /**
-     * 适配drawableLeft大小。
+     * 适配drawableLeft大小，单位dp。
      */
     @SuppressWarnings("deprecation")
     public static void resizeDrawableLeft(Context context, TextView tv, int id, int width, int height) {

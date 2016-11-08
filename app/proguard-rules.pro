@@ -44,3 +44,6 @@
     <init>(java.lang.Throwable);
 }
 
+#Picasso
+-dontwarn com.squareup.okhttp.**
+

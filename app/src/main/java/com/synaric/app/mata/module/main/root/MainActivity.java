@@ -90,7 +90,6 @@ public class MainActivity extends MvpActivity<MainPresenter> implements MainView
 
     /**
      * 退栈到HomeFragment的时候，允许DrawerLayout滑动，反之禁止。
-     *
      * @param lock Fragment请求是否锁定DrawerLayout。
      */
     @Override
@@ -117,10 +116,8 @@ public class MainActivity extends MvpActivity<MainPresenter> implements MainView
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_play:
-                PlayerService.actionInit(this);
                 break;
             case R.id.iv_next:
-                PlayerService.actionInit(getApplicationContext());
                 break;
             case R.id.iv_cover_large:
                 break;

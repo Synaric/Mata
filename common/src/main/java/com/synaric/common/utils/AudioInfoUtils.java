@@ -3,19 +3,16 @@ package com.synaric.common.utils;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.MediaMetadataRetriever;
 import android.net.Uri;
-import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
 
+import com.orhanobut.logger.Logger;
 import com.synaric.app.rxmodel.utils.RxUtils;
 import com.synaric.common.entity.AudioInfo;
 
-import java.io.FileDescriptor;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -62,6 +59,8 @@ public class AudioInfoUtils {
                 MediaStore.Audio.AudioColumns.COMPOSER, //作曲
                 MediaStore.Audio.AudioColumns.DATA,     //文件路径
                 MediaStore.Audio.AudioColumns.SIZE,     //文件大小
+                MediaStore.Audio.Media.DATE_MODIFIED,   //文件修改时间
+                MediaStore.Audio.Media.TITLE_KEY        //歌曲标识
         };
         Cursor cursor = resolver.query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
                 projection, null, null, MediaStore.Audio.Media.DEFAULT_SORT_ORDER);
@@ -82,6 +81,8 @@ public class AudioInfoUtils {
                 info.setComposer(cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.COMPOSER)));
                 info.setData(cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA)));
                 info.setSize(cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.SIZE)));
+                info.setModified(cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATE_MODIFIED)));
+                info.setTitleKey(cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.TITLE_KEY)));
 
                 //歌曲大小和时长要符合要求
                 if(config.validate(info)) audioInfoList.add(info);
@@ -92,58 +93,27 @@ public class AudioInfoUtils {
         }
         cursor.close();
 
+        //按照修改时间排序
+        Collections.sort(audioInfoList, new Comparator<AudioInfo>() {
+            @Override
+            public int compare(AudioInfo o1, AudioInfo o2) {
+                return o1.getModified() - o2.getModified() > 0 ? -1 : 1;
+            }
+        });
+        Logger.d("finish scanning. total files: " + audioInfoList.size());
+
         return audioInfoList;
     }
 
     /**
-     * 根据音乐文件路径获取专辑封面缩略图。
-     * @param filePath 音乐文件路径。
-     * @return 封面缩略图。
-     */
-    @Deprecated
-    public static Bitmap getCoverByPath(String filePath){
-        Bitmap bitmap = null;
-        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-        byte[] embedPic = retriever.getEmbeddedPicture();
-
-        try {
-
-            retriever.setDataSource(filePath);
-            bitmap = BitmapFactory.decodeByteArray(embedPic, 0, embedPic.length);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            retriever.release();
-        }
-        return bitmap;
-    }
-
-    /**
-     * 根据歌曲id获取专辑封面缩略图。
+     * 根据歌曲id获取专辑封面缩略图Uri。
      * @return 封面图。
      */
-    public static Bitmap getCoverFromFile(Context context, long id){
-        Bitmap cover = null;
-
+    public static Uri getUriFromId(long id){
         if(id < 0){
             throw new IllegalArgumentException("id must > 0. id = " + id);
         }
-
-        try {
-
-            Uri uri = Uri.parse("content://media/external/audio/media/" + id + "/albumart");
-            ParcelFileDescriptor pfd = context.getContentResolver().openFileDescriptor(uri, "r");
-            if(pfd != null){
-                FileDescriptor fd = pfd.getFileDescriptor();
-                cover = BitmapFactory.decodeFileDescriptor(fd);
-            }
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        return cover;
+        return Uri.parse("content://media/external/audio/media/" + id + "/albumart");
     }
 
     public static class ScanConfig {

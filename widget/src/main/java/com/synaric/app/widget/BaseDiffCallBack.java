@@ -32,6 +32,6 @@ public abstract class BaseDiffCallBack extends DiffUtil.Callback {
 
     public interface OnItemCompare<T> {
 
-        boolean areItemsTheSame(T oldItem, T newItem);
+        Object getPrimaryKey(T item);
     }
 }
