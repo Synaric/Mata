@@ -8,14 +8,22 @@ import android.net.Uri;
 import android.text.TextUtils;
 
 import com.orhanobut.logger.Logger;
+import com.synaric.app.player.event.PlayerStateChangedEvent;
 import com.synaric.common.entity.AudioInfo;
 
 import java.io.IOException;
+
+import xiaofei.library.hermeseventbus.HermesEventBus;
 
 /**
  * 播放器服务。
  */
 public class PlayerService extends IntentService {
+
+    /**
+     * 播放器状态：播放中。
+     */
+    public static final int STATE_PLAYING = 2;
 
     public static final String ACTION_INIT = "init";
 
@@ -41,7 +49,8 @@ public class PlayerService extends IntentService {
      * 初始化播放器。
      */
     public static void init(Context context) {
-        Intent intent = newIntent(context.getApplicationContext());
+        context = context.getApplicationContext();
+        Intent intent = newIntent(context);
         intent.setAction(ACTION_INIT);
         context.startService(intent);
     }
@@ -49,16 +58,17 @@ public class PlayerService extends IntentService {
     /**
      * 播放音频。
      */
-    public static void play(Context context, AudioInfo info, int from) {
-        Intent intent = newIntent(context.getApplicationContext());
+    public static void play(Context context, AudioInfo info, int sourceType) {
+        context = context.getApplicationContext();
+        Intent intent = newIntent(context);
         intent.setAction(ACTION_PLAY);
-        intent.putExtra(EXTRA_TYPE, from);
+        intent.putExtra(EXTRA_TYPE, sourceType);
         intent.putExtra(EXTRA_AUDIO_INFO, info);
         context.startService(intent);
     }
 
     private static Intent newIntent(Context context) {
-        return new Intent(context, IntentService.class);
+        return new Intent(context, PlayerService.class);
     }
 
     @Override
@@ -95,7 +105,8 @@ public class PlayerService extends IntentService {
     }
 
     private void handlePlay(Intent intent) {
-        AudioInfo audioInfo = (AudioInfo) intent.getSerializableExtra(EXTRA_AUDIO_INFO);
+        final AudioInfo audioInfo = (AudioInfo) intent.getSerializableExtra(EXTRA_AUDIO_INFO);
+        final int type = intent.getIntExtra(EXTRA_TYPE, 0);
         if(audioInfo == null) return;
 
         final String url = audioInfo.getData();
@@ -111,7 +122,8 @@ public class PlayerService extends IntentService {
             mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
                 public void onPrepared(MediaPlayer mp) {
-                    mediaPlayer.start();
+                    HermesEventBus.getDefault().post(new PlayerStateChangedEvent(STATE_PLAYING, type, audioInfo));
+                    //mediaPlayer.start();
                 }
             });
             mediaPlayer.prepareAsync();
@@ -119,13 +131,5 @@ public class PlayerService extends IntentService {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    /**
-     * 监听播放器状态。
-     */
-    public interface PlayerStateListener {
-
-        void onPlay(AudioInfo info);
     }
 }

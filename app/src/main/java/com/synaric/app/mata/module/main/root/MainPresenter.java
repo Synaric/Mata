@@ -1,6 +1,7 @@
 package com.synaric.app.mata.module.main.root;
 
 import com.synaric.app.mata.mvp.BasePresenter;
+import com.synaric.app.player.PlayerService;
 import com.synaric.mvp.View;
 
 import rx.Observable;
@@ -16,6 +17,6 @@ public class MainPresenter extends BasePresenter{
     }
 
     public void loadMain() {
-        accessData(new SimpleApiCallback<>(standardModel.emptyRequest(queryBy(null))));
+        //accessData(new SimpleApiCallback<>(standardModel.emptyRequest(queryBy(null))));
     }
 }

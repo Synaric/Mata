@@ -3,6 +3,7 @@ package com.synaric.app.mata.module.main.root;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 
 import com.flyco.tablayout.SlidingTabLayout;
 import com.synaric.app.mata.R;
@@ -11,9 +12,10 @@ import com.synaric.app.mata.base.BaseFragment;
 import com.synaric.app.mata.event.RequestFinish;
 import com.synaric.app.mata.event.RequestStartFragment;
 import com.synaric.app.mata.event.RequestToggleDrawer;
-import com.synaric.app.mata.module.local.LocalAudiosFragment;
+import com.synaric.app.mata.module.main.my.local.LocalAudiosFragment;
 
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -50,6 +52,7 @@ public class HomeFragment extends BaseFragment {
     @Override
     protected void onCreate() {
         super.onCreate();
+        Log.d("HomeFragment", "onCreate");
         setEnableSwipeBack(false);
     }
 

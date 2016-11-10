@@ -1,11 +1,13 @@
 package com.synaric.common.utils;
 
 import android.annotation.SuppressLint;
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.os.Process;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
@@ -71,6 +73,23 @@ public class SystemUtils {
             e.printStackTrace();
         }
 
+        return null;
+    }
+
+    public static boolean isMainProgress(Context context) {
+        return context.getPackageName().equals(getCurrentProcessName(context));
+    }
+
+    public static String getCurrentProcessName(Context context) {
+        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        if (activityManager == null) {
+            return null;
+        }
+        for (ActivityManager.RunningAppProcessInfo processInfo : activityManager.getRunningAppProcesses()) {
+            if (processInfo.pid == Process.myPid()) {
+                return processInfo.processName;
+            }
+        }
         return null;
     }
 }

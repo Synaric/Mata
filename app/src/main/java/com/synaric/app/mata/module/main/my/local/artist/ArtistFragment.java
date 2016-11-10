@@ -1,4 +1,4 @@
-package com.synaric.app.mata.module.local.artist;
+package com.synaric.app.mata.module.main.my.local.artist;
 
 import com.synaric.app.mata.base.BaseFragment;
 

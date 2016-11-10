@@ -1,8 +1,9 @@
 package com.synaric.app.mata;
 
-import com.synaric.app.player.PlayerService;
 import com.synaric.common.BaseApplication;
 import com.synaric.app.mata.model.StandardModel;
+
+import xiaofei.library.hermeseventbus.HermesEventBus;
 
 /**
  * 初始化与生命周期监听。
@@ -13,8 +14,7 @@ public class MataApplication extends BaseApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        //初始化播放器
-        PlayerService.init(getApplicationContext());
+        HermesEventBus.getDefault().init(this);
     }
 
     @Override

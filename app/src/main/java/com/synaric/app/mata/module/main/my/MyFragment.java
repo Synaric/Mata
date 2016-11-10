@@ -4,7 +4,7 @@ import android.view.View;
 
 import com.synaric.app.mata.R;
 import com.synaric.app.mata.base.BaseFragment;
-import com.synaric.app.mata.module.local.LocalAudiosFragment;
+import com.synaric.app.mata.module.main.my.local.LocalAudiosFragment;
 import com.synaric.app.mata.module.main.root.HomeFragment;
 
 import butterknife.OnClick;
@@ -51,13 +51,20 @@ public class MyFragment extends BaseFragment implements MyView<String> {
 
     }
 
-    @OnClick({R.id.ll_local_audio})
+    @OnClick({R.id.ll_local_audio, R.id.ll_favorite, R.id.ll_history, R.id.ll_artist})
     public void onClick(View view) {
         final int id = view.getId();
 
         switch (id) {
             case R.id.ll_local_audio:
                 postStartFragment(HomeFragment.class, LocalAudiosFragment.newInstance(), SupportFragment.STANDARD);
+                break;
+            case R.id.ll_favorite:
+                break;
+            case R.id.ll_history:
+                break;
+            case R.id.ll_artist:
+                postStartFragment(HomeFragment.class, FavoriteArtistFragment.newInstance(), SupportFragment.STANDARD);
                 break;
         }
     }

@@ -1,6 +1,7 @@
 package com.synaric.common;
 
 import android.app.Application;
+import android.util.Log;
 
 /**
  * 基础应用配置、生命周期管理。
@@ -13,7 +14,6 @@ public abstract class BaseApplication extends Application{
     @Override
     public void onCreate() {
         super.onCreate();
-
         //初始化工具
         CommonUtilsConfiguration.init(this, getBaseUrl());
     }

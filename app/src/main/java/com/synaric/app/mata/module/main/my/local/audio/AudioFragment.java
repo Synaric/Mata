@@ -1,4 +1,4 @@
-package com.synaric.app.mata.module.local.audio;
+package com.synaric.app.mata.module.main.my.local.audio;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.orhanobut.logger.Logger;
 import com.synaric.app.mata.R;
 import com.synaric.app.mata.base.MvpFragment;
-import com.synaric.app.mata.module.local.LocalAudiosPresenter;
+import com.synaric.app.mata.module.main.my.local.LocalAudiosPresenter;
 import com.synaric.app.player.PlayerService;
 import com.synaric.app.widget.CompoundRecyclerView;
 import com.synaric.app.widget.ViewUtils;
@@ -73,12 +73,17 @@ public class AudioFragment extends MvpFragment<LocalAudiosPresenter>
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        //读取本地歌曲
-        presenter.loadLocalAudios(this);
         //适配icon大小
         ViewUtils.resizeDrawableLeft(
                 getContext(), tvRandomPlay, R.drawable.list_btn_orange_randomplay, 14
         );
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        //扫描本地歌曲
+        presenter.scanLocalAudios(this, getContext());
     }
 
     @OnClick(R.id.tv_random_play)

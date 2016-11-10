@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.synaric.app.widget.R;
+import com.synaric.common.utils.ImageUtils;
 
 /**
  * <br/><br/>Created by Synaric on 2016/11/1 0001.
@@ -54,10 +55,6 @@ public class CommonViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void setImageUri(Context context, int viewId, Uri uri, int placeHolderId) {
-        Picasso
-            .with(context)
-            .load(uri)
-            .placeholder(placeHolderId <= 0 ? R.color.img_error : placeHolderId)
-            .into((ImageView) fetchView(viewId));
+        ImageUtils.loadInto(context, uri, placeHolderId, (ImageView) fetchView(viewId));
     }
 }

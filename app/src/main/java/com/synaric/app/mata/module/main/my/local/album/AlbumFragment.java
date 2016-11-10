@@ -1,4 +1,4 @@
-package com.synaric.app.mata.module.local.album;
+package com.synaric.app.mata.module.main.my.local.album;
 
 import com.synaric.app.mata.base.BaseFragment;
 

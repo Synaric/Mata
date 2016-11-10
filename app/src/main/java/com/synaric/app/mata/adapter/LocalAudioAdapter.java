@@ -5,11 +5,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
 import com.synaric.app.mata.R;
-import com.synaric.app.mata.module.local.album.AlbumFragment;
-import com.synaric.app.mata.module.local.artist.ArtistFragment;
-import com.synaric.app.mata.module.local.audio.AudioFragment;
-import com.synaric.app.mata.module.local.compilation.CompilationFragment;
-import com.synaric.app.mata.module.local.folder.FolderFragment;
+import com.synaric.app.mata.module.main.my.local.album.AlbumFragment;
+import com.synaric.app.mata.module.main.my.local.artist.ArtistFragment;
+import com.synaric.app.mata.module.main.my.local.audio.AudioFragment;
+import com.synaric.app.mata.module.main.my.local.compilation.CompilationFragment;
+import com.synaric.app.mata.module.main.my.local.folder.FolderFragment;
 import com.synaric.app.mata.mvp.BasePresenter;
 import com.synaric.common.adapter.BaseTabPagerAdapter;
 

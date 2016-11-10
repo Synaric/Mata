@@ -26,7 +26,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <!-- 播放器服务 -->
+        <service
+            android:name="com.synaric.app.player.PlayerService"
+            android:exported="false"
+            android:process=":player"/>
 
         <activity android:name=".module.main.root.MainActivity">
             <intent-filter>

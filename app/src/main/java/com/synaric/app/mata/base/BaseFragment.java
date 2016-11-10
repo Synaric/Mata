@@ -16,10 +16,10 @@ import com.synaric.app.mata.event.RequestStartFragment;
 import com.synaric.app.mata.event.ShowFragmentStack;
 import com.synaric.app.mata.widget.SwipeBackLayout;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import me.yokeyword.fragmentation.SupportFragment;
-import xiaofei.library.hermeseventbus.HermesEventBus;
 
 /**
  * <pre>
@@ -34,7 +34,7 @@ import xiaofei.library.hermeseventbus.HermesEventBus;
 @SuppressWarnings("unused")
 public abstract class BaseFragment extends SupportFragment {
 
-    protected final HermesEventBus eventBus = HermesEventBus.getDefault();
+    protected final EventBus eventBus = EventBus.getDefault();
 
     protected BaseActivity activity;
 
@@ -211,8 +211,9 @@ public abstract class BaseFragment extends SupportFragment {
      */
     public void onEvent(RequestStartFragment event) {
         Class<?> from = event.from;
-        if(from == null || !(getClass() == from)) return;
-        start(event.to, event.launchMode);
+        SupportFragment to = event.to;
+        if(from == null || to == null ||  !(getClass() == from)) return;
+        start(to, event.launchMode);
     }
 
     /**

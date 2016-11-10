@@ -52,6 +52,7 @@
         android:weightSum="3">
 
         <LinearLayout
+            android:id="@+id/ll_favorite"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -71,6 +72,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_history"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -90,6 +92,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_artist"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

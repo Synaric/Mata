@@ -14,9 +14,10 @@ import com.synaric.app.mata.event.RequestFinish;
 import com.synaric.app.mata.event.RequestStartFragment;
 import com.synaric.app.widget.ViewUtils;
 
+import org.greenrobot.eventbus.EventBus;
+
 import butterknife.ButterKnife;
 import me.yokeyword.fragmentation.SupportFragment;
-import xiaofei.library.hermeseventbus.HermesEventBus;
 
 /**
  * <br/><br/>Created by Synaric on 2016/10/26 0026.
@@ -27,7 +28,7 @@ public class FragmentDelegate {
 
     private Fragment wrapper;
 
-    private HermesEventBus eventBus = HermesEventBus.getDefault();
+    private EventBus eventBus = EventBus.getDefault();
 
     public FragmentDelegate(Context context, Fragment fragment) {
         activity = (BaseActivity) context;
@@ -92,6 +93,7 @@ public class FragmentDelegate {
             Class<? extends BaseFragment> from,
             SupportFragment to,
             int launchMode) {
+
         eventBus.post(new RequestStartFragment(from, to, launchMode));
     }
 }

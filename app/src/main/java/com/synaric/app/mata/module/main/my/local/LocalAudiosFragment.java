@@ -1,4 +1,4 @@
-package com.synaric.app.mata.module.local;
+package com.synaric.app.mata.module.main.my.local;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

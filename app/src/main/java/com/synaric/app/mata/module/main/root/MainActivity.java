@@ -1,5 +1,6 @@
 package com.synaric.app.mata.module.main.root;
 
+import android.net.Uri;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
@@ -13,6 +14,10 @@ import com.synaric.app.mata.event.ShowFragmentStack;
 import com.synaric.app.mata.widget.PlayerBar;
 import com.synaric.app.mata.widget.PlayerLayout;
 import com.synaric.app.player.PlayerService;
+import com.synaric.app.player.event.PlayerStateChangedEvent;
+import com.synaric.common.entity.AudioInfo;
+import com.synaric.common.utils.AudioInfoUtils;
+import com.synaric.common.utils.ImageUtils;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -27,7 +32,8 @@ import me.yokeyword.fragmentation.debug.DebugFragmentRecord;
 /**
  * 主界面。
  */
-public class MainActivity extends MvpActivity<MainPresenter> implements MainView<String>, BaseFragment.OnLockDrawLayoutListener {
+public class MainActivity extends MvpActivity<MainPresenter>
+        implements MainView<String>, BaseFragment.OnLockDrawLayoutListener {
 
     @InjectView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
@@ -48,6 +54,8 @@ public class MainActivity extends MvpActivity<MainPresenter> implements MainView
         loadRootFragment(R.id.fl_container, HomeFragment.newInstance());
         //同步底部播放条和上拉播放器
         playerBar.syncState(playerLayout);
+
+        PlayerService.init(getApplicationContext());
     }
 
     @Override
@@ -88,6 +96,19 @@ public class MainActivity extends MvpActivity<MainPresenter> implements MainView
         showFragmentStackHierarchyView();
     }
 
+    @Subscribe
+    public void onEvent(PlayerStateChangedEvent event) {
+        AudioInfo audioInfo = event.info;
+        switch (event.state) {
+            case PlayerService.STATE_PLAYING:
+                Uri uri = event.type == PlayerService.TYPE_LOCAL ?
+                        AudioInfoUtils.getUriFromId(audioInfo.getId()) :
+                        Uri.parse(audioInfo.getCoverUrl());
+                ImageUtils.loadInto(this, uri, R.color.img_error, playerBar);
+                break;
+        }
+    }
+
     /**
      * 退栈到HomeFragment的时候，允许DrawerLayout滑动，反之禁止。
      * @param lock Fragment请求是否锁定DrawerLayout。
@@ -105,6 +126,15 @@ public class MainActivity extends MvpActivity<MainPresenter> implements MainView
              */
             drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
         }
+    }
+
+    @Override
+    public void onBackPressedSupport() {
+        if(drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+            return;
+        }
+        super.onBackPressedSupport();
     }
 
     @Override

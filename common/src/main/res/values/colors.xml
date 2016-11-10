@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <drawable name="com_background">#00000000</drawable>
+    <color name="img_error">#DDDDDD</color>
 </resources>

@@ -1,4 +1,4 @@
-package com.synaric.app.mata.module.local.compilation;
+package com.synaric.app.mata.module.main.my.local.compilation;
 
 import com.synaric.app.mata.base.BaseFragment;
 
