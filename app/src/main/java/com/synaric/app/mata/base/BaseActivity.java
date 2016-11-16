@@ -22,7 +22,7 @@ import me.yokeyword.fragmentation.debug.DebugFragmentRecord;
  * 所有Activity的基类。
  * <br/><br/>Created by Synaric on 2016/9/5 0005.
  */
-public abstract class BaseActivity extends SupportActivity{
+public abstract class BaseActivity extends SupportActivity {
 
     private boolean enableTransitAnim;
 
@@ -36,7 +36,7 @@ public abstract class BaseActivity extends SupportActivity{
         setContentView(getLayoutId());
         ButterKnife.inject(this);
         EventBus.getDefault().register(this);
-        if(savedInstanceState == null) onCreate();
+        if (savedInstanceState == null) onCreate();
         StatusBarUtils.compat(this);
     }
 
@@ -59,7 +59,7 @@ public abstract class BaseActivity extends SupportActivity{
 
     @SuppressWarnings("unchecked")
     protected List<DebugFragmentRecord> getFragmentRecords() {
-        if(fragmentation == null) return null;
+        if (fragmentation == null) return null;
         return (List<DebugFragmentRecord>) ReflectUtils.invoke(fragmentation, getFragmentRecords);
     }
 

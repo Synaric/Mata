@@ -28,8 +28,7 @@
 
         <service
             android:name="com.synaric.app.player.PlayerService"
-            android:exported="false"
-            android:process=":player"/>
+            android:exported="false"/>
 
         <activity android:name=".module.main.root.MainActivity">
             <intent-filter>

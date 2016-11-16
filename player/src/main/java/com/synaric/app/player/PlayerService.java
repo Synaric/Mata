@@ -1,24 +1,25 @@
 package com.synaric.app.player;
 
 import android.app.IntentService;
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.IBinder;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.orhanobut.logger.Logger;
 import com.synaric.app.player.event.PlayerStateChangedEvent;
 import com.synaric.common.entity.AudioInfo;
 
-import java.io.IOException;
-
 import xiaofei.library.hermeseventbus.HermesEventBus;
 
 /**
  * 播放器服务。
  */
-public class PlayerService extends IntentService {
+public class PlayerService extends Service {
 
     /**
      * 播放器状态：播放中。
@@ -39,10 +40,12 @@ public class PlayerService extends IntentService {
 
     private static boolean INITIALIZED = false;
 
-    private MediaPlayer mediaPlayer;
+    private static MediaPlayer mediaPlayer;
 
-    public PlayerService() {
-        super("PlayerService");
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
     }
 
     /**
@@ -72,18 +75,18 @@ public class PlayerService extends IntentService {
     }
 
     @Override
-    protected void onHandleIntent(Intent intent) {
-        if (intent == null) return;
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        if (intent == null) return START_STICKY;
 
         String action = intent.getAction();
         if (ACTION_INIT.equals(action)) {
             handleInit();
-            return;
+            return START_STICKY;
         }
 
         if (!INITIALIZED) {
             Logger.e("MediaPlayer hasn't initialized.");
-            return;
+            return START_STICKY;
         }
 
         switch (action) {
@@ -91,6 +94,8 @@ public class PlayerService extends IntentService {
                 handlePlay(intent);
                 break;
         }
+
+        return START_STICKY;
     }
 
     private void handleInit() {
@@ -102,12 +107,13 @@ public class PlayerService extends IntentService {
         }
         mediaPlayer = new MediaPlayer();
         INITIALIZED = true;
+        Logger.d("PlayerService has been initialized.");
     }
 
     private void handlePlay(Intent intent) {
         final AudioInfo audioInfo = (AudioInfo) intent.getSerializableExtra(EXTRA_AUDIO_INFO);
         final int type = intent.getIntExtra(EXTRA_TYPE, 0);
-        if(audioInfo == null) return;
+        if (audioInfo == null) return;
 
         final String url = audioInfo.getData();
         if (TextUtils.isEmpty(url)) {
@@ -115,20 +121,20 @@ public class PlayerService extends IntentService {
             return;
         }
 
-        Uri uri = Uri.parse(url);
         try {
 
-            mediaPlayer.setDataSource(getApplicationContext(), uri);
+            mediaPlayer.setDataSource(url);
             mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
                 public void onPrepared(MediaPlayer mp) {
+                    Logger.d("PlayerService.onPrepared().");
                     HermesEventBus.getDefault().post(new PlayerStateChangedEvent(STATE_PLAYING, type, audioInfo));
                     //mediaPlayer.start();
                 }
             });
             mediaPlayer.prepareAsync();
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

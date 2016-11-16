@@ -1,12 +1,13 @@
 package com.synaric.app.player.event;
 
 import com.synaric.common.entity.AudioInfo;
+import com.synaric.common.utils.IPCEvent;
 
 /**
  * 播放器状态更新事件，通过Hermes-EventBus（一个EventBus的IPC实现）分发。
  * <br/><br/>Created by Synaric on 2016/11/9 0009.
  */
-public class PlayerStateChangedEvent {
+public class PlayerStateChangedEvent extends IPCEvent {
 
     public int state;
     public int type;

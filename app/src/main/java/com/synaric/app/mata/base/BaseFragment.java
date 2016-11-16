@@ -22,12 +22,13 @@ import org.greenrobot.eventbus.Subscribe;
 import me.yokeyword.fragmentation.SupportFragment;
 
 /**
+ * 封装了Fragment共通操作，并且具有SwipeBack功能。
+ * <br/>如果要关闭swipe back模式：
  * <pre>
- *     如果要关闭swipe back模式：
  *     protected void onCreate() {
  *         setEnableSwipeBack(false);
  *     }
- *     例如{@link com.synaric.app.mata.module.main.root.HomeFragment}就不应该开启swipe back模式。
+ * 例如{@link com.synaric.app.mata.module.main.root.HomeFragment}就不应该开启swipe back模式。
  * </pre>
  * <br/><br/>Created by Synaric on 2016/10/11 0011.
  */
@@ -118,7 +119,7 @@ public abstract class BaseFragment extends SupportFragment {
      * @param view 根视图。
      */
     protected View attachToSwipeBack(View view) {
-        swipeBackLayout.attachToFragment(this, view);
+        if(swipeBackLayout != null) swipeBackLayout.attachToFragment(this, view);
         return swipeBackLayout;
     }
 
@@ -173,12 +174,13 @@ public abstract class BaseFragment extends SupportFragment {
 
         BaseFragment fragment = findFragment(to);
         if (fragment == null) {
+            //如果不在栈内，则直接启动
             popTo(from, false, () -> {
                 try {
                     if (post) {
-                        start(to.newInstance());
-                    } else {
                         postStartFragment(from, to.newInstance(), SupportFragment.STANDARD);
+                    } else {
+                        start(to.newInstance());
                     }
                 } catch (java.lang.InstantiationException | IllegalAccessException e) {
                     e.printStackTrace();
@@ -207,6 +209,7 @@ public abstract class BaseFragment extends SupportFragment {
     }
 
     /**
+     * 异步请求开启Fragment事件。
      * 根Fragment需要覆写本方法并监听事件（加上{@link Subscribe}注解）。
      */
     public void onEvent(RequestStartFragment event) {
@@ -217,6 +220,7 @@ public abstract class BaseFragment extends SupportFragment {
     }
 
     /**
+     * 异步请求Fragment退栈事件。
      * 根Fragment需要覆写本方法并监听事件（加上{@link Subscribe}注解）。
      */
     @SuppressWarnings("deprecation")
@@ -232,6 +236,10 @@ public abstract class BaseFragment extends SupportFragment {
 
     }
 
+    /**
+     * 单Activity模式中，SwipeBackFragment会在生命周期中请求锁定和释放DrawerLayout。
+     * 持有DrawerLayout的全局界面需要实现这个监听，并根据Fragment栈情况锁定和释放DrawLayout。
+     */
     public interface OnLockDrawLayoutListener {
 
         void onLockDrawLayout(boolean lock);

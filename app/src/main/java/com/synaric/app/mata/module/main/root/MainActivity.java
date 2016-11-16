@@ -54,8 +54,6 @@ public class MainActivity extends MvpActivity<MainPresenter>
         loadRootFragment(R.id.fl_container, HomeFragment.newInstance());
         //同步底部播放条和上拉播放器
         playerBar.syncState(playerLayout);
-
-        PlayerService.init(getApplicationContext());
     }
 
     @Override
@@ -104,13 +102,14 @@ public class MainActivity extends MvpActivity<MainPresenter>
                 Uri uri = event.type == PlayerService.TYPE_LOCAL ?
                         AudioInfoUtils.getUriFromId(audioInfo.getId()) :
                         Uri.parse(audioInfo.getCoverUrl());
-                ImageUtils.loadInto(this, uri, R.color.img_error, playerBar);
+                ImageUtils.loadInto(this, uri, R.drawable.default_cover_radioplayerbar, playerBar);
                 break;
         }
     }
 
     /**
      * 退栈到HomeFragment的时候，允许DrawerLayout滑动，反之禁止。
+     *
      * @param lock Fragment请求是否锁定DrawerLayout。
      */
     @Override
@@ -130,10 +129,16 @@ public class MainActivity extends MvpActivity<MainPresenter>
 
     @Override
     public void onBackPressedSupport() {
-        if(drawerLayout.isDrawerOpen(GravityCompat.START)) {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
             return;
         }
+
+        if (playerLayout.isOpened()) {
+            playerLayout.animateClose();
+            return;
+        }
+
         super.onBackPressedSupport();
     }
 

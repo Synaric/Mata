@@ -20,6 +20,7 @@ import butterknife.ButterKnife;
 import me.yokeyword.fragmentation.SupportFragment;
 
 /**
+ * 封装Fragment共通操作。
  * <br/><br/>Created by Synaric on 2016/10/26 0026.
  */
 public class FragmentDelegate {

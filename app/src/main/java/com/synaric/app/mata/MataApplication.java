@@ -1,7 +1,9 @@
 package com.synaric.app.mata;
 
+import com.synaric.app.player.PlayerService;
 import com.synaric.common.BaseApplication;
 import com.synaric.app.mata.model.StandardModel;
+import com.synaric.common.utils.SystemUtils;
 
 import xiaofei.library.hermeseventbus.HermesEventBus;
 
@@ -15,6 +17,9 @@ public class MataApplication extends BaseApplication {
     public void onCreate() {
         super.onCreate();
         HermesEventBus.getDefault().init(this);
+        if (SystemUtils.isMainProgress(this)) {
+            PlayerService.init(getApplicationContext());
+        }
     }
 
     @Override

@@ -6,19 +6,26 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 import com.synaric.app.mata.R;
 import com.synaric.app.widget.SlideUpLayout;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 /**
  * 底部播放条。
  * 这个控件需要和{@link SlideUpLayout}同步状态，即调用{@link #syncState(SlideUpLayout)}。
  * <br/><br/>Created by Synaric on 2016/10/18 0018.
  */
-public class PlayerBar extends LinearLayout implements Target {
+public class PlayerBar extends FrameLayout implements Target {
+
+    @InjectView(R.id.iv_background)
+    ImageView ivBackground;
 
     public PlayerBar(Context context) {
         this(context, null);
@@ -35,6 +42,7 @@ public class PlayerBar extends LinearLayout implements Target {
 
     /**
      * 监听上拉播放器界面的滑动位置，并相应进行动画。
+     *
      * @param slideUpLayout 需要监听的slideUpLayout。
      */
     public void syncState(SlideUpLayout slideUpLayout) {
@@ -43,11 +51,12 @@ public class PlayerBar extends LinearLayout implements Target {
 
     private void init(Context context, AttributeSet attrs, int defStyleAttr) {
         View.inflate(context, R.layout.player_above, this);
+        ButterKnife.inject(this);
     }
 
     @Override
     public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-        setBackground(new BitmapDrawable(getResources(), bitmap));
+        ivBackground.setImageDrawable(new BitmapDrawable(getResources(), bitmap));
     }
 
     @Override
@@ -57,6 +66,6 @@ public class PlayerBar extends LinearLayout implements Target {
 
     @Override
     public void onPrepareLoad(Drawable placeHolderDrawable) {
-        setBackgroundResource(R.drawable.default_cover_radioplayerbar);
+        ivBackground.setImageResource(R.drawable.default_cover_radioplayerbar);
     }
 }
