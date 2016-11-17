@@ -8,8 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
-import com.synaric.app.widget.R;
+import com.orhanobut.logger.Logger;
 import com.synaric.common.utils.ImageUtils;
 
 /**
@@ -19,9 +18,11 @@ public class CommonViewHolder extends RecyclerView.ViewHolder {
 
     private SparseArray<View> views;
     private View root;
+    private Context context;
 
-    public CommonViewHolder(View itemView) {
+    public CommonViewHolder(Context context, View itemView) {
         super(itemView);
+        this.context = context;
         views = new SparseArray<>();
         root = itemView;
     }
@@ -40,9 +41,28 @@ public class CommonViewHolder extends RecyclerView.ViewHolder {
         if(root != null) root.setOnClickListener(listener);
     }
 
-    public void setText(int viewId, CharSequence text) {
+    public CommonViewHolder setText(int viewId, CharSequence text) {
         TextView tv = fetchView(viewId);
         tv.setText(text);
+        return this;
+    }
+
+    /**
+     * 按照一定格式，设置TextView的值。
+     * @param formatId string id，包含格式信息。
+     */
+    public CommonViewHolder setFormatText(int viewId, int formatId, Object... args){
+        if(viewId <= 0 || formatId <= 0){
+            Logger.e("Illegal argument for CommonAdapter.setFormatText(). please check.");
+            return this;
+        }
+
+        if(args == null || args.length <= 0){
+            return this;
+        }
+
+        final String text = context.getResources().getString(formatId, args);
+        return setText(viewId, text);
     }
 
     public void setImageResource(int viewId, int resId) {

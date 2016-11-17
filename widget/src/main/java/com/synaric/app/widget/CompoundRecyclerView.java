@@ -58,7 +58,7 @@ public class CompoundRecyclerView extends FrameLayout {
         FrameLayout.LayoutParams params = new LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         contentView = new RecyclerView(context);
-        contentView.setLayoutManager(ViewUtils.defaultLayoutManger(getContext()));
+        contentView.setLayoutManager(ViewUtils.defaultLayoutManager(getContext()));
         typedArray.recycle();
 
         addView(contentView, params);

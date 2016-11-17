@@ -99,7 +99,7 @@ public class AudioFragment extends MvpFragment<LocalAudiosPresenter>
 
     @Override
     public void onFailed(String error) {
-
+        crvContainer.notifyDataSetChanged(audioInfo, null, AudioInfo::getId);
     }
 
     @Override

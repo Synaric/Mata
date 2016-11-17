@@ -69,8 +69,20 @@ public class ViewUtils {
         });
     }
 
-    public static RecyclerView.LayoutManager defaultLayoutManger(Context context) {
-        return new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+    /**
+     * 创建纵向列表LayoutManager，并解决偶发崩溃问题。
+     */
+    public static RecyclerView.LayoutManager defaultLayoutManager(Context context) {
+        return new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false) {
+            @Override
+            public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
+                try {
+                    super.onLayoutChildren(recycler, state);
+                } catch (Exception e) {
+                    //RecyclerView的一个BUG，偶然性发生的崩溃
+                }
+            }
+        };
     }
 
     /**

@@ -6,8 +6,8 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
 
-import com.orhanobut.logger.Logger;
 import com.synaric.app.rxmodel.utils.RxUtils;
+import com.synaric.common.entity.ArtistInfo;
 import com.synaric.common.entity.AudioInfo;
 
 import java.util.ArrayList;
@@ -27,11 +27,23 @@ public class AudioInfoUtils {
     /**
      * 扫描所有本地音乐信息。
      */
-    public static Observable<List<AudioInfo>> findAllInExternalDir(final Context context) {
+    public static Observable<List<AudioInfo>> findAllAudioInfo(final Context context) {
         return RxUtils.makeModelObservable(new Callable<List<AudioInfo>>() {
             @Override
             public List<AudioInfo> call() throws Exception {
-                return findAllInternal(context);
+                return findAllAudioInfoInternal(context);
+            }
+        });
+    }
+
+    /**
+     * 扫描本地音乐艺术家信息。
+     */
+    public static Observable<List<ArtistInfo>> findAllArtistInfo(final Context context) {
+        return RxUtils.makeModelObservable(new Callable<List<ArtistInfo>>() {
+            @Override
+            public List<ArtistInfo> call() throws Exception {
+                return findAllArtistInfoInternal(context);
             }
         });
     }
@@ -39,14 +51,14 @@ public class AudioInfoUtils {
     /**
      * 扫描所有本地音乐信息。
      */
-    private static List<AudioInfo> findAllInternal(Context context) {
-        return findAllInternal(context, new ScanConfig());
+    private static List<AudioInfo> findAllAudioInfoInternal(Context context) {
+        return findAllAudioInfoInternal(context, new ScanConfig());
     }
 
     /**
      * 扫描所有本地音乐信息。
      */
-    private static List<AudioInfo> findAllInternal(Context context, ScanConfig config){
+    private static List<AudioInfo> findAllAudioInfoInternal(Context context, ScanConfig config) {
         List<AudioInfo> audioInfoList = new ArrayList<>();
 
         ContentResolver resolver = context.getContentResolver();
@@ -64,11 +76,11 @@ public class AudioInfoUtils {
         };
         Cursor cursor = resolver.query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
                 projection, null, null, MediaStore.Audio.Media.DEFAULT_SORT_ORDER);
-        if(cursor == null){
+        if (cursor == null) {
             return audioInfoList;
         }
 
-        while(cursor.moveToNext()){
+        while (cursor.moveToNext()) {
             AudioInfo info = new AudioInfo();
 
             try {
@@ -85,7 +97,7 @@ public class AudioInfoUtils {
                 info.setTitleKey(cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.TITLE_KEY)));
 
                 //歌曲大小和时长要符合要求
-                if(config.validate(info)) audioInfoList.add(info);
+                if (config.validate(info)) audioInfoList.add(info);
 
             } catch (IllegalArgumentException e) {
                 //不处理，继续扫描
@@ -100,18 +112,68 @@ public class AudioInfoUtils {
                 return o1.getModified() - o2.getModified() > 0 ? -1 : 1;
             }
         });
-        Logger.d("finish scanning. total files: " + audioInfoList.size());
 
         return audioInfoList;
     }
 
     /**
+     * 扫描本地音乐艺术家信息。
+     */
+    private static List<ArtistInfo> findAllArtistInfoInternal(Context context) {
+        List<ArtistInfo> artistInfoList = new ArrayList<>();
+
+        ContentResolver resolver = context.getContentResolver();
+        String[] projection = {
+                MediaStore.Audio.Artists._ID,
+                MediaStore.Audio.ArtistColumns.ARTIST,
+                MediaStore.Audio.ArtistColumns.ARTIST_KEY,
+                MediaStore.Audio.ArtistColumns.NUMBER_OF_ALBUMS,
+                MediaStore.Audio.ArtistColumns.NUMBER_OF_TRACKS
+        };
+        Cursor cursor = resolver.query(MediaStore.Audio.Artists.EXTERNAL_CONTENT_URI,
+                projection, null, null, MediaStore.Audio.Artists.DEFAULT_SORT_ORDER);
+
+        if (cursor == null) {
+            return artistInfoList;
+        }
+
+        while (cursor.moveToNext()) {
+            ArtistInfo info = new ArtistInfo();
+
+            try {
+
+                info.setArtist(cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.ArtistColumns.ARTIST)));
+                info.setArtistKey(cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.ArtistColumns.ARTIST_KEY)));
+                info.setAlbums(cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.Audio.ArtistColumns.NUMBER_OF_ALBUMS)));
+                info.setTracks(cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.Audio.ArtistColumns.NUMBER_OF_TRACKS)));
+
+                artistInfoList.add(info);
+
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            }
+        }
+        cursor.close();
+        Collections.sort(artistInfoList, new Comparator<ArtistInfo>() {
+            @Override
+            public int compare(ArtistInfo o1, ArtistInfo o2) {
+                String o1Artist = o1.getArtist();
+                String o2Artist = o2.getArtist();
+                return o2Artist == null ? 1 : o2Artist.compareTo(o1Artist);
+            }
+        });
+
+        return artistInfoList;
+    }
+
+    /**
      * 根据歌曲id获取专辑封面缩略图Uri。
+     *
      * @return 封面图。
      */
-    public static Uri getUriFromId(String id){
+    public static Uri getUriFromId(String id) {
         long lid = Long.valueOf(id);
-        if(lid < 0){
+        if (lid < 0) {
             throw new IllegalArgumentException("id must > 0. id = " + id);
         }
         return Uri.parse("content://media/external/audio/media/" + id + "/albumart");

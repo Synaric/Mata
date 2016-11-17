@@ -18,18 +18,21 @@ public abstract class CommonAdapter<T> extends RecyclerView.Adapter<CommonViewHo
 
     protected LayoutInflater inflater;
 
+    protected Context context;
+
     private int resId;
 
     public CommonAdapter(Context context, List<T> data, int resId) {
         this.data = data;
         this.inflater = LayoutInflater.from(context);
+        this.context = context;
         this.resId = resId;
     }
 
     @Override
     public CommonViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = inflater.inflate(resId, parent, false);
-        return new CommonViewHolder(view);
+        return new CommonViewHolder(context, view);
     }
 
     @Override

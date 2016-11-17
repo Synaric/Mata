@@ -3,6 +3,7 @@ package com.synaric.app.mata.module.main.my.local;
 import android.content.Context;
 
 import com.synaric.app.mata.mvp.BasePresenter;
+import com.synaric.common.entity.ArtistInfo;
 import com.synaric.common.entity.AudioInfo;
 import com.synaric.common.utils.AudioInfoUtils;
 import com.synaric.mvp.View;
@@ -17,10 +18,18 @@ import rx.Observable;
 public class LocalAudiosPresenter extends BasePresenter {
 
     /**
-     * 扫描本地歌曲。
+     * 扫描所有本地歌曲。
      */
     public void scanLocalAudios(View<?> view, Context context) {
-        Observable<List<AudioInfo>> result = AudioInfoUtils.findAllInExternalDir(context);
+        Observable<List<AudioInfo>> result = AudioInfoUtils.findAllAudioInfo(context);
+        accessData(view, new SimpleApiCallback<>(result));
+    }
+
+    /**
+     * 扫描所有艺术家。
+     */
+    public void scanArtists(View<?> view, Context context) {
+        Observable<List<ArtistInfo>> result = AudioInfoUtils.findAllArtistInfo(context);
         accessData(view, new SimpleApiCallback<>(result));
     }
 }

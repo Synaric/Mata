@@ -26,14 +26,18 @@
     <string name="main_hint_rss2">在虾米音乐快乐地聆听和分享</string>
     <string name="main_first_collection">制作第一张精选集</string>
     <string name="main_find_collection">听大虾们的精选集</string>
-    <string name="no_title">无标题</string>
-    <string name="unknown">未知</string>
     <string name="local_title">本地歌曲</string>
     <string name="local_random_play">随机播放</string>
+    <string name="local_file_count_default">0首</string>
+    <string name="local_file_count">%1$d首</string>
     <string name="local_manage">批量管理</string>
     <string name="local_audio">歌曲</string>
     <string name="local_artist">艺人</string>
     <string name="local_album">专辑</string>
     <string name="local_compilation">精选集</string>
     <string name="local_folder">文件夹</string>
+
+    <string name="unknown">未知</string>
+    <string name="no_title">无标题</string>
+    <string name="hint_empty">虾米也没有</string>
 </resources>
