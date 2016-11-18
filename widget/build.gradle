@@ -21,5 +21,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile rootProject.ext.supportAppCompat
     compile project(':common')
+    //一个TabLayout快速集成库
     compile 'com.flyco.tablayout:FlycoTabLayout_Lib:2.0.0@aar'
 }

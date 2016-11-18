@@ -37,5 +37,7 @@ dependencies {
     compile 'com.squareup.retrofit2:adapter-rxjava:2.0.2'
     compile 'com.squareup.retrofit2:converter-gson:2.0.2'
     compile 'com.squareup.picasso:picasso:2.5.2'
+    //汉字转拼音库，用于拼音排序列表
+    compile 'com.github.promeg:tinypinyin:1.0.0'
     compile project(':rxmodel')
 }

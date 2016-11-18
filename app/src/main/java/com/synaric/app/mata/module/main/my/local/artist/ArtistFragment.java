@@ -59,19 +59,19 @@ public class ArtistFragment extends MvpFragment<LocalAudiosPresenter>
     @Override
     public void onStart() {
         super.onStart();
-        presenter.scanArtists(this, getContext());
+        presenter.scanLocalArtists(this, getContext());
     }
 
     @Override
     public void onSuccess(List<ArtistInfo> data) {
         Logger.d("读取艺术家成功：" + data.size());
-        crvContainer.notifyDataSetChanged(artistInfo, data, ArtistInfo::getArtistKey);
+        crvContainer.notifyDataSetChanged(artistInfo, data, true, ArtistInfo::getArtistKey);
     }
 
     @Override
     public void onFailed(String error) {
         Logger.e(error);
-        crvContainer.notifyDataSetChanged(artistInfo, null, ArtistInfo::getArtistKey);
+        crvContainer.notifyDataSetChanged(artistInfo, null, true, ArtistInfo::getArtistKey);
     }
 
     @Override

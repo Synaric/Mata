@@ -44,7 +44,7 @@ public class CompoundRecyclerView extends FrameLayout {
         init(context, attrs);
     }
 
-    private void init(Context context, @Nullable AttributeSet attrs) {
+    protected void init(Context context, @Nullable AttributeSet attrs) {
         final TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.CompoundRecyclerView);
         final int emptyId = typedArray.getResourceId(R.styleable.CompoundRecyclerView_empty_view, 0);
         final int errorId = typedArray.getResourceId(R.styleable.CompoundRecyclerView_error_view, 0);

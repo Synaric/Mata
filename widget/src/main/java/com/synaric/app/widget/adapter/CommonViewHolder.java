@@ -70,6 +70,11 @@ public class CommonViewHolder extends RecyclerView.ViewHolder {
         iv.setImageResource(resId);
     }
 
+    public void setImagePath(Context context, int viewId, String filePath, int placeHolderId) {
+        ImageView iv = fetchView(viewId);
+        ImageUtils.loadInto(context, filePath, placeHolderId, iv);
+    }
+
     public void setImageUri(Context context, int viewId, Uri uri) {
         setImageUri(context, viewId, uri, 0);
     }

@@ -75,7 +75,10 @@ public class AudioFragment extends MvpFragment<LocalAudiosPresenter>
         super.onActivityCreated(savedInstanceState);
         //适配icon大小
         ViewUtils.resizeDrawableLeft(
-                getContext(), tvRandomPlay, R.drawable.list_btn_orange_randomplay, 14
+                getContext(),
+                tvRandomPlay,
+                R.drawable.list_btn_orange_randomplay,
+                getResources().getInteger(R.integer.drawable_mid)
         );
     }
 
@@ -94,12 +97,12 @@ public class AudioFragment extends MvpFragment<LocalAudiosPresenter>
     @Override
     public void onSuccess(List<AudioInfo> data) {
         Logger.d("读取本地歌曲成功：" + data.size());
-        crvContainer.notifyDataSetChanged(audioInfo, data, AudioInfo::getId);
+        crvContainer.notifyDataSetChanged(audioInfo, data, true, AudioInfo::getId);
     }
 
     @Override
     public void onFailed(String error) {
-        crvContainer.notifyDataSetChanged(audioInfo, null, AudioInfo::getId);
+        crvContainer.notifyDataSetChanged(audioInfo, null, true, AudioInfo::getId);
     }
 
     @Override

@@ -7,7 +7,7 @@
 
     <LinearLayout
         android:id="@+id/ll_local_audio"
-        style="@style/common_item"
+        style="@style/common_card"
         android:orientation="horizontal">
 
         <ImageView
@@ -47,7 +47,7 @@
     </LinearLayout>
 
     <LinearLayout
-        style="@style/common_item"
+        style="@style/common_card"
         android:orientation="horizontal"
         android:weightSum="3">
 
@@ -114,7 +114,7 @@
     </LinearLayout>
 
     <LinearLayout
-        style="@style/common_item"
+        style="@style/common_card"
         android:orientation="horizontal"
         android:gravity="center_vertical">
 
@@ -133,7 +133,7 @@
     </LinearLayout>
 
     <LinearLayout
-        style="@style/common_item"
+        style="@style/common_card"
         android:orientation="vertical"
         android:gravity="center_horizontal">
 

@@ -12,6 +12,7 @@ import com.synaric.app.common.R;
 /**
  * <br/><br/>Created by Synaric on 2016/11/9 0009.
  */
+@SuppressWarnings("unused")
 public class ImageUtils {
 
     /**
@@ -23,6 +24,13 @@ public class ImageUtils {
             .load(uri)
             .placeholder(placeHolderId)
             .fetch(callback);
+    }
+
+    /**
+     * 异步加载图片并显示到一个ImageView上。
+     */
+    public static void loadInto(Context context, String filePath, int placeHolderId, ImageView iv) {
+        loadInto(context, Uri.parse("file://" + filePath), placeHolderId, iv);
     }
 
     /**
