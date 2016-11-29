@@ -1,5 +1,6 @@
 package com.synaric.app.mata.module.main.my.local.artist;
 
+import android.os.Bundle;
 import android.view.View;
 
 import com.orhanobut.logger.Logger;
@@ -57,8 +58,8 @@ public class ArtistFragment extends MvpFragment<LocalAudiosPresenter>
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    protected void onEnterAnimationEnd(Bundle savedInstanceState) {
+        super.onEnterAnimationEnd(savedInstanceState);
         presenter.scanLocalArtists(this, getContext());
     }
 

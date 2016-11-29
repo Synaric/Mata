@@ -83,9 +83,8 @@ public class AudioFragment extends MvpFragment<LocalAudiosPresenter>
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        //扫描本地歌曲
+    protected void onEnterAnimationEnd(Bundle savedInstanceState) {
+        super.onEnterAnimationEnd(savedInstanceState);
         presenter.scanLocalAudios(this, getContext());
     }
 

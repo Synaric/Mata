@@ -3,6 +3,7 @@ package com.synaric.app.widget;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
@@ -24,12 +25,14 @@ import java.util.List;
  *
  * <br/><br/>Created by Synaric on 2016/10/31 0031.
  */
+@SuppressWarnings("unused")
 public class CompoundRecyclerView extends FrameLayout {
 
     private View emptyView;
     private View errorView;
     private RecyclerView contentView;
     private CommonAdapter adapter;
+    private LinearLayoutManager layoutManager;
 
     public CompoundRecyclerView(Context context) {
         this(context, null);
@@ -58,7 +61,8 @@ public class CompoundRecyclerView extends FrameLayout {
         FrameLayout.LayoutParams params = new LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         contentView = new RecyclerView(context);
-        contentView.setLayoutManager(ViewUtils.defaultLayoutManager(getContext()));
+        layoutManager = (LinearLayoutManager) ViewUtils.defaultLayoutManager(getContext());
+        contentView.setLayoutManager(layoutManager);
         typedArray.recycle();
 
         addView(contentView, params);
@@ -134,5 +138,18 @@ public class CompoundRecyclerView extends FrameLayout {
 
         if(itemCount > 0 || forceUpdate)
             ViewUtils.calculateDiff(adapter, oldData, newData, onItemCompare);
+    }
+
+    /**
+     * 平滑回到顶部。
+     */
+    public void smoothScrollToTop() {
+        int firstVisibilityPosition = layoutManager.findFirstVisibleItemPosition();
+        contentView.stopScroll();
+        layoutManager.setSmoothScrollbarEnabled(true);
+        if (firstVisibilityPosition > 10) {
+            layoutManager.scrollToPositionWithOffset(10, 0);
+        }
+        contentView.smoothScrollToPosition(0);
     }
 }
