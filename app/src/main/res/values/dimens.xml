@@ -11,7 +11,7 @@
     <dimen name="tab_indicator_height">2dp</dimen>
     <dimen name="tab_padding">10dp</dimen>
 
-    <dimen name="index_width">15dp</dimen>
+    <dimen name="index_width">30dp</dimen>
 
     <integer name="drawable_mid">14</integer>
 

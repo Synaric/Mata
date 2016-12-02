@@ -149,8 +149,9 @@ public class CompoundRecyclerView extends FrameLayout {
             ViewUtils.calculateDiff(adapter, oldData, newData, onItemCompare);
     }
 
-    public void smoothScrollToPosition(int position) {
-        contentView.smoothScrollToPosition(position);
+    public void smoothScrollToPosition(final int position) {
+        contentView.stopScroll();
+        layoutManager.scrollToPositionWithOffset(position, 0);
     }
 
     /**

@@ -117,6 +117,7 @@
         <item name="android:layout_alignParentEnd">true</item>
         <item name="android:layout_marginTop">@dimen/default_general_margin</item>
         <item name="android:layout_marginBottom">@dimen/default_general_margin</item>
+        <item name="android:alpha">0</item>
     </style>
 
 </resources>

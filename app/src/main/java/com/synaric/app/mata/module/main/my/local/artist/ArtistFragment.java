@@ -7,6 +7,7 @@ import com.orhanobut.logger.Logger;
 import com.synaric.app.mata.R;
 import com.synaric.app.mata.base.MvpFragment;
 import com.synaric.app.mata.module.main.my.local.LocalAudiosPresenter;
+import com.synaric.app.widget.AlphabetIndexView;
 import com.synaric.app.widget.CompoundRecyclerView;
 import com.synaric.app.widget.adapter.CommonAdapter;
 import com.synaric.app.widget.adapter.CommonViewHolder;
@@ -15,6 +16,7 @@ import com.synaric.common.entity.ArtistInfo;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 /**
@@ -26,6 +28,8 @@ public class ArtistFragment extends MvpFragment<LocalAudiosPresenter>
 
     @InjectView(R.id.crv_container)
     CompoundRecyclerView crvContainer;
+    @InjectView(R.id.alphabet_index_view)
+    AlphabetIndexView alphabetIndexView;
 
     private List<ArtistInfo> artistInfo = new ArrayList<>();
 
@@ -35,7 +39,7 @@ public class ArtistFragment extends MvpFragment<LocalAudiosPresenter>
 
     @Override
     public int getLayoutId() {
-        return R.layout.common_list;
+        return R.layout.common_index_list;
     }
 
 
@@ -47,19 +51,21 @@ public class ArtistFragment extends MvpFragment<LocalAudiosPresenter>
     @Override
     protected void onCreateView(View root) {
         super.onCreateView(root);
-        crvContainer.setAdapter(
-            new CommonAdapter<ArtistInfo>(getContext(), artistInfo, R.layout.item_artist_info) {
-                @Override
-                protected void onBindViewHolder(CommonViewHolder holder, ArtistInfo entity) {
-                    holder.setText(R.id.tv_artist, entity.getArtist());
-                    holder.setFormatText(R.id.tv_count, R.string.local_file_count, entity.getTracks());
-                }
-        });
     }
 
     @Override
     protected void onEnterAnimationEnd(Bundle savedInstanceState) {
         super.onEnterAnimationEnd(savedInstanceState);
+        crvContainer.setAdapter(
+                new CommonAdapter<ArtistInfo>(getContext(), artistInfo, R.layout.item_artist_info) {
+                    @Override
+                    protected void onBindViewHolder(CommonViewHolder holder, ArtistInfo entity) {
+                        holder.setText(R.id.tv_artist, entity.getArtist());
+                        holder.setFormatText(R.id.tv_count, R.string.local_file_count, entity.getTracks());
+                    }
+                });
+
+        alphabetIndexView.syncState(crvContainer);
         presenter.scanLocalArtists(this, getContext());
     }
 

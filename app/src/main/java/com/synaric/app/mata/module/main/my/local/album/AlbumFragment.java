@@ -49,6 +49,11 @@ public class AlbumFragment extends MvpFragment<LocalAudiosPresenter>
     @Override
     protected void onCreateView(View root) {
         super.onCreateView(root);
+    }
+
+    @Override
+    protected void onEnterAnimationEnd(Bundle savedInstanceState) {
+        super.onEnterAnimationEnd(savedInstanceState);
         crvContainer.setAdapter(
                 new CommonAdapter<AlbumInfo>(getContext(), albumInfo, R.layout.item_album_info) {
                     @Override
@@ -61,11 +66,6 @@ public class AlbumFragment extends MvpFragment<LocalAudiosPresenter>
                 });
 
         alphabetIndexView.syncState(crvContainer);
-    }
-
-    @Override
-    protected void onEnterAnimationEnd(Bundle savedInstanceState) {
-        super.onEnterAnimationEnd(savedInstanceState);
         presenter.scanLocalAlbums(this, getContext());
     }
 

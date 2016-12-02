@@ -55,19 +55,6 @@ public class AudioFragment extends MvpFragment<LocalAudiosPresenter>
     @Override
     protected void onCreateView(View root) {
         super.onCreateView(root);
-        crvContainer.setAdapter(
-            new CommonAdapter<AudioInfo>(getContext(), audioInfo, R.layout.item_audio_info) {
-                @Override
-                protected void onBindViewHolder(CommonViewHolder holder, AudioInfo entity) {
-                    final Uri uri = AudioInfoUtils.getUriFromId(entity.getId());
-                    holder.setImageUri(getContext(), R.id.iv_cover, uri);
-                    holder.setText(R.id.tv_title, entity.getTitle());
-                    holder.setText(R.id.tv_artist, entity.getArtist());
-                    holder.setOnClickListener(
-                            v -> PlayerService.play(getContext(), entity, PlayerService.TYPE_LOCAL)
-                    );
-                }
-            });
     }
 
     @Override
@@ -85,6 +72,19 @@ public class AudioFragment extends MvpFragment<LocalAudiosPresenter>
     @Override
     protected void onEnterAnimationEnd(Bundle savedInstanceState) {
         super.onEnterAnimationEnd(savedInstanceState);
+        crvContainer.setAdapter(
+                new CommonAdapter<AudioInfo>(getContext(), audioInfo, R.layout.item_audio_info) {
+                    @Override
+                    protected void onBindViewHolder(CommonViewHolder holder, AudioInfo entity) {
+                        final Uri uri = AudioInfoUtils.getUriFromId(entity.getId());
+                        holder.setImageUri(getContext(), R.id.iv_cover, uri);
+                        holder.setText(R.id.tv_title, entity.getTitle());
+                        holder.setText(R.id.tv_artist, entity.getArtist());
+                        holder.setOnClickListener(
+                                v -> PlayerService.play(getContext(), entity, PlayerService.TYPE_LOCAL)
+                        );
+                    }
+                });
         presenter.scanLocalAudios(this, getContext());
     }
 

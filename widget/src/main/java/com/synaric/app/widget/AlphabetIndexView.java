@@ -1,5 +1,6 @@
 package com.synaric.app.widget;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
@@ -7,12 +8,11 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
-import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.orhanobut.logger.Logger;
 import com.synaric.app.widget.adapter.CommonAdapter;
 import com.synaric.common.utils.ExtTextUtils;
 import com.synaric.common.utils.OrderedItem;
@@ -28,7 +28,9 @@ public class AlphabetIndexView extends View {
     /**
      * 默认字体大小。
      */
-    public static int TEXT_SIZE_DEFAULT = 15;
+    public static int TEXT_SIZE_DEFAULT = 30;
+
+    public static long ANIMATION_INTERNAL = 3000;
 
     /**
      * 首字母索引集合。
@@ -72,7 +74,7 @@ public class AlphabetIndexView extends View {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.AlphabetIndexView);
         ColorStateList colors = typedArray.getColorStateList(R.styleable.AlphabetIndexView_aiv_text_color);
         if (colors == null) {
-            textColor = typedArray.getColor(R.styleable.AlphabetIndexView_aiv_text_color, Color.LTGRAY);
+            textColor = Color.LTGRAY;
             textColorSelected = Color.BLUE;
         } else {
             textColor = colors.getDefaultColor();
@@ -118,6 +120,14 @@ public class AlphabetIndexView extends View {
 
         switch (action) {
             case MotionEvent.ACTION_DOWN:
+                show();
+                postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        hide();
+                    }
+                }, ANIMATION_INTERNAL);
+                if (getAlpha() < 0.8f) break;
                 if (oldPosition != newPosition && newPosition >= 0 && newPosition < INDEX.length) {
                     select(newPosition);
                 }
@@ -125,6 +135,20 @@ public class AlphabetIndexView extends View {
         }
 
         return true;
+    }
+
+    /**
+     * 展示索引。
+     */
+    public void show() {
+        ObjectAnimator.ofFloat(this, "alpha", 1).setDuration(200).start();
+    }
+
+    /**
+     * 隐藏索引。
+     */
+    public void hide() {
+        ObjectAnimator.ofFloat(this, "alpha", 0).setDuration(800).start();
     }
 
     /**
@@ -144,24 +168,28 @@ public class AlphabetIndexView extends View {
                 if (adapter == null) return;
                 List<OrderedItem> data = (List<OrderedItem>) adapter.getData();
                 int newPosition = ExtTextUtils.findFirstStartsWith(data, index);
-                if (newPosition >= 0) compoundRecyclerView.smoothScrollToPosition(newPosition);
-            }
-        });
+                Logger.i("newPosition = " + newPosition);
+                if (newPosition >= 0) {
 
-        compoundRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                OrderedItem item = (OrderedItem) compoundRecyclerView.findFirstVisibleItem();
-                String indexTag = item.getIndexTag();
-                if (TextUtils.isEmpty(indexTag) || !ExtTextUtils.isLetter(indexTag.charAt(0))) {
-                    select(INDEX.length - 1);
-                } else {
-                    char c = indexTag.toUpperCase().charAt(0);
-                    select(c - 65);
+                    compoundRecyclerView.smoothScrollToPosition(newPosition);
                 }
             }
         });
+
+//        compoundRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            @Override
+//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+//                super.onScrolled(recyclerView, dx, dy);
+//                OrderedItem item = (OrderedItem) compoundRecyclerView.findFirstVisibleItem();
+//                String indexTag = item.getIndexTag();
+//                if (TextUtils.isEmpty(indexTag) || !ExtTextUtils.isLetter(indexTag.charAt(0))) {
+//                    select(INDEX.length - 1);
+//                } else {
+//                    char c = indexTag.toUpperCase().charAt(0);
+//                    select(c - 65);
+//                }
+//            }
+//        });
     }
 
     /**

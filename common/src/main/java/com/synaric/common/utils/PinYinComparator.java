@@ -17,7 +17,7 @@ public class PinYinComparator<T extends OrderedItem> implements Comparator<T> {
         boolean isLetter2 = ExtTextUtils.isLetter(c2);
 
         if (isLetter1 ^ isLetter2) {
-            return isLetter1 ? 1 : -1;
+            return isLetter1 ? -1 : 1;
         }
 
         return s1.compareTo(s2);

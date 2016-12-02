@@ -12,5 +12,6 @@
 
     <com.synaric.app.widget.AlphabetIndexView
         android:id="@+id/alphabet_index_view"
-        style="@style/common_alphabet_index_view" />
+        style="@style/common_alphabet_index_view"
+        app:aiv_text_color="@color/index_text"/>
 </RelativeLayout>

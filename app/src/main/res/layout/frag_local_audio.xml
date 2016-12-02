@@ -50,6 +50,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
-        app:empty_view="@layout/view_empty"/>
+        app:crv_empty_view="@layout/view_empty"/>
 
 </LinearLayout>
