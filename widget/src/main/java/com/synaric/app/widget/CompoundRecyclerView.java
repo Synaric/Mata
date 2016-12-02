@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.synaric.app.widget.adapter.CommonAdapter;
+import com.synaric.app.widget.other.BaseDiffCallBack;
 
 import java.util.List;
 
@@ -49,8 +50,8 @@ public class CompoundRecyclerView extends FrameLayout {
 
     protected void init(Context context, @Nullable AttributeSet attrs) {
         final TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.CompoundRecyclerView);
-        final int emptyId = typedArray.getResourceId(R.styleable.CompoundRecyclerView_empty_view, 0);
-        final int errorId = typedArray.getResourceId(R.styleable.CompoundRecyclerView_error_view, 0);
+        final int emptyId = typedArray.getResourceId(R.styleable.CompoundRecyclerView_crv_empty_view, 0);
+        final int errorId = typedArray.getResourceId(R.styleable.CompoundRecyclerView_crv_error_view, 0);
         if(emptyId != 0) {
             emptyView = findViewById(emptyId);
         }
@@ -90,6 +91,14 @@ public class CompoundRecyclerView extends FrameLayout {
         contentView.setAdapter(adapter);
         this.adapter = adapter;
         notifyDataSetChanged(null, null, false, null);
+    }
+
+    public CommonAdapter getAdapter() {
+        return adapter;
+    }
+
+    public void addOnScrollListener(RecyclerView.OnScrollListener listener) {
+        contentView.addOnScrollListener(listener);
     }
 
     /**
@@ -140,6 +149,10 @@ public class CompoundRecyclerView extends FrameLayout {
             ViewUtils.calculateDiff(adapter, oldData, newData, onItemCompare);
     }
 
+    public void smoothScrollToPosition(int position) {
+        contentView.smoothScrollToPosition(position);
+    }
+
     /**
      * 平滑回到顶部。
      */
@@ -151,5 +164,14 @@ public class CompoundRecyclerView extends FrameLayout {
             layoutManager.scrollToPositionWithOffset(10, 0);
         }
         contentView.smoothScrollToPosition(0);
+    }
+
+    /**
+     * 返回第一个可见项对应的数据。
+     */
+    public Object findFirstVisibleItem() {
+        int firstVisibilityPosition = layoutManager.findFirstVisibleItemPosition();
+        if (firstVisibilityPosition >= 0)  return adapter.getData().get(firstVisibilityPosition);
+        return null;
     }
 }

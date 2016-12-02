@@ -35,7 +35,7 @@ public class ArtistFragment extends MvpFragment<LocalAudiosPresenter>
 
     @Override
     public int getLayoutId() {
-        return R.layout.view_common_list;
+        return R.layout.common_list;
     }
 
 

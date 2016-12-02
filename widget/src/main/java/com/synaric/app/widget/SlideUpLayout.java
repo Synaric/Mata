@@ -1,21 +1,5 @@
 package com.synaric.app.widget;
 
-/*
- * Copyright (C) 2008 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -30,9 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityEvent;
 
+@SuppressWarnings("unused")
 public class SlideUpLayout extends ViewGroup {
-    public static final int ORIENTATION_HORIZONTAL = 0;
-    public static final int ORIENTATION_VERTICAL = 1;
 
     private static final int TAP_THRESHOLD = 6;
     private static final float MAXIMUM_TAP_VELOCITY = 100.0f;
@@ -95,36 +78,36 @@ public class SlideUpLayout extends ViewGroup {
     /**
      * Callback invoked when the drawer is opened.
      */
-    public static interface OnDrawerOpenListener {
+    public interface OnDrawerOpenListener {
         /**
          * Invoked when the drawer becomes fully open.
          */
-        public void onDrawerOpened();
+        void onDrawerOpened();
     }
 
     /**
      * Callback invoked when the drawer is closed.
      */
-    public static interface OnDrawerCloseListener {
+    public interface OnDrawerCloseListener {
         /**
          * Invoked when the drawer becomes fully closed.
          */
-        public void onDrawerClosed();
+        void onDrawerClosed();
     }
 
     /**
      * Callback invoked when the drawer is scrolled.
      */
-    public static interface OnDrawerScrollListener {
+    public interface OnDrawerScrollListener {
         /**
          * Invoked when the user starts dragging/flinging the drawer's handle.
          */
-        public void onScrollStarted();
+        void onScrollStarted();
 
         /**
          * Invoked when the user stops dragging/flinging the drawer's handle.
          */
-        public void onScrollEnded();
+        void onScrollEnded();
     }
 
     public SlideUpLayout(Context context, AttributeSet attrs) {
@@ -136,6 +119,7 @@ public class SlideUpLayout extends ViewGroup {
         init(context, attrs);
     }
 
+    @SuppressWarnings("deprecation")
     private void init(Context context, AttributeSet attrs) {
         final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SlideUpLayout);
 

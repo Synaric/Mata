@@ -6,9 +6,12 @@
     <dimen name="app_bar_toolbar">3dp</dimen>
     <dimen name="navigation_max_width">300dp</dimen>
     <dimen name="default_general_margin">16dp</dimen>
+
     <dimen name="tab_height">48dp</dimen>
     <dimen name="tab_indicator_height">2dp</dimen>
     <dimen name="tab_padding">10dp</dimen>
+
+    <dimen name="index_width">15dp</dimen>
 
     <integer name="drawable_mid">14</integer>
 

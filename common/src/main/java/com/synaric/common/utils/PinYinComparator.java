@@ -1,25 +1,25 @@
 package com.synaric.common.utils;
 
-import com.github.promeg.pinyinhelper.Pinyin;
-
 import java.util.Comparator;
 
 /**
  * <br/><br/>Created by Synaric on 2016/11/18 0018.
  */
-public abstract class PinYinComparator<T> implements Comparator<T> {
+public class PinYinComparator<T extends OrderedItem> implements Comparator<T> {
 
     @Override
     public int compare(T o1, T o2) {
-        String s1 = orderBy(o1);
-        String s2 = orderBy(o2);
-        if (s1 == null) s1 = "";
-        if (s2 == null) s2 = "";
-        if (Pinyin.isChinese(s1.charAt(0))) s1 = Pinyin.toPinyin(s1.charAt(0));
-        if (Pinyin.isChinese(s2.charAt(0))) s2 = Pinyin.toPinyin(s2.charAt(0));
+        String s1 = o1.getIndexTag(o1.orderBy());
+        String s2 = o2.getIndexTag(o2.orderBy());
+        char c1 = s1.charAt(0);
+        char c2 = s2.charAt(0);
+        boolean isLetter1 = ExtTextUtils.isLetter(c1);
+        boolean isLetter2 = ExtTextUtils.isLetter(c2);
+
+        if (isLetter1 ^ isLetter2) {
+            return isLetter1 ? 1 : -1;
+        }
 
         return s1.compareTo(s2);
     }
-
-    protected abstract String orderBy(T t);
 }

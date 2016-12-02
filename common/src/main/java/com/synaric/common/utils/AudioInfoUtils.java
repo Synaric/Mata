@@ -169,12 +169,7 @@ public class AudioInfoUtils {
         cursor.close();
 
         //按照A-Z排序，汉字转换为拼音排序
-        Collections.sort(artistInfoList, new PinYinComparator<ArtistInfo>() {
-            @Override
-            protected String orderBy(ArtistInfo artistInfo) {
-                return artistInfo.getArtist();
-            }
-        });
+        Collections.sort(artistInfoList, new PinYinComparator<ArtistInfo>());
 
         return artistInfoList;
     }
@@ -222,12 +217,7 @@ public class AudioInfoUtils {
         cursor.close();
 
         //按照A-Z排序，汉字转换为拼音排序
-        Collections.sort(albumInfoList, new PinYinComparator<AlbumInfo>() {
-            @Override
-            protected String orderBy(AlbumInfo albumInfo) {
-                return albumInfo.getAlbum();
-            }
-        });
+        Collections.sort(albumInfoList, new PinYinComparator<AlbumInfo>());
 
         return albumInfoList;
     }

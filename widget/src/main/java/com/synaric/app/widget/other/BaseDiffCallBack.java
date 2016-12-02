@@ -1,4 +1,4 @@
-package com.synaric.app.widget;
+package com.synaric.app.widget.other;
 
 import android.support.v7.util.DiffUtil;
 

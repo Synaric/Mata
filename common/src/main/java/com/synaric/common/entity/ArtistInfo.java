@@ -1,10 +1,12 @@
 package com.synaric.common.entity;
 
+import com.synaric.common.utils.OrderedItem;
+
 /**
  * 描述艺术家信息的封装类。
  * <br/><br/>Created by Synaric on 2016/11/17 0017.
  */
-public class ArtistInfo {
+public class ArtistInfo extends OrderedItem {
 
     private String id;
 
@@ -54,5 +56,10 @@ public class ArtistInfo {
 
     public void setTracks(int tracks) {
         this.tracks = tracks;
+    }
+
+    @Override
+    public String orderBy() {
+        return artist;
     }
 }

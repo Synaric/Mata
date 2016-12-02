@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.synaric.app.rxmodel.utils.RxUtils;
 import com.synaric.app.widget.adapter.CommonAdapter;
+import com.synaric.app.widget.other.BaseDiffCallBack;
 import com.synaric.common.utils.SystemUtils;
 
 import java.util.List;

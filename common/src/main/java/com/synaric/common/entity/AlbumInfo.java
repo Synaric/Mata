@@ -1,11 +1,13 @@
 package com.synaric.common.entity;
 
+import com.synaric.common.utils.OrderedItem;
+
 /**
  * 描述专辑信息的封装类。
  * <br/><br/>Created by Synaric on 2016/11/18 0018.
  */
 @SuppressWarnings("unused")
-public class AlbumInfo {
+public class AlbumInfo extends OrderedItem {
 
     private String album;
 
@@ -65,5 +67,10 @@ public class AlbumInfo {
 
     public void setSongs(int songs) {
         this.songs = songs;
+    }
+
+    @Override
+    public String orderBy() {
+        return album;
     }
 }

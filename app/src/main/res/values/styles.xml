@@ -111,4 +111,12 @@
         <item name="android:background">@color/dividerColor</item>
     </style>
 
+    <style name="common_alphabet_index_view">
+        <item name="android:layout_width">@dimen/index_width</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_alignParentEnd">true</item>
+        <item name="android:layout_marginTop">@dimen/default_general_margin</item>
+        <item name="android:layout_marginBottom">@dimen/default_general_margin</item>
+    </style>
+
 </resources>

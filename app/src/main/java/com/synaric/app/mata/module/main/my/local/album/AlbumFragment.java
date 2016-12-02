@@ -7,6 +7,7 @@ import com.orhanobut.logger.Logger;
 import com.synaric.app.mata.R;
 import com.synaric.app.mata.base.MvpFragment;
 import com.synaric.app.mata.module.main.my.local.LocalAudiosPresenter;
+import com.synaric.app.widget.AlphabetIndexView;
 import com.synaric.app.widget.CompoundRecyclerView;
 import com.synaric.app.widget.adapter.CommonAdapter;
 import com.synaric.app.widget.adapter.CommonViewHolder;
@@ -26,6 +27,8 @@ public class AlbumFragment extends MvpFragment<LocalAudiosPresenter>
 
     @InjectView(R.id.crv_container)
     CompoundRecyclerView crvContainer;
+    @InjectView(R.id.alphabet_index_view)
+    AlphabetIndexView alphabetIndexView;
 
     private List<AlbumInfo> albumInfo = new ArrayList<>();
 
@@ -35,7 +38,7 @@ public class AlbumFragment extends MvpFragment<LocalAudiosPresenter>
 
     @Override
     public int getLayoutId() {
-        return R.layout.view_common_list;
+        return R.layout.common_index_list;
     }
 
     @Override
@@ -47,15 +50,17 @@ public class AlbumFragment extends MvpFragment<LocalAudiosPresenter>
     protected void onCreateView(View root) {
         super.onCreateView(root);
         crvContainer.setAdapter(
-            new CommonAdapter<AlbumInfo>(getContext(), albumInfo, R.layout.item_album_info) {
-                @Override
-                protected void onBindViewHolder(CommonViewHolder holder, AlbumInfo entity) {
-                    holder.setImagePath(getContext(), R.id.iv_cover, entity.getAlbumArt(), 0);
-                    holder.setText(R.id.tv_title, entity.getAlbum());
-                    holder.setText(R.id.tv_artist, entity.getArtist());
-                    holder.setFormatText(R.id.tv_count, R.string.local_file_count, entity.getSongs());
-                }
-        });
+                new CommonAdapter<AlbumInfo>(getContext(), albumInfo, R.layout.item_album_info) {
+                    @Override
+                    protected void onBindViewHolder(CommonViewHolder holder, AlbumInfo entity) {
+                        holder.setImagePath(getContext(), R.id.iv_cover, entity.getAlbumArt(), 0);
+                        holder.setText(R.id.tv_title, entity.getAlbum());
+                        holder.setText(R.id.tv_artist, entity.getArtist());
+                        holder.setFormatText(R.id.tv_count, R.string.local_file_count, entity.getSongs());
+                    }
+                });
+
+        alphabetIndexView.syncState(crvContainer);
     }
 
     @Override
