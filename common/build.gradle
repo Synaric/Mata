@@ -7,6 +7,9 @@ android {
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
+
+        //定义main dex中必须保留的类
+        multiDexKeepProguard file('mainDexClasses.pro')
     }
 
     packagingOptions {
@@ -39,5 +42,6 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     //汉字转拼音库，用于拼音排序列表
     compile 'com.github.promeg:tinypinyin:1.0.0'
+    compile 'com.android.support:multidex:1.0.1'
     compile project(':rxmodel')
 }

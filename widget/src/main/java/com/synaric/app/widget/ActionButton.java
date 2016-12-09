@@ -94,9 +94,6 @@ public class ActionButton extends View implements View.OnClickListener{
      */
     private int flagMotion;
 
-    private Bitmap bitmapClosed;
-    private Bitmap bitmapOpened;
-
     public static ActionButton getOrCreate(Context context) {
         if(singleton == null) {
             singleton = new ActionButton(context);
@@ -128,8 +125,8 @@ public class ActionButton extends View implements View.OnClickListener{
         int margin = SystemUtils.dp2px(context, DEFAULT_MARGIN);
 
         Resources resources = getResources();
-        bitmapClosed = BitmapFactory.decodeResource(resources, R.drawable.ic_play_arrow_white_48dp);
-        bitmapOpened = BitmapFactory.decodeResource(resources, R.drawable.ic_pause_black_48dp);
+        Bitmap bitmapClosed = BitmapFactory.decodeResource(resources, R.drawable.ic_play_arrow_white_48dp);
+        Bitmap bitmapOpened = BitmapFactory.decodeResource(resources, R.drawable.ic_pause_black_48dp);
         drawable = new ActionButtonDrawable(bitmapOpened, bitmapClosed);
         setBackground(drawable);
         setOnClickListener(this);

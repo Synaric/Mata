@@ -41,4 +41,11 @@ public class ExtTextUtils {
         }
         return -1;
     }
+
+    /**
+     * 检测srcText是否包含targetText。
+     */
+    public static boolean contains(String srcText, CharSequence targetText) {
+        return srcText != null && srcText.contains(targetText);
+    }
 }
