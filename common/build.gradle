@@ -10,6 +10,11 @@ android {
 
         //定义main dex中必须保留的类
         multiDexKeepProguard file('mainDexClasses.pro')
+
+        ndk{
+            moduleName "cer"
+            abiFilters "armeabi"
+        }
     }
 
     packagingOptions {

@@ -42,7 +42,7 @@ public class LoadResActivity extends AppCompatActivity {
         protected Void doInBackground(Void... params) {
             try {
                 MultiDex.install(getApplication());
-                Log.d("LoadResActivity", "install finish");
+                Log.d("LoadResActivity", "finish install");
                 messenger.send(new Message());
             } catch (Exception e) {
                 e.printStackTrace();

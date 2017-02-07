@@ -102,6 +102,7 @@ public abstract class BaseFragment extends SupportFragment {
     @Override
     public void onDetach() {
         super.onDetach();
+        //确保资源的释放
         lockDrawLayoutListener = null;
         activity = null;
     }
@@ -123,8 +124,8 @@ public abstract class BaseFragment extends SupportFragment {
         return swipeBackLayout;
     }
 
-    protected void screenTransitAnim(View view, int targetId, Intent intent) {
-        ((BaseActivity) getContext()).screenTransitAnim(view, targetId, intent);
+    protected void customScaleUpAnimation(View view, Intent intent) {
+        ((BaseActivity) getContext()).customScaleUpAnimation(view, intent);
     }
 
     public void setEnableSwipeBack(boolean enableSwipeBack) {

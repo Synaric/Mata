@@ -47,3 +47,8 @@
 #Picasso
 -dontwarn com.squareup.okhttp.**
 
+#保持native方法不被混淆
+-keepclasseswithmembernames class * {
+    native <methods>;
+}
+

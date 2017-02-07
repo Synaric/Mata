@@ -39,18 +39,19 @@ public abstract class BaseApplication extends Application{
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
-        //Android 5.0以上不需要特别处理
+        //Android 5.0以上不需要调用MultiDex
         if (!isAsyncLaunchProcess() && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             if (needWait(base)) {
                 /*
                     第一次启动APP由于MultiDex将会非常缓慢，某些低端机可能ANR。
                     因此这里的做法是挂起主进程，开启:async_launch进程执行dexopt。
                     dexopt执行完毕，主进程重新变为前台进程，继续执行初始化。
-                    主进程在这过程中变成后台进程，因此挂起将不会引起ANR。
+                    主进程在这过程中变成后台进程，因此阻塞将不会引起ANR。
                  */
                 DexInstallDeamonThread thread = new DexInstallDeamonThread(this, base);
                 thread.start();
 
+                //阻塞等待:async_launch完成加载
                 synchronized (lock) {
                     try {
                         lock.wait();
@@ -78,6 +79,9 @@ public abstract class BaseApplication extends Application{
         return sp.getBoolean(BaseSPKey.FIRST_LAUNCH, true);
     }
 
+    /**
+     * @see <a href="http://www.open-open.com/lib/view/open1452264136714.html">其实你不知道MultiDex到底有多坑</a>
+     */
     private static class DexInstallDeamonThread extends Thread {
 
         private Handler handler;

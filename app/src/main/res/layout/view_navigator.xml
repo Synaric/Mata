@@ -6,8 +6,7 @@
     android:layout_height="@dimen/tab_height"
     android:orientation="horizontal"
     android:weightSum="5"
-    android:background="@color/colorPrimary"
-    tools:showIn="@layout/activity_main">
+    android:background="@color/colorPrimary">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/civ_head_portrait"
