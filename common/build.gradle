@@ -39,6 +39,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile rootProject.ext.supportAppCompat
     compile rootProject.ext.supportDesign
+    compile rootProject.ext.percentSupport
     compile 'com.jakewharton:butterknife:5.1.1'
     compile 'xiaofei.library:hermes-eventbus:0.1.1'
     compile 'com.squareup.retrofit2:retrofit:2.0.2'

@@ -30,6 +30,7 @@ ext {
     versionName = "1.0"
     supportAppCompat = 'com.android.support:appcompat-v7:24.2.0'
     supportDesign = 'com.android.support:design:24.2.0'
+    percentSupport = 'com.android.support:percent:24.2.0'
 }
 
 task clean(type: Delete) {
