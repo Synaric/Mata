@@ -19,6 +19,7 @@ import com.synaric.app.common.R;
 public class LoadResActivity extends AppCompatActivity {
 
     private Messenger messenger;
+    private LoadDexTask dexTask;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -32,8 +33,14 @@ public class LoadResActivity extends AppCompatActivity {
         Intent from = getIntent();
         messenger = from.getParcelableExtra("MESSENGER");
 
-        LoadDexTask dexTask = new LoadDexTask();
+        dexTask = new LoadDexTask();
         dexTask.execute();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (dexTask != null) dexTask.cancel(true);
     }
 
     class LoadDexTask extends AsyncTask<Void, Void, Void> {
