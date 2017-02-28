@@ -1,8 +1,5 @@
 package com.synaric.common.security;
 
-import android.os.Build;
-import android.support.annotation.RequiresApi;
-
 import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
@@ -33,7 +30,7 @@ public class Decryptor {
 
     private KeyStore keyStore;
 
-    Decryptor() throws CertificateException, NoSuchAlgorithmException, KeyStoreException,
+    public Decryptor() throws CertificateException, NoSuchAlgorithmException, KeyStoreException,
             IOException {
         initKeyStore();
     }

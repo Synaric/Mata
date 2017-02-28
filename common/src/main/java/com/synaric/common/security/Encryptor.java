@@ -32,14 +32,11 @@ import javax.crypto.SecretKey;
 @SuppressWarnings("unused")
 public class Encryptor {
 
-
     private static final String TRANSFORMATION = "AES/GCM/NoPadding";
     private static final String ANDROID_KEY_STORE = "AndroidKeyStore";
 
     private byte[] encryption;
     private byte[] iv;
-
-    Encryptor() {}
 
     byte[] encryptText(final Context context, final String alias, final String textToEncrypt)
             throws UnrecoverableEntryException, NoSuchAlgorithmException, KeyStoreException,

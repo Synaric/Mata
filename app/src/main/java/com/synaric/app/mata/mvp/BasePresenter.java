@@ -111,6 +111,7 @@ public class BasePresenter implements Presenter<View> {
     public void onUnsubscribe() {
         if (compositeSubscription != null && compositeSubscription.hasSubscriptions()) {
             compositeSubscription.unsubscribe();
+            compositeSubscription.clear();
         }
     }
 
