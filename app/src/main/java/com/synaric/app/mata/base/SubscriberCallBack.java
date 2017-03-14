@@ -8,6 +8,7 @@ import rx.Subscriber;
  * <br/><br/>Created by Synaric on 2016/10/8 0008.
  */
 public class SubscriberCallback<T> extends Subscriber<T> {
+
     private ApiCallback<T> apiCallback;
 
     public SubscriberCallback(ApiCallback<T> apiCallback) {
